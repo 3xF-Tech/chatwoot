@@ -3,7 +3,7 @@
 
 ___
 
-# Chatwoot
+# 3xF.Tech
 
 The modern customer support platform, an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc.
 
@@ -88,7 +88,7 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 
 ## Documentation
 
-Detailed documentation is available at [chatwoot.com/help-center](https://www.chatwoot.com/help-center).
+Detailed documentation is available at [3xf.tech/help-center](https://www.3xf.tech/help-center).
 
 ## Translation process
 
