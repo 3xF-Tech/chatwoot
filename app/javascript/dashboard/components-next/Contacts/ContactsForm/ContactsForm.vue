@@ -1,5 +1,6 @@
 <script setup>
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, watch, onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { required, email } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
@@ -27,6 +28,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update']);
 
+const store = useStore();
 const { t } = useI18n();
 
 const FORM_CONFIG = {
@@ -34,10 +36,10 @@ const FORM_CONFIG = {
   LAST_NAME: { field: 'lastName' },
   EMAIL_ADDRESS: { field: 'email' },
   PHONE_NUMBER: { field: 'phoneNumber' },
+  COMPANY: { field: 'companyId', isCompanySelector: true },
   CITY: { field: 'additionalAttributes.city' },
   COUNTRY: { field: 'additionalAttributes.countryCode' },
   BIO: { field: 'additionalAttributes.description' },
-  COMPANY_NAME: { field: 'additionalAttributes.companyName' },
 };
 
 const SOCIAL_CONFIG = {
@@ -55,9 +57,9 @@ const defaultState = {
   firstName: '',
   lastName: '',
   phoneNumber: '',
+  companyId: null,
   additionalAttributes: {
     description: '',
-    companyName: '',
     countryCode: '',
     country: '',
     city: '',
@@ -72,6 +74,7 @@ const defaultState = {
 };
 
 const state = reactive({ ...defaultState });
+const companiesLoaded = ref(false);
 
 const validationRules = {
   firstName: { required },
@@ -92,12 +95,12 @@ const prepareStateBasedOnProps = () => {
     name = '',
     email: emailAddress,
     phoneNumber,
+    companyId = null,
     additionalAttributes = {},
   } = props.contactData || {};
   const { firstName, lastName } = splitName(name || '');
   const {
     description = '',
-    companyName = '',
     countryCode = '',
     country = '',
     city = '',
@@ -111,9 +114,9 @@ const prepareStateBasedOnProps = () => {
     lastName,
     email: emailAddress,
     phoneNumber,
+    companyId,
     additionalAttributes: {
       description,
-      companyName,
       countryCode,
       country,
       city,
@@ -125,6 +128,23 @@ const prepareStateBasedOnProps = () => {
 const countryOptions = computed(() =>
   countries.map(({ name, id }) => ({ label: name, value: id }))
 );
+
+const companies = computed(() => store.getters['companies/getCompaniesList']);
+
+const companyOptions = computed(() => {
+  const options = companies.value.map(company => ({
+    label: company.name,
+    value: company.id,
+  }));
+  return [{ label: t('CONTACTS_LAYOUT.CARD.EDIT_DETAILS_FORM.FORM.COMPANY.NO_COMPANY'), value: null }, ...options];
+});
+
+const fetchCompanies = async () => {
+  if (!companiesLoaded.value) {
+    await store.dispatch('companies/get', { page: 1, sort: 'name' });
+    companiesLoaded.value = true;
+  }
+};
 
 const editDetailsForm = computed(() =>
   Object.keys(FORM_CONFIG).map(key => ({
@@ -210,6 +230,11 @@ const handleCountrySelection = value => {
   emit('update', state);
 };
 
+const handleCompanySelection = value => {
+  state.companyId = value;
+  emit('update', state);
+};
+
 const resetValidation = () => {
   v$.value.$reset();
 };
@@ -225,6 +250,10 @@ watch(
   },
   { immediate: true }
 );
+
+onMounted(() => {
+  fetchCompanies();
+});
 
 // Expose state to parent component for avatar upload
 defineExpose({
@@ -255,6 +284,19 @@ defineExpose({
               '[&>div>button]:!bg-n-alpha-black2': isDetailsView,
             }"
             @update:model-value="handleCountrySelection"
+          />
+          <ComboBox
+            v-else-if="item.key === 'COMPANY'"
+            v-model="state.companyId"
+            :options="companyOptions"
+            :placeholder="item.placeholder"
+            class="[&>div>button]:h-8"
+            :class="{
+              '[&>div>button]:bg-n-alpha-black2 [&>div>button:not(.focused)]:!outline-transparent':
+                !isDetailsView,
+              '[&>div>button]:!bg-n-alpha-black2': isDetailsView,
+            }"
+            @update:model-value="handleCompanySelection"
           />
           <PhoneNumberInput
             v-else-if="item.key === 'PHONE_NUMBER'"

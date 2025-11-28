@@ -22,6 +22,45 @@
     "CONTACTS_COUNT": "{count} contacts",
     "EMPTY_STATE": {
       "TITLE": "No companies found"
+    },
+    "CREATE": {
+      "TITLE": "Create Company",
+      "SUBMIT": "Create Company",
+      "SUCCESS_MESSAGE": "Company created successfully",
+      "ERROR_MESSAGE": "Failed to create company"
+    },
+    "EDIT": {
+      "TITLE": "Edit Company",
+      "SUBMIT": "Update Company",
+      "SUCCESS_MESSAGE": "Company updated successfully",
+      "ERROR_MESSAGE": "Failed to update company"
+    },
+    "DELETE": {
+      "CONFIRM_TITLE": "Delete Company",
+      "CONFIRM_MESSAGE": "Are you sure you want to delete this company? This action cannot be undone.",
+      "SUCCESS_MESSAGE": "Company deleted successfully",
+      "ERROR_MESSAGE": "Failed to delete company"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Company Name",
+        "PLACEHOLDER": "Enter company name",
+        "ERROR": "Company name is required"
+      },
+      "DOMAIN": {
+        "LABEL": "Domain",
+        "PLACEHOLDER": "example.com",
+        "HELP_TEXT": "Company website domain (e.g., example.com)"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Description",
+        "PLACEHOLDER": "Enter company description"
+      }
+    }
+  },
+  "COMPANIES_PAGE": {
+    "CREATE": {
+      "BUTTON": "New Company"
     }
   },
   "COMPANIES_LAYOUT": {

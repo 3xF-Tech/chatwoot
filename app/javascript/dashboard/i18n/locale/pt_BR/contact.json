@@ -114,6 +114,13 @@
         "PLACEHOLDER": "Digite o nome da empresa",
         "LABEL": "Nome da empresa"
       },
+      "COMPANY": {
+        "PLACEHOLDER": "Selecione uma empresa",
+        "LABEL": "Empresa",
+        "SELECT_PLACEHOLDER": "Selecionar",
+        "REMOVE": "Remover",
+        "NO_COMPANY": "Sem empresa"
+      },
       "COUNTRY": {
         "PLACEHOLDER": "Digite o nome do país ",
         "LABEL": "Nome do País",
@@ -436,8 +443,9 @@
           "BIO": {
             "PLACEHOLDER": "Digite uma biografia"
           },
-          "COMPANY_NAME": {
-            "PLACEHOLDER": "Digite o nome da empresa"
+          "COMPANY": {
+            "PLACEHOLDER": "Selecione a empresa",
+            "NO_COMPANY": "Sem empresa"
           }
         },
         "UPDATE_BUTTON": "Atualizar contato",

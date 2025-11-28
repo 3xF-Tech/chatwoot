@@ -1,4 +1,5 @@
 <script>
+import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import {
   DuplicateContactException,
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       countries: countries,
-      companyName: '',
+      companyId: null,
       description: '',
       email: '',
       name: '',
@@ -73,11 +74,29 @@ export default {
     email: {
       email,
     },
-    companyName: {},
+    companyId: {},
     phoneNumber: {},
     bio: {},
   },
   computed: {
+    ...mapGetters({
+      companies: 'companies/getCompaniesList',
+    }),
+    companyOptions() {
+      const options = (this.companies || []).map(company => ({
+        id: company.id,
+        name: company.name,
+      }));
+      return [{ id: null, name: this.$t('CONTACT_FORM.FORM.COMPANY.NO_COMPANY') }, ...options];
+    },
+    selectedCompany: {
+      get() {
+        return this.companyOptions.find(c => c.id === this.companyId) || this.companyOptions[0];
+      },
+      set(value) {
+        this.companyId = value ? value.id : null;
+      },
+    },
     parsePhoneNumber() {
       return parsePhoneNumber(this.phoneNumber);
     },
@@ -119,8 +138,12 @@ export default {
   mounted() {
     this.setContactObject();
     this.setDialCode();
+    this.fetchCompanies();
   },
   methods: {
+    async fetchCompanies() {
+      await this.$store.dispatch('companies/get', { page: 1, sort: 'name' });
+    },
     onCancel() {
       this.$emit('cancel');
     },
@@ -153,7 +176,7 @@ export default {
       this.name = name || '';
       this.email = emailAddress || '';
       this.phoneNumber = phoneNumber || '';
-      this.companyName = additionalAttributes.company_name || '';
+      this.companyId = this.contact.company_id || null;
       this.country = {
         id: additionalAttributes.country_code || '',
         name:
@@ -187,10 +210,10 @@ export default {
         name: this.name,
         email: this.email,
         phone_number: this.setPhoneNumber,
+        company_id: this.companyId,
         additional_attributes: {
           ...this.contact.additional_attributes,
           description: this.description,
-          company_name: this.companyName,
           country_code: this.country.id,
           country:
             this.country.name ===
@@ -355,12 +378,24 @@ export default {
         </div>
       </div>
     </div>
-    <woot-input
-      v-model="companyName"
-      class="w-full"
-      :label="$t('CONTACT_FORM.FORM.COMPANY_NAME.LABEL')"
-      :placeholder="$t('CONTACT_FORM.FORM.COMPANY_NAME.PLACEHOLDER')"
-    />
+    <div class="w-full">
+      <label>
+        {{ $t('CONTACT_FORM.FORM.COMPANY.LABEL') }}
+      </label>
+      <multiselect
+        v-model="selectedCompany"
+        track-by="id"
+        label="name"
+        :placeholder="$t('CONTACT_FORM.FORM.COMPANY.PLACEHOLDER')"
+        selected-label
+        :select-label="$t('CONTACT_FORM.FORM.COMPANY.SELECT_PLACEHOLDER')"
+        :deselect-label="$t('CONTACT_FORM.FORM.COMPANY.REMOVE')"
+        :max-height="160"
+        :options="companyOptions"
+        allow-empty
+        :option-height="104"
+      />
+    </div>
     <div>
       <div class="w-full">
         <label>

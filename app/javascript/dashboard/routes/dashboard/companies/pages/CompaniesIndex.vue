@@ -9,6 +9,7 @@ import { debounce } from '@chatwoot/utils';
 
 import CompaniesListLayout from 'dashboard/components-next/Companies/CompaniesListLayout.vue';
 import CompaniesCard from 'dashboard/components-next/Companies/CompaniesCard/CompaniesCard.vue';
+import CreateCompanyDialog from 'dashboard/components-next/Companies/CompaniesForm/CreateCompanyDialog.vue';
 
 const DEFAULT_SORT_FIELD = 'created_at';
 const DEBOUNCE_DELAY = 300;
@@ -121,6 +122,23 @@ const handleSort = async ({ sort, order }) => {
   fetchCompanies(1, searchValue.value, buildSortAttr());
 };
 
+const createCompanyDialogRef = ref(null);
+
+const openCreateDialog = () => {
+  createCompanyDialogRef.value?.dialogRef.open();
+};
+
+const handleCompanyCreated = () => {
+  fetchCompanies(1);
+};
+
+const navigateToCompany = companyId => {
+  router.push({
+    name: 'company_details',
+    params: { companyId },
+  });
+};
+
 onMounted(() => {
   searchValue.value = searchQuery.value;
   fetchCompanies();
@@ -139,6 +157,7 @@ onMounted(() => {
     @update:current-page="onPageChange"
     @update:sort="handleSort"
     @search="onSearch"
+    @create="openCreateDialog"
   >
     <div v-if="isFetchingList" class="flex items-center justify-center p-8">
       <span class="text-n-slate-11 text-base">{{
@@ -164,7 +183,13 @@ onMounted(() => {
         :description="company.description"
         :avatar-url="company.avatarUrl"
         :updated-at="company.updatedAt"
+        @show-company="navigateToCompany"
       />
     </div>
   </CompaniesListLayout>
+
+  <CreateCompanyDialog
+    ref="createCompanyDialogRef"
+    @created="handleCompanyCreated"
+  />
 </template>

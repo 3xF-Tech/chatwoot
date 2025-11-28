@@ -63,6 +63,18 @@ export default {
     additionalAttributes() {
       return this.contact.additional_attributes || {};
     },
+    companyName() {
+      if (this.contact.company && this.contact.company.name) {
+        return this.contact.company.name;
+      }
+      return this.additionalAttributes.company_name || '';
+    },
+    companyLink() {
+      if (this.contact.company && this.contact.company.id) {
+        return `/app/accounts/${this.$route.params.accountId}/companies/${this.contact.company.id}`;
+      }
+      return '';
+    },
     location() {
       const {
         country = '',
@@ -248,7 +260,8 @@ export default {
             :title="$t('CONTACT_PANEL.IDENTIFIER')"
           />
           <ContactInfoRow
-            :value="additionalAttributes.company_name"
+            :value="companyName"
+            :href="companyLink"
             icon="building-bank"
             emoji="🏢"
             :title="$t('CONTACT_PANEL.COMPANY')"

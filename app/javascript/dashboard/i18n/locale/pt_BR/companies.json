@@ -1,0 +1,114 @@
+{
+  "COMPANIES": {
+    "HEADER": "Empresas",
+    "SORT_BY": {
+      "LABEL": "Ordenar por",
+      "OPTIONS": {
+        "NAME": "Nome",
+        "DOMAIN": "Domínio",
+        "CREATED_AT": "Data de criação"
+      }
+    },
+    "ORDER": {
+      "LABEL": "Ordem",
+      "OPTIONS": {
+        "ASCENDING": "Crescente",
+        "DESCENDING": "Decrescente"
+      }
+    },
+    "SEARCH_PLACEHOLDER": "Buscar empresas...",
+    "LOADING": "Carregando empresas...",
+    "UNNAMED": "Empresa sem nome",
+    "CONTACTS_COUNT": "{count} contatos",
+    "EMPTY_STATE": {
+      "TITLE": "Nenhuma empresa encontrada",
+      "DESCRIPTION": "Comece criando sua primeira empresa para organizar seus contatos."
+    },
+    "CREATE": {
+      "TITLE": "Criar Empresa",
+      "SUBMIT": "Criar Empresa",
+      "SUCCESS_MESSAGE": "Empresa criada com sucesso",
+      "ERROR_MESSAGE": "Erro ao criar empresa"
+    },
+    "EDIT": {
+      "TITLE": "Editar Empresa",
+      "SUBMIT": "Atualizar Empresa",
+      "SUCCESS_MESSAGE": "Empresa atualizada com sucesso",
+      "ERROR_MESSAGE": "Erro ao atualizar empresa"
+    },
+    "DELETE": {
+      "CONFIRM_TITLE": "Excluir Empresa",
+      "CONFIRM_MESSAGE": "Tem certeza que deseja excluir esta empresa? Esta ação não pode ser desfeita.",
+      "CONFIRM_YES": "Sim, excluir",
+      "CONFIRM_NO": "Não, cancelar",
+      "SUCCESS_MESSAGE": "Empresa excluída com sucesso",
+      "ERROR_MESSAGE": "Erro ao excluir empresa"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Nome da Empresa",
+        "PLACEHOLDER": "Digite o nome da empresa",
+        "ERROR": "O nome da empresa é obrigatório"
+      },
+      "DOMAIN": {
+        "LABEL": "Domínio",
+        "PLACEHOLDER": "exemplo.com.br",
+        "HELP_TEXT": "Domínio do site da empresa (ex: exemplo.com.br)"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Descrição",
+        "PLACEHOLDER": "Digite uma descrição da empresa"
+      }
+    }
+  },
+  "COMPANIES_PAGE": {
+    "CREATE": {
+      "BUTTON": "Nova Empresa"
+    }
+  },
+  "COMPANIES_LAYOUT": {
+    "PAGINATION_FOOTER": {
+      "SHOWING": "Exibindo {startItem} - {endItem} de {totalItems} empresas"
+    }
+  },
+  "COMPANY_DETAILS": {
+    "TITLE": "Detalhes da Empresa",
+    "TABS": {
+      "OVERVIEW": "Visão Geral",
+      "CONTACTS": "Contatos",
+      "ACTIVITY": "Atividades"
+    },
+    "OVERVIEW": {
+      "BASIC_INFO": "Informações Básicas",
+      "NAME": "Nome",
+      "DOMAIN": "Domínio",
+      "DESCRIPTION": "Descrição",
+      "CREATED_AT": "Criado em",
+      "UPDATED_AT": "Atualizado em",
+      "BUSINESS_INFO": "Informações Comerciais",
+      "WEBSITE": "Website",
+      "INDUSTRY": "Setor",
+      "EMPLOYEES": "Funcionários",
+      "REVENUE": "Faturamento",
+      "ADDRESS": "Endereço",
+      "CITY": "Cidade",
+      "STATE": "Estado",
+      "COUNTRY": "País",
+      "POSTAL_CODE": "CEP",
+      "PHONE": "Telefone",
+      "EMAIL": "E-mail"
+    },
+    "CONTACTS": {
+      "TITLE": "Contatos Associados",
+      "EMPTY": "Nenhum contato associado a esta empresa",
+      "ADD_CONTACT": "Adicionar Contato",
+      "VIEW_ALL": "Ver todos os contatos"
+    },
+    "ACTIONS": {
+      "EDIT": "Editar",
+      "DELETE": "Excluir",
+      "BACK": "Voltar"
+    },
+    "NOT_AVAILABLE": "Não informado"
+  }
+}

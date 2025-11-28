@@ -11,7 +11,7 @@ defineProps({
   activeOrdering: { type: String, default: '' },
 });
 
-const emit = defineEmits(['update:currentPage', 'update:sort', 'search']);
+const emit = defineEmits(['update:currentPage', 'update:sort', 'search', 'create']);
 
 const updateCurrentPage = page => {
   emit('update:currentPage', page);
@@ -30,6 +30,7 @@ const updateCurrentPage = page => {
         :active-ordering="activeOrdering"
         @search="emit('search', $event)"
         @update:sort="emit('update:sort', $event)"
+        @create="emit('create')"
       />
       <main class="flex-1 overflow-y-auto">
         <div class="w-full mx-auto max-w-[60rem]">

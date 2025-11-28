@@ -114,6 +114,13 @@
         "PLACEHOLDER": "Enter the company name",
         "LABEL": "Company Name"
       },
+      "COMPANY": {
+        "PLACEHOLDER": "Select a company",
+        "LABEL": "Company",
+        "SELECT_PLACEHOLDER": "Select",
+        "REMOVE": "Remove",
+        "NO_COMPANY": "No company"
+      },
       "COUNTRY": {
         "PLACEHOLDER": "Enter the country name",
         "LABEL": "Country Name",
@@ -437,8 +444,9 @@
           "BIO": {
             "PLACEHOLDER": "Enter the bio"
           },
-          "COMPANY_NAME": {
-            "PLACEHOLDER": "Enter the company name"
+          "COMPANY": {
+            "PLACEHOLDER": "Select company",
+            "NO_COMPANY": "No company"
           }
         },
         "UPDATE_BUTTON": "Update contact",

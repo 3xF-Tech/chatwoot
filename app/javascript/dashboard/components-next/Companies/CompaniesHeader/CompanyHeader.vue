@@ -1,6 +1,7 @@
 <script setup>
 import Input from 'dashboard/components-next/input/Input.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
+import Button from 'dashboard/components-next/button/Button.vue';
 import CompanySortMenu from './components/CompanySortMenu.vue';
 
 defineProps({
@@ -11,34 +12,27 @@ defineProps({
   activeOrdering: { type: String, default: '' },
 });
 
-const emit = defineEmits(['search', 'update:sort']);
+const emit = defineEmits(['search', 'update:sort', 'create']);
 </script>
 
 <template>
   <header class="sticky top-0 z-10">
     <div
-      class="flex items-start sm:items-center justify-between w-full py-6 px-6 gap-2 mx-auto max-w-[60rem]"
+      class="flex items-start sm:items-center justify-between w-full py-6 px-6 gap-4 mx-auto max-w-[60rem]"
     >
       <span class="text-xl font-medium truncate text-n-slate-12">
         {{ headerTitle }}
       </span>
-      <div class="flex items-center flex-row flex-shrink-0 gap-2">
-        <div class="flex items-center">
-          <CompanySortMenu
-            :active-sort="activeSort"
-            :active-ordering="activeOrdering"
-            @update:sort="emit('update:sort', $event)"
-          />
-        </div>
-        <div v-if="showSearch" class="flex items-center gap-2 w-full">
+      <div class="flex items-center flex-col sm:flex-row flex-shrink-0 gap-4">
+        <div v-if="showSearch" class="flex items-center gap-2 w-full sm:w-auto">
           <Input
             :model-value="searchValue"
             type="search"
-            :placeholder="$t('CONTACTS_LAYOUT.HEADER.SEARCH_PLACEHOLDER')"
+            :placeholder="$t('COMPANIES.SEARCH_PLACEHOLDER')"
             :custom-input-class="[
               'h-8 [&:not(.focus)]:!border-transparent bg-n-alpha-2 dark:bg-n-solid-1 ltr:!pl-8 !py-1 rtl:!pr-8',
             ]"
-            class="w-full"
+            class="w-full sm:w-64"
             @input="emit('search', $event.target.value)"
           >
             <template #prefix>
@@ -48,6 +42,20 @@ const emit = defineEmits(['search', 'update:sort']);
               />
             </template>
           </Input>
+        </div>
+        <div class="flex items-center flex-shrink-0 gap-2">
+          <CompanySortMenu
+            :active-sort="activeSort"
+            :active-ordering="activeOrdering"
+            @update:sort="emit('update:sort', $event)"
+          />
+          <div class="w-px h-4 bg-n-strong" />
+          <Button
+            :label="$t('COMPANIES_PAGE.CREATE.BUTTON')"
+            icon="i-lucide-plus"
+            size="sm"
+            @click="emit('create')"
+          />
         </div>
       </div>
     </div>
