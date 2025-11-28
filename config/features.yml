@@ -224,6 +224,4 @@
   enabled: false
 - name: companies
   display_name: Companies
-  enabled: false
-  premium: true
-  chatwoot_internal: true
+  enabled: true
