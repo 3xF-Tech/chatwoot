@@ -46,6 +46,14 @@ module Events::Types
   INBOX_CREATED = 'inbox.created'
   INBOX_UPDATED = 'inbox.updated'
 
+  # opportunity events
+  OPPORTUNITY_CREATED = 'opportunity.created'
+  OPPORTUNITY_UPDATED = 'opportunity.updated'
+  OPPORTUNITY_DELETED = 'opportunity.deleted'
+  OPPORTUNITY_STAGE_CHANGED = 'opportunity.stage_changed'
+  OPPORTUNITY_WON = 'opportunity.won'
+  OPPORTUNITY_LOST = 'opportunity.lost'
+
   # notification events
   NOTIFICATION_CREATED = 'notification.created'
   NOTIFICATION_DELETED = 'notification.deleted'

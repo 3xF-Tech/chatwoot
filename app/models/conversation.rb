@@ -113,6 +113,8 @@ class Conversation < ApplicationRecord
   has_many :notifications, as: :primary_actor, dependent: :destroy_async
   has_many :attachments, through: :messages
   has_many :reporting_events, dependent: :destroy_async
+  has_many :opportunity_conversations, dependent: :destroy_async
+  has_many :opportunities, through: :opportunity_conversations
 
   before_save :ensure_snooze_until_reset
   before_create :determine_conversation_status

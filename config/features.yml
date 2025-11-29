@@ -92,6 +92,9 @@
 - name: crm
   display_name: CRM
   enabled: true
+- name: opportunities
+  display_name: Opportunities
+  enabled: true
 - name: auto_resolve_conversations
   display_name: Auto Resolve Conversations
   enabled: true

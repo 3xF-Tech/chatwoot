@@ -1,0 +1,11 @@
+json.id item.id
+json.opportunity_id item.opportunity_id
+json.name item.name
+json.description item.description
+json.quantity item.quantity.to_f
+json.unit_price item.unit_price.to_f
+json.discount_percent item.discount_percent.to_f
+json.total item.total.to_f
+json.position item.position
+json.created_at item.created_at
+json.updated_at item.updated_at

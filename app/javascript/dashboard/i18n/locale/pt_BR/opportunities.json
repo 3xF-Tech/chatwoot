@@ -1,0 +1,434 @@
+{
+  "OPPORTUNITIES": {
+    "HEADER": "Oportunidades",
+    "HEADER_BTN_TXT": "Nova Oportunidade",
+    "LOADING": "Carregando oportunidades...",
+    "EMPTY_STATE": {
+      "TITLE": "Nenhuma oportunidade encontrada",
+      "DESCRIPTION": "Comece a rastrear seus negócios criando sua primeira oportunidade.",
+      "BTN_TXT": "Criar Oportunidade"
+    },
+    "EMPTY_PIPELINE": {
+      "TITLE": "Nenhum funil configurado",
+      "DESCRIPTION": "Crie um funil com etapas para começar a gerenciar suas oportunidades. Funis ajudam você a organizar e acompanhar negócios ao longo do processo de vendas.",
+      "BTN_TXT": "Criar Funil"
+    },
+    "PIPELINE": {
+      "CREATE_TITLE": "Criar Funil",
+      "CREATE_DESC": "Defina um nome e as etapas para seu funil de vendas. Você pode personalizar etapas e suas probabilidades.",
+      "NAME_LABEL": "Nome do Funil",
+      "NAME_PLACEHOLDER": "ex: Funil de Vendas, Vendas Enterprise",
+      "NAME_REQUIRED": "O nome do funil é obrigatório",
+      "DESCRIPTION_LABEL": "Descrição",
+      "DESCRIPTION_PLACEHOLDER": "Descreva seu funil...",
+      "STAGES_LABEL": "Etapas do Funil",
+      "ADD_STAGE": "Adicionar Etapa",
+      "STAGE_NAME_PLACEHOLDER": "Nome da etapa",
+      "ACTIVE": "Ativa",
+      "CREATE_SUBMIT": "Criar Funil",
+      "CREATE_SUCCESS": "Funil criado com sucesso!",
+      "CREATE_ERROR": "Erro ao criar funil"
+    },
+    "SORT_BY": {
+      "TITLE": "Ordenar por",
+      "CREATED_AT": "Data de Criação",
+      "EXPECTED_CLOSE_DATE": "Fechamento Previsto",
+      "VALUE": "Valor",
+      "NAME": "Nome",
+      "UPDATED_AT": "Última Atualização"
+    },
+    "FILTERS": {
+      "STATUS": "Status",
+      "PIPELINE": "Funil",
+      "STAGE": "Etapa",
+      "ASSIGNEE": "Responsável",
+      "COMPANY": "Empresa",
+      "CONTACT": "Contato",
+      "DATE_RANGE": "Período",
+      "ALL_STATUSES": "Todos os Status",
+      "ALL_PIPELINES": "Todos os Funis",
+      "ALL_STAGES": "Todas as Etapas",
+      "ALL_ASSIGNEES": "Todos os Responsáveis"
+    },
+    "STATUS": {
+      "OPEN": "Aberta",
+      "WON": "Ganha",
+      "LOST": "Perdida",
+      "CANCELLED": "Cancelada"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Nome da Oportunidade",
+        "PLACEHOLDER": "Ex: Contrato anual com Empresa X",
+        "REQUIRED": "O nome é obrigatório"
+      },
+      "PIPELINE": {
+        "LABEL": "Funil",
+        "PLACEHOLDER": "Selecione um funil",
+        "REQUIRED": "O funil é obrigatório"
+      },
+      "STAGE": {
+        "LABEL": "Etapa",
+        "PLACEHOLDER": "Selecione uma etapa",
+        "REQUIRED": "A etapa é obrigatória"
+      },
+      "VALUE": {
+        "LABEL": "Valor",
+        "PLACEHOLDER": "0,00"
+      },
+      "CURRENCY": {
+        "LABEL": "Moeda",
+        "PLACEHOLDER": "Selecione a moeda"
+      },
+      "EXPECTED_CLOSE_DATE": {
+        "LABEL": "Fechamento Previsto",
+        "PLACEHOLDER": "Selecione uma data"
+      },
+      "CONTACT": {
+        "LABEL": "Contato",
+        "PLACEHOLDER": "Selecione um contato"
+      },
+      "COMPANY": {
+        "LABEL": "Empresa",
+        "PLACEHOLDER": "Selecione uma empresa"
+      },
+      "ASSIGNEE": {
+        "LABEL": "Responsável",
+        "PLACEHOLDER": "Selecione um responsável"
+      },
+      "PRIORITY": {
+        "LABEL": "Prioridade",
+        "PLACEHOLDER": "Selecione a prioridade",
+        "LOW": "Baixa",
+        "MEDIUM": "Média",
+        "HIGH": "Alta",
+        "URGENT": "Urgente"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Descrição",
+        "PLACEHOLDER": "Adicione detalhes sobre esta oportunidade..."
+      },
+      "CUSTOM_ATTRIBUTES": {
+        "LABEL": "Atributos Personalizados"
+      }
+    },
+    "CREATE": {
+      "TITLE": "Nova Oportunidade",
+      "DESC": "Crie uma nova oportunidade para rastrear um negócio potencial.",
+      "SUCCESS_MESSAGE": "Oportunidade criada com sucesso",
+      "ERROR_MESSAGE": "Não foi possível criar a oportunidade. Por favor, tente novamente."
+    },
+    "EDIT": {
+      "TITLE": "Editar Oportunidade",
+      "SUCCESS_MESSAGE": "Oportunidade atualizada com sucesso",
+      "ERROR_MESSAGE": "Não foi possível atualizar a oportunidade. Por favor, tente novamente."
+    },
+    "DELETE": {
+      "TITLE": "Excluir Oportunidade",
+      "DESC": "Tem certeza que deseja excluir esta oportunidade? Esta ação não pode ser desfeita.",
+      "CONFIRM": "Sim, excluir",
+      "CANCEL": "Cancelar",
+      "SUCCESS_MESSAGE": "Oportunidade excluída com sucesso",
+      "ERROR_MESSAGE": "Não foi possível excluir a oportunidade. Por favor, tente novamente."
+    },
+    "MOVE_STAGE": {
+      "TITLE": "Mover para Etapa",
+      "SUCCESS_MESSAGE": "Oportunidade movida para {stage}",
+      "ERROR_MESSAGE": "Não foi possível mover a oportunidade. Por favor, tente novamente."
+    },
+    "MARK_WON": {
+      "TITLE": "Marcar como Ganha",
+      "DESC": "Parabéns! Você está prestes a marcar esta oportunidade como ganha.",
+      "CONFIRM": "Marcar como Ganha",
+      "SUCCESS_MESSAGE": "Oportunidade marcada como ganha!",
+      "ERROR_MESSAGE": "Não foi possível atualizar a oportunidade. Por favor, tente novamente."
+    },
+    "MARK_LOST": {
+      "TITLE": "Marcar como Perdida",
+      "DESC": "Por favor, forneça um motivo para perder esta oportunidade.",
+      "REASON_LABEL": "Motivo da Perda",
+      "REASON_PLACEHOLDER": "Explique por que esta oportunidade foi perdida...",
+      "CONFIRM": "Marcar como Perdida",
+      "SUCCESS_MESSAGE": "Oportunidade marcada como perdida",
+      "ERROR_MESSAGE": "Não foi possível atualizar a oportunidade. Por favor, tente novamente."
+    },
+    "DETAILS": {
+      "TITLE": "Detalhes da Oportunidade",
+      "OVERVIEW": "Visão Geral",
+      "ITEMS": "Itens",
+      "ACTIVITIES": "Atividades",
+      "CONVERSATIONS": "Conversas",
+      "HISTORY": "Histórico",
+      "CREATED_AT": "Criada em",
+      "UPDATED_AT": "Atualizada em",
+      "CLOSED_AT": "Fechada em",
+      "PROBABILITY": "Probabilidade",
+      "WEIGHTED_VALUE": "Valor Ponderado",
+      "DAYS_IN_STAGE": "Dias na Etapa",
+      "DAYS_OPEN": "Dias Aberta",
+      "LOST_REASON": "Motivo da Perda",
+      "NO_CONTACT_OR_COMPANY": "Nenhum contato ou empresa vinculada"
+    },
+    "KANBAN": {
+      "TITLE": "Quadro de Oportunidades",
+      "DROP_HERE": "Solte aqui",
+      "EMPTY_STAGE": "Nenhuma oportunidade nesta etapa",
+      "TOTAL": "Total",
+      "COUNT": "{count} oportunidade | {count} oportunidades"
+    },
+    "LIST": {
+      "TITLE": "Lista de Oportunidades",
+      "COLUMNS": {
+        "NAME": "Nome",
+        "CONTACT": "Contato",
+        "COMPANY": "Empresa",
+        "VALUE": "Valor",
+        "STAGE": "Etapa",
+        "EXPECTED_CLOSE": "Fechamento Previsto",
+        "ASSIGNEE": "Responsável",
+        "STATUS": "Status",
+        "ACTIONS": "Ações"
+      }
+    },
+    "ITEMS": {
+      "TITLE": "Itens da Oportunidade",
+      "ADD": "Adicionar Item",
+      "EDIT": "Editar Item",
+      "DELETE": "Excluir Item",
+      "EMPTY": "Nenhum item adicionado a esta oportunidade",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Nome do Item",
+          "PLACEHOLDER": "Descreva o produto ou serviço",
+          "REQUIRED": "O nome é obrigatório"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Descrição",
+          "PLACEHOLDER": "Detalhes adicionais..."
+        },
+        "QUANTITY": {
+          "LABEL": "Quantidade",
+          "PLACEHOLDER": "1"
+        },
+        "UNIT_PRICE": {
+          "LABEL": "Preço Unitário",
+          "PLACEHOLDER": "0,00"
+        },
+        "DISCOUNT_PERCENT": {
+          "LABEL": "Desconto (%)",
+          "PLACEHOLDER": "0"
+        },
+        "TOTAL": {
+          "LABEL": "Total"
+        }
+      },
+      "SUMMARY": {
+        "SUBTOTAL": "Subtotal",
+        "DISCOUNT": "Desconto",
+        "TOTAL": "Total"
+      },
+      "SUCCESS": {
+        "CREATE": "Item adicionado com sucesso",
+        "UPDATE": "Item atualizado com sucesso",
+        "DELETE": "Item removido com sucesso",
+        "REORDER": "Itens reordenados com sucesso"
+      },
+      "ERROR": {
+        "CREATE": "Não foi possível adicionar o item",
+        "UPDATE": "Não foi possível atualizar o item",
+        "DELETE": "Não foi possível remover o item",
+        "REORDER": "Não foi possível reordenar os itens"
+      }
+    },
+    "ACTIVITIES": {
+      "TITLE": "Atividades",
+      "ADD": "Adicionar Atividade",
+      "EDIT": "Editar Atividade",
+      "DELETE": "Excluir Atividade",
+      "COMPLETE": "Marcar como Concluída",
+      "EMPTY": "Nenhuma atividade agendada",
+      "OVERDUE": "Atrasada",
+      "TODAY": "Hoje",
+      "UPCOMING": "Próximas",
+      "COMPLETED": "Concluídas",
+      "TYPES": {
+        "TASK": "Tarefa",
+        "CALL": "Ligação",
+        "MEETING": "Reunião",
+        "EMAIL": "E-mail",
+        "NOTE": "Nota",
+        "FOLLOW_UP": "Acompanhamento"
+      },
+      "FORM": {
+        "TYPE": {
+          "LABEL": "Tipo de Atividade",
+          "PLACEHOLDER": "Selecione o tipo",
+          "REQUIRED": "O tipo é obrigatório"
+        },
+        "TITLE": {
+          "LABEL": "Título",
+          "PLACEHOLDER": "Descreva a atividade",
+          "REQUIRED": "O título é obrigatório"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Descrição",
+          "PLACEHOLDER": "Adicione detalhes..."
+        },
+        "SCHEDULED_AT": {
+          "LABEL": "Data/Hora Agendada",
+          "PLACEHOLDER": "Selecione data e hora"
+        },
+        "REMINDER_AT": {
+          "LABEL": "Lembrete",
+          "PLACEHOLDER": "Adicionar lembrete"
+        },
+        "ASSIGNEE": {
+          "LABEL": "Responsável",
+          "PLACEHOLDER": "Atribuir a..."
+        }
+      },
+      "SUCCESS": {
+        "CREATE": "Atividade criada com sucesso",
+        "UPDATE": "Atividade atualizada com sucesso",
+        "DELETE": "Atividade excluída com sucesso",
+        "COMPLETE": "Atividade concluída"
+      },
+      "ERROR": {
+        "CREATE": "Não foi possível criar a atividade",
+        "UPDATE": "Não foi possível atualizar a atividade",
+        "DELETE": "Não foi possível excluir a atividade",
+        "COMPLETE": "Não foi possível completar a atividade"
+      }
+    },
+    "CONVERSATIONS": {
+      "TITLE": "Conversas Vinculadas",
+      "LINK": "Vincular Conversa",
+      "UNLINK": "Desvincular",
+      "EMPTY": "Nenhuma conversa vinculada",
+      "SEARCH_PLACEHOLDER": "Buscar conversas...",
+      "SUCCESS": {
+        "LINK": "Conversa vinculada com sucesso",
+        "UNLINK": "Conversa desvinculada com sucesso"
+      },
+      "ERROR": {
+        "LINK": "Não foi possível vincular a conversa",
+        "UNLINK": "Não foi possível desvincular a conversa"
+      }
+    },
+    "STATS": {
+      "TITLE": "Estatísticas de Vendas",
+      "TOTAL_VALUE": "Valor Total",
+      "WEIGHTED_VALUE": "Valor Ponderado",
+      "AVERAGE_VALUE": "Valor Médio",
+      "TOTAL_COUNT": "Total de Oportunidades",
+      "OPEN_COUNT": "Em Aberto",
+      "WON_COUNT": "Ganhas",
+      "LOST_COUNT": "Perdidas",
+      "WIN_RATE": "Taxa de Conversão",
+      "BY_STAGE": "Por Etapa",
+      "BY_ASSIGNEE": "Por Responsável",
+      "BY_MONTH": "Por Mês"
+    },
+    "SIDEBAR": {
+      "TITLE": "Oportunidades",
+      "VIEW_ALL": "Ver Todas",
+      "CREATE_NEW": "Criar Oportunidade",
+      "EMPTY": "Sem oportunidades vinculadas",
+      "LINKED_OPPORTUNITY": "Oportunidade vinculada | Oportunidades vinculadas"
+    }
+  },
+  "PIPELINES": {
+    "HEADER": "Funis de Vendas",
+    "HEADER_BTN_TXT": "Novo Funil",
+    "LOADING": "Carregando funis...",
+    "EMPTY_STATE": {
+      "TITLE": "Nenhum funil encontrado",
+      "DESCRIPTION": "Configure seu primeiro funil de vendas para começar a gerenciar oportunidades.",
+      "BTN_TXT": "Criar Funil"
+    },
+    "DEFAULT_BADGE": "Padrão",
+    "SET_DEFAULT": "Definir como Padrão",
+    "FORM": {
+      "NAME": {
+        "LABEL": "Nome do Funil",
+        "PLACEHOLDER": "Ex: Funil de Vendas Principal",
+        "REQUIRED": "O nome é obrigatório"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Descrição",
+        "PLACEHOLDER": "Descreva o propósito deste funil..."
+      }
+    },
+    "CREATE": {
+      "TITLE": "Novo Funil",
+      "DESC": "Crie um novo funil para organizar suas oportunidades.",
+      "SUCCESS_MESSAGE": "Funil criado com sucesso",
+      "ERROR_MESSAGE": "Não foi possível criar o funil. Por favor, tente novamente."
+    },
+    "EDIT": {
+      "TITLE": "Editar Funil",
+      "SUCCESS_MESSAGE": "Funil atualizado com sucesso",
+      "ERROR_MESSAGE": "Não foi possível atualizar o funil. Por favor, tente novamente."
+    },
+    "DELETE": {
+      "TITLE": "Excluir Funil",
+      "DESC": "Tem certeza que deseja excluir este funil? Todas as oportunidades serão movidas para o funil padrão.",
+      "CONFIRM": "Sim, excluir",
+      "CANCEL": "Cancelar",
+      "SUCCESS_MESSAGE": "Funil excluído com sucesso",
+      "ERROR_MESSAGE": "Não foi possível excluir o funil. Por favor, tente novamente."
+    },
+    "STAGES": {
+      "TITLE": "Etapas do Funil",
+      "ADD": "Adicionar Etapa",
+      "EDIT": "Editar Etapa",
+      "DELETE": "Excluir Etapa",
+      "REORDER": "Reordenar Etapas",
+      "EMPTY": "Nenhuma etapa configurada",
+      "TYPES": {
+        "ACTIVE": "Ativa",
+        "WON": "Ganha",
+        "LOST": "Perdida"
+      },
+      "FORM": {
+        "NAME": {
+          "LABEL": "Nome da Etapa",
+          "PLACEHOLDER": "Ex: Proposta Enviada",
+          "REQUIRED": "O nome é obrigatório"
+        },
+        "TYPE": {
+          "LABEL": "Tipo de Etapa",
+          "PLACEHOLDER": "Selecione o tipo"
+        },
+        "PROBABILITY": {
+          "LABEL": "Probabilidade (%)",
+          "PLACEHOLDER": "0-100"
+        },
+        "ROTTING_DAYS": {
+          "LABEL": "Dias para Alerta de Inatividade",
+          "PLACEHOLDER": "Ex: 7"
+        }
+      },
+      "DEFAULT_STAGES": {
+        "LEAD": "Lead",
+        "QUALIFIED": "Qualificado",
+        "PROPOSAL": "Proposta",
+        "NEGOTIATION": "Negociação",
+        "WON": "Ganha",
+        "LOST": "Perdida"
+      },
+      "SUCCESS": {
+        "CREATE": "Etapa criada com sucesso",
+        "UPDATE": "Etapa atualizada com sucesso",
+        "DELETE": "Etapa excluída com sucesso",
+        "REORDER": "Etapas reordenadas com sucesso"
+      },
+      "ERROR": {
+        "CREATE": "Não foi possível criar a etapa",
+        "UPDATE": "Não foi possível atualizar a etapa",
+        "DELETE": "Não foi possível excluir a etapa",
+        "REORDER": "Não foi possível reordenar as etapas"
+      }
+    }
+  }
+}

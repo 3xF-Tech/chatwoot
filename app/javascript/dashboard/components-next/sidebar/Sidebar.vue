@@ -369,6 +369,23 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'Opportunities',
+      label: t('SIDEBAR.OPPORTUNITIES'),
+      icon: 'i-lucide-briefcase',
+      children: [
+        {
+          name: 'All Opportunities',
+          label: t('SIDEBAR.ALL_OPPORTUNITIES'),
+          to: accountScopedRoute(
+            'opportunities_index',
+            {},
+            { view: 'kanban' }
+          ),
+          activeOn: ['opportunities_index', 'opportunity_details'],
+        },
+      ],
+    },
+    {
       name: 'Reports',
       label: t('SIDEBAR.REPORTS'),
       icon: 'i-lucide-chart-spline',

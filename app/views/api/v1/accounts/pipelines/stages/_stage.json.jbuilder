@@ -1,0 +1,10 @@
+json.id stage.id
+json.pipeline_id stage.pipeline_id
+json.name stage.name
+json.position stage.position
+json.probability stage.probability
+json.stage_type stage.stage_type
+json.rotting_days stage.rotting_days
+json.color stage.color
+json.created_at stage.created_at
+json.updated_at stage.updated_at

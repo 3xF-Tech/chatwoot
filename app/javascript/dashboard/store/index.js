@@ -40,6 +40,8 @@ import integrations from './modules/integrations';
 import labels from './modules/labels';
 import macros from './modules/macros';
 import notifications from './modules/notifications';
+import opportunities from './modules/opportunities';
+import pipelines from './modules/pipelines';
 import portals from './modules/helpCenterPortals';
 import reports from './modules/reports';
 import sla from './modules/sla';
@@ -104,6 +106,8 @@ export default createStore({
     labels,
     macros,
     notifications,
+    opportunities,
+    pipelines,
     portals,
     reports,
     sla,

@@ -70,6 +70,12 @@ class Account < ApplicationRecord
   has_many :companies, dependent: :destroy_async
   has_many :contacts, dependent: :destroy_async
   has_many :conversations, dependent: :destroy_async
+  has_many :opportunities, dependent: :destroy_async
+  has_many :opportunity_activities, dependent: :destroy_async
+  has_many :opportunity_items, dependent: :destroy_async
+  has_many :opportunity_stage_changes, dependent: :destroy_async
+  has_many :pipelines, dependent: :destroy_async
+  has_many :pipeline_stages, through: :pipelines, source: :stages
   has_many :csat_survey_responses, dependent: :destroy_async
   has_many :custom_attribute_definitions, dependent: :destroy_async
   has_many :custom_filters, dependent: :destroy_async

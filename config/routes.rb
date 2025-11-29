@@ -159,6 +159,47 @@ Rails.application.routes.draw do
               get :search
             end
           end
+
+          # Pipelines and Opportunities (CRM)
+          resources :pipelines, only: [:index, :show, :create, :update, :destroy] do
+            member do
+              post :set_default
+            end
+            scope module: :pipelines do
+              resources :stages, only: [:index, :show, :create, :update, :destroy] do
+                collection do
+                  post :reorder
+                end
+              end
+            end
+          end
+
+          resources :opportunities, only: [:index, :show, :create, :update, :destroy] do
+            collection do
+              get :search
+              get :stats
+            end
+            member do
+              post :move_stage
+              post :mark_won
+              post :mark_lost
+            end
+            scope module: :opportunities do
+              resources :items, only: [:index, :show, :create, :update, :destroy] do
+                collection do
+                  post :reorder
+                end
+              end
+              resources :activities, only: [:index, :show, :create, :update, :destroy] do
+                member do
+                  post :complete
+                end
+              end
+              resources :conversations, only: [:index, :create, :destroy]
+              resources :stage_changes, only: [:index]
+            end
+          end
+
           resources :contacts, only: [:index, :show, :update, :create, :destroy] do
             collection do
               get :active

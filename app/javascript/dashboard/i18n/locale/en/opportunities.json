@@ -1,0 +1,396 @@
+{
+  "OPPORTUNITIES": {
+    "HEADER": {
+      "TITLE": "Opportunities",
+      "SEARCH_PLACEHOLDER": "Search opportunities...",
+      "NEW_BUTTON": "New Opportunity",
+      "VIEW_KANBAN": "Kanban",
+      "VIEW_LIST": "List"
+    },
+    "FILTERS": {
+      "PIPELINE": "Pipeline",
+      "STAGE": "Stage",
+      "OWNER": "Owner",
+      "STATUS": "Status",
+      "ALL_PIPELINES": "All Pipelines",
+      "ALL_STAGES": "All Stages",
+      "ALL_OWNERS": "All Owners",
+      "ALL_STATUSES": "All Statuses"
+    },
+    "STATUS": {
+      "OPEN": "Open",
+      "WON": "Won",
+      "LOST": "Lost",
+      "CANCELLED": "Cancelled"
+    },
+    "KANBAN": {
+      "TOTAL_VALUE": "Total Value",
+      "DEALS": "deals",
+      "EMPTY_STAGE": "No opportunities in this stage"
+    },
+    "CARD": {
+      "EXPECTED_CLOSE": "Expected close",
+      "OWNER": "Owner",
+      "NO_OWNER": "No owner assigned"
+    },
+    "FORM": {
+      "TITLE": {
+        "CREATE": "Create Opportunity",
+        "EDIT": "Edit Opportunity"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Enter opportunity name"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Enter opportunity description"
+        },
+        "VALUE": {
+          "LABEL": "Value",
+          "PLACEHOLDER": "Enter value"
+        },
+        "CURRENCY": {
+          "LABEL": "Currency"
+        },
+        "PIPELINE": {
+          "LABEL": "Pipeline",
+          "PLACEHOLDER": "Select pipeline"
+        },
+        "STAGE": {
+          "LABEL": "Stage",
+          "PLACEHOLDER": "Select stage"
+        },
+        "EXPECTED_CLOSE_DATE": {
+          "LABEL": "Expected Close Date",
+          "PLACEHOLDER": "Select date"
+        },
+        "CONTACT": {
+          "LABEL": "Contact",
+          "PLACEHOLDER": "Select contact"
+        },
+        "COMPANY": {
+          "LABEL": "Company",
+          "PLACEHOLDER": "Select company"
+        },
+        "OWNER": {
+          "LABEL": "Owner",
+          "PLACEHOLDER": "Select owner"
+        },
+        "SOURCE": {
+          "LABEL": "Source",
+          "PLACEHOLDER": "Enter source"
+        }
+      },
+      "BUTTONS": {
+        "CREATE": "Create Opportunity",
+        "UPDATE": "Update Opportunity",
+        "CANCEL": "Cancel"
+      },
+      "ERRORS": {
+        "NAME_REQUIRED": "Name is required",
+        "CONTACT_OR_COMPANY_REQUIRED": "At least one contact or company is required"
+      }
+    },
+    "CREATE": {
+      "SUCCESS": "Opportunity created successfully",
+      "ERROR": "Error creating opportunity"
+    },
+    "EDIT": {
+      "SUCCESS": "Opportunity updated successfully",
+      "ERROR": "Error updating opportunity"
+    },
+    "DELETE": {
+      "TITLE": "Delete Opportunity",
+      "CONFIRM": "Are you sure you want to delete this opportunity?",
+      "SUCCESS": "Opportunity deleted successfully",
+      "ERROR": "Error deleting opportunity"
+    },
+    "DETAILS": {
+      "BACK": "Back to Opportunities",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "OVERVIEW": {
+        "TITLE": "Overview",
+        "VALUE": "Value",
+        "WEIGHTED_VALUE": "Weighted Value",
+        "PROBABILITY": "Probability",
+        "EXPECTED_CLOSE": "Expected Close",
+        "CREATED_AT": "Created At",
+        "SOURCE": "Source",
+        "NOT_AVAILABLE": "N/A"
+      },
+      "STAGE": {
+        "TITLE": "Stage",
+        "MOVE_STAGE": "Move Stage",
+        "MARK_WON": "Mark as Won",
+        "MARK_LOST": "Mark as Lost",
+        "CURRENT_STAGE": "Current Stage"
+      },
+      "CONTACT": {
+        "TITLE": "Contact",
+        "NO_CONTACT": "No contact associated"
+      },
+      "COMPANY": {
+        "TITLE": "Company",
+        "NO_COMPANY": "No company associated"
+      },
+      "OWNER": {
+        "TITLE": "Owner",
+        "NO_OWNER": "No owner assigned"
+      },
+      "ITEMS": {
+        "TITLE": "Products/Services",
+        "ADD": "Add Item",
+        "EMPTY": "No items added yet",
+        "SUBTOTAL": "Subtotal",
+        "QUANTITY": "Qty",
+        "UNIT_PRICE": "Unit Price",
+        "DISCOUNT": "Discount",
+        "TOTAL": "Total"
+      },
+      "ACTIVITIES": {
+        "TITLE": "Activities",
+        "ADD": "Add Activity",
+        "EMPTY": "No activities yet",
+        "PENDING": "Pending",
+        "COMPLETED": "Completed",
+        "OVERDUE": "Overdue",
+        "MARK_DONE": "Mark as Done",
+        "TYPES": {
+          "TASK": "Task",
+          "CALL": "Call",
+          "MEETING": "Meeting",
+          "EMAIL": "Email",
+          "NOTE": "Note",
+          "FOLLOW_UP": "Follow-up"
+        }
+      },
+      "CONVERSATIONS": {
+        "TITLE": "Related Conversations",
+        "LINK": "Link Conversation",
+        "EMPTY": "No conversations linked",
+        "UNLINK": "Unlink"
+      },
+      "HISTORY": {
+        "TITLE": "Stage History",
+        "EMPTY": "No stage changes recorded",
+        "MOVED_TO": "moved to",
+        "VALUE_CHANGED": "Value changed from {from} to {to}"
+      }
+    },
+    "MOVE_STAGE": {
+      "SUCCESS": "Opportunity moved to new stage",
+      "ERROR": "Error moving opportunity"
+    },
+    "MARK_WON": {
+      "TITLE": "Mark as Won",
+      "CONFIRM": "Are you sure you want to mark this opportunity as won?",
+      "SUCCESS": "Opportunity marked as won!",
+      "ERROR": "Error marking opportunity as won"
+    },
+    "MARK_LOST": {
+      "TITLE": "Mark as Lost",
+      "REASON_LABEL": "Lost Reason",
+      "REASON_PLACEHOLDER": "Enter reason for losing this opportunity",
+      "SUCCESS": "Opportunity marked as lost",
+      "ERROR": "Error marking opportunity as lost"
+    },
+    "STATS": {
+      "TOTAL_VALUE": "Total Pipeline Value",
+      "WEIGHTED_VALUE": "Weighted Value",
+      "OPEN_DEALS": "Open Deals",
+      "WON_VALUE": "Won Value"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "No opportunities yet",
+      "DESCRIPTION": "Create your first opportunity to start tracking your sales pipeline",
+      "MESSAGE": "Create your first opportunity to start tracking your sales pipeline",
+      "BUTTON": "Create Opportunity",
+      "BTN_TXT": "Create Opportunity"
+    },
+    "EMPTY_PIPELINE": {
+      "TITLE": "No pipelines configured",
+      "DESCRIPTION": "Create a pipeline with stages to start managing your opportunities. Pipelines help you organize and track deals through your sales process.",
+      "BTN_TXT": "Create Pipeline"
+    },
+    "PIPELINE": {
+      "CREATE_TITLE": "Create Pipeline",
+      "CREATE_DESC": "Define a name and the stages for your sales pipeline. You can customize stages and their probabilities.",
+      "NAME_LABEL": "Pipeline Name",
+      "NAME_PLACEHOLDER": "e.g. Sales Pipeline, Enterprise Sales",
+      "NAME_REQUIRED": "Pipeline name is required",
+      "DESCRIPTION_LABEL": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Describe your pipeline...",
+      "STAGES_LABEL": "Pipeline Stages",
+      "ADD_STAGE": "Add Stage",
+      "STAGE_NAME_PLACEHOLDER": "Stage name",
+      "ACTIVE": "Active",
+      "CREATE_SUBMIT": "Create Pipeline",
+      "CREATE_SUCCESS": "Pipeline created successfully!",
+      "CREATE_ERROR": "Error creating pipeline"
+    }
+  },
+  "PIPELINES": {
+    "HEADER": {
+      "TITLE": "Pipelines",
+      "NEW_BUTTON": "New Pipeline"
+    },
+    "FORM": {
+      "TITLE": {
+        "CREATE": "Create Pipeline",
+        "EDIT": "Edit Pipeline"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Enter pipeline name"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Enter pipeline description"
+        },
+        "IS_DEFAULT": {
+          "LABEL": "Set as default pipeline"
+        }
+      },
+      "BUTTONS": {
+        "CREATE": "Create Pipeline",
+        "UPDATE": "Update Pipeline",
+        "CANCEL": "Cancel"
+      }
+    },
+    "STAGES": {
+      "TITLE": "Stages",
+      "ADD": "Add Stage",
+      "DRAG_HINT": "Drag to reorder stages",
+      "FORM": {
+        "NAME": "Stage Name",
+        "PROBABILITY": "Probability (%)",
+        "TYPE": "Stage Type",
+        "ROTTING_DAYS": "Rotting Days",
+        "COLOR": "Color"
+      },
+      "TYPES": {
+        "ACTIVE": "Active",
+        "WON": "Won",
+        "LOST": "Lost"
+      }
+    },
+    "CREATE": {
+      "SUCCESS": "Pipeline created successfully",
+      "ERROR": "Error creating pipeline"
+    },
+    "EDIT": {
+      "SUCCESS": "Pipeline updated successfully",
+      "ERROR": "Error updating pipeline"
+    },
+    "DELETE": {
+      "TITLE": "Delete Pipeline",
+      "CONFIRM": "Are you sure you want to delete this pipeline? All stages will be deleted.",
+      "SUCCESS": "Pipeline deleted successfully",
+      "ERROR": "Error deleting pipeline. Make sure there are no opportunities using this pipeline."
+    },
+    "SET_DEFAULT": {
+      "SUCCESS": "Pipeline set as default",
+      "ERROR": "Error setting default pipeline"
+    }
+  },
+  "OPPORTUNITY_ITEMS": {
+    "FORM": {
+      "TITLE": {
+        "CREATE": "Add Product/Service",
+        "EDIT": "Edit Product/Service"
+      },
+      "FIELDS": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Enter product/service name"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Enter description"
+        },
+        "QUANTITY": {
+          "LABEL": "Quantity",
+          "PLACEHOLDER": "Enter quantity"
+        },
+        "UNIT_PRICE": {
+          "LABEL": "Unit Price",
+          "PLACEHOLDER": "Enter unit price"
+        },
+        "DISCOUNT_PERCENT": {
+          "LABEL": "Discount (%)",
+          "PLACEHOLDER": "Enter discount percentage"
+        }
+      }
+    },
+    "CREATE": {
+      "SUCCESS": "Item added successfully",
+      "ERROR": "Error adding item"
+    },
+    "EDIT": {
+      "SUCCESS": "Item updated successfully",
+      "ERROR": "Error updating item"
+    },
+    "DELETE": {
+      "SUCCESS": "Item removed successfully",
+      "ERROR": "Error removing item"
+    }
+  },
+  "OPPORTUNITY_ACTIVITIES": {
+    "FORM": {
+      "TITLE": {
+        "CREATE": "Add Activity",
+        "EDIT": "Edit Activity"
+      },
+      "FIELDS": {
+        "TYPE": {
+          "LABEL": "Type",
+          "PLACEHOLDER": "Select activity type"
+        },
+        "TITLE": {
+          "LABEL": "Title",
+          "PLACEHOLDER": "Enter activity title"
+        },
+        "DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Enter description"
+        },
+        "SCHEDULED_AT": {
+          "LABEL": "Scheduled At",
+          "PLACEHOLDER": "Select date and time"
+        },
+        "REMINDER_AT": {
+          "LABEL": "Reminder",
+          "PLACEHOLDER": "Select reminder time"
+        },
+        "DURATION": {
+          "LABEL": "Duration (minutes)",
+          "PLACEHOLDER": "Enter duration"
+        },
+        "ASSIGNEE": {
+          "LABEL": "Assignee",
+          "PLACEHOLDER": "Select assignee"
+        }
+      }
+    },
+    "CREATE": {
+      "SUCCESS": "Activity created successfully",
+      "ERROR": "Error creating activity"
+    },
+    "EDIT": {
+      "SUCCESS": "Activity updated successfully",
+      "ERROR": "Error updating activity"
+    },
+    "DELETE": {
+      "SUCCESS": "Activity deleted successfully",
+      "ERROR": "Error deleting activity"
+    },
+    "COMPLETE": {
+      "SUCCESS": "Activity marked as completed",
+      "ERROR": "Error completing activity"
+    }
+  }
+}

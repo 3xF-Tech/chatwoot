@@ -82,6 +82,8 @@ en:
         invalid: must be a valid domain name
       search:
         query_missing: Specify search string with parameter q
+    opportunities:
+      contact_or_company_required: At least one contact or company must be associated with the opportunity
     categories:
       locale:
         unique: should be unique in the category and portal
@@ -429,6 +431,14 @@ en:
       %{format_messages}
   agent_capacity_policy:
     inbox_already_assigned: 'Inbox has already been assigned to this policy'
+  pipelines:
+    default_stages:
+      qualification: 'Qualification'
+      proposal: 'Proposal'
+      negotiation: 'Negotiation'
+      closing: 'Closing'
+      won: 'Won'
+      lost: 'Lost'
   portals:
     send_instructions:
       email_required: 'Email is required'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_19_161025) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_28_100000) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -1032,6 +1032,137 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_19_161025) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "opportunities", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "pipeline_id", null: false
+    t.bigint "pipeline_stage_id", null: false
+    t.bigint "contact_id"
+    t.bigint "company_id"
+    t.bigint "owner_id"
+    t.bigint "team_id"
+    t.integer "display_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.decimal "value", precision: 15, scale: 2, default: "0.0"
+    t.string "currency", limit: 3, default: "BRL"
+    t.integer "probability", default: 0
+    t.date "expected_close_date"
+    t.date "actual_close_date"
+    t.integer "status", default: 0
+    t.string "lost_reason"
+    t.string "source"
+    t.jsonb "custom_attributes", default: {}
+    t.datetime "stage_entered_at"
+    t.datetime "last_activity_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "display_id"], name: "index_opportunities_on_account_id_and_display_id", unique: true
+    t.index ["account_id", "status"], name: "index_opportunities_on_account_id_and_status"
+    t.index ["account_id"], name: "index_opportunities_on_account_id"
+    t.index ["company_id"], name: "index_opportunities_on_company_id"
+    t.index ["contact_id"], name: "index_opportunities_on_contact_id"
+    t.index ["expected_close_date"], name: "index_opportunities_on_expected_close_date"
+    t.index ["last_activity_at"], name: "index_opportunities_on_last_activity_at"
+    t.index ["owner_id"], name: "index_opportunities_on_owner_id"
+    t.index ["pipeline_id", "pipeline_stage_id"], name: "index_opportunities_on_pipeline_id_and_pipeline_stage_id"
+    t.index ["pipeline_id"], name: "index_opportunities_on_pipeline_id"
+    t.index ["pipeline_stage_id"], name: "index_opportunities_on_pipeline_stage_id"
+    t.index ["team_id"], name: "index_opportunities_on_team_id"
+  end
+
+  create_table "opportunity_activities", force: :cascade do |t|
+    t.bigint "opportunity_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "user_id"
+    t.integer "activity_type", default: 0
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "scheduled_at"
+    t.datetime "completed_at"
+    t.boolean "is_done", default: false
+    t.datetime "reminder_at"
+    t.integer "duration_minutes"
+    t.jsonb "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_opportunity_activities_on_account_id"
+    t.index ["opportunity_id", "scheduled_at"], name: "idx_on_opportunity_id_scheduled_at_3324f5ef08"
+    t.index ["opportunity_id"], name: "index_opportunity_activities_on_opportunity_id"
+    t.index ["scheduled_at"], name: "index_pending_activities_on_scheduled_at", where: "(is_done = false)"
+    t.index ["user_id", "is_done"], name: "index_opportunity_activities_on_user_id_and_is_done"
+    t.index ["user_id"], name: "index_opportunity_activities_on_user_id"
+  end
+
+  create_table "opportunity_conversations", force: :cascade do |t|
+    t.bigint "opportunity_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["conversation_id"], name: "index_opportunity_conversations_on_conversation_id"
+    t.index ["opportunity_id", "conversation_id"], name: "index_opp_conversations_unique", unique: true
+    t.index ["opportunity_id"], name: "index_opportunity_conversations_on_opportunity_id"
+  end
+
+  create_table "opportunity_items", force: :cascade do |t|
+    t.bigint "opportunity_id", null: false
+    t.bigint "account_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.decimal "quantity", precision: 10, scale: 2, default: "1.0"
+    t.decimal "unit_price", precision: 15, scale: 2, default: "0.0"
+    t.decimal "discount_percent", precision: 5, scale: 2, default: "0.0"
+    t.decimal "total", precision: 15, scale: 2, default: "0.0"
+    t.integer "position", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_opportunity_items_on_account_id"
+    t.index ["opportunity_id", "position"], name: "index_opportunity_items_on_opportunity_id_and_position"
+    t.index ["opportunity_id"], name: "index_opportunity_items_on_opportunity_id"
+  end
+
+  create_table "opportunity_stage_changes", force: :cascade do |t|
+    t.bigint "opportunity_id", null: false
+    t.bigint "account_id", null: false
+    t.bigint "user_id"
+    t.bigint "from_stage_id"
+    t.bigint "to_stage_id"
+    t.decimal "from_value", precision: 15, scale: 2
+    t.decimal "to_value", precision: 15, scale: 2
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.index ["account_id"], name: "index_opportunity_stage_changes_on_account_id"
+    t.index ["from_stage_id"], name: "index_opportunity_stage_changes_on_from_stage_id"
+    t.index ["opportunity_id", "created_at"], name: "index_opp_stage_changes_on_opp_and_created"
+    t.index ["opportunity_id"], name: "index_opportunity_stage_changes_on_opportunity_id"
+    t.index ["to_stage_id"], name: "index_opportunity_stage_changes_on_to_stage_id"
+    t.index ["user_id"], name: "index_opportunity_stage_changes_on_user_id"
+  end
+
+  create_table "pipeline_stages", force: :cascade do |t|
+    t.bigint "pipeline_id", null: false
+    t.string "name", null: false
+    t.integer "position", default: 0
+    t.integer "probability", default: 0
+    t.integer "stage_type", default: 0
+    t.integer "rotting_days"
+    t.string "color", limit: 7
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pipeline_id", "position"], name: "index_pipeline_stages_on_pipeline_id_and_position"
+    t.index ["pipeline_id"], name: "index_pipeline_stages_on_pipeline_id"
+  end
+
+  create_table "pipelines", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "name", limit: 100, null: false
+    t.text "description"
+    t.boolean "is_default", default: false
+    t.jsonb "settings", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "is_default"], name: "index_pipelines_on_account_default", unique: true, where: "(is_default = true)"
+    t.index ["account_id"], name: "index_pipelines_on_account_id"
+  end
+
   create_table "platform_app_permissibles", force: :cascade do |t|
     t.bigint "platform_app_id", null: false
     t.string "permissible_type", null: false
@@ -1255,6 +1386,27 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_19_161025) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "inboxes", "portals"
+  add_foreign_key "opportunities", "accounts"
+  add_foreign_key "opportunities", "companies"
+  add_foreign_key "opportunities", "contacts"
+  add_foreign_key "opportunities", "pipeline_stages"
+  add_foreign_key "opportunities", "pipelines"
+  add_foreign_key "opportunities", "teams"
+  add_foreign_key "opportunities", "users", column: "owner_id"
+  add_foreign_key "opportunity_activities", "accounts"
+  add_foreign_key "opportunity_activities", "opportunities"
+  add_foreign_key "opportunity_activities", "users"
+  add_foreign_key "opportunity_conversations", "conversations"
+  add_foreign_key "opportunity_conversations", "opportunities"
+  add_foreign_key "opportunity_items", "accounts"
+  add_foreign_key "opportunity_items", "opportunities"
+  add_foreign_key "opportunity_stage_changes", "accounts"
+  add_foreign_key "opportunity_stage_changes", "opportunities"
+  add_foreign_key "opportunity_stage_changes", "pipeline_stages", column: "from_stage_id"
+  add_foreign_key "opportunity_stage_changes", "pipeline_stages", column: "to_stage_id"
+  add_foreign_key "opportunity_stage_changes", "users"
+  add_foreign_key "pipeline_stages", "pipelines"
+  add_foreign_key "pipelines", "accounts"
   create_trigger("accounts_after_insert_row_tr", :generated => true, :compatibility => 1).
       on("accounts").
       after(:insert).
