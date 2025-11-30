@@ -3,14 +3,16 @@ import { useI18n } from 'vue-i18n';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
-const { t } = useI18n();
-
 const emit = defineEmits(['create-pipeline']);
+
+const { t } = useI18n();
 </script>
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-[60vh] p-8 gap-6">
-    <div class="flex items-center justify-center size-20 rounded-full bg-woot-50 dark:bg-woot-900/20">
+    <div
+      class="flex items-center justify-center size-20 rounded-full bg-woot-50 dark:bg-woot-900/20"
+    >
       <Icon icon="i-lucide-git-branch" class="size-10 text-woot-500" />
     </div>
 

@@ -284,3 +284,12 @@ leadsquared:
       'conversation_activity_score',
       'transcript_activity_score',
     ]
+
+google_calendar:
+  id: google_calendar
+  feature_flag: calendar
+  logo: google-calendar.png
+  i18n_key: google_calendar
+  action: /google_calendar
+  hook_type: account
+  allow_multiple_hooks: false

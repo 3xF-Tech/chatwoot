@@ -376,14 +376,17 @@ const menuItems = computed(() => {
         {
           name: 'All Opportunities',
           label: t('SIDEBAR.ALL_OPPORTUNITIES'),
-          to: accountScopedRoute(
-            'opportunities_index',
-            {},
-            { view: 'kanban' }
-          ),
+          to: accountScopedRoute('opportunities_index', {}, { view: 'kanban' }),
           activeOn: ['opportunities_index', 'opportunity_details'],
         },
       ],
+    },
+    {
+      name: 'Calendar',
+      label: t('SIDEBAR.CALENDAR'),
+      icon: 'i-lucide-calendar',
+      to: accountScopedRoute('calendar_home'),
+      activeOn: ['calendar_home', 'calendar_settings'],
     },
     {
       name: 'Reports',

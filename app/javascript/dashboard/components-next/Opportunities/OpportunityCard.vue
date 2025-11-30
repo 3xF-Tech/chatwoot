@@ -4,8 +4,6 @@ import { useI18n } from 'vue-i18n';
 import Avatar from 'next/avatar/Avatar.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 
-const { t } = useI18n();
-
 const props = defineProps({
   opportunity: {
     type: Object,
@@ -14,6 +12,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['showOpportunity']);
+
+const { t } = useI18n();
 
 const formatCurrency = (value, currency = 'BRL') => {
   if (!value) return '-';
@@ -54,12 +54,15 @@ const handleClick = () => {
         <div class="flex items-center gap-2">
           <span class="text-sm text-n-slate-11">#{{ opportunity.display_id }}</span>
           <span
+            class="px-2 py-0.5 text-xs font-medium rounded-md"
             :class="[
-              'px-2 py-0.5 text-xs font-medium rounded-md',
-              opportunity.status === 'won' ? 'bg-g-50 text-g-800 dark:bg-g-900 dark:text-g-200' :
-              opportunity.status === 'lost' ? 'bg-r-50 text-r-800 dark:bg-r-900 dark:text-r-200' :
-              opportunity.status === 'open' ? 'bg-b-50 text-b-800 dark:bg-b-900 dark:text-b-200' :
-              'bg-n-alpha-2 text-n-slate-11'
+              opportunity.status === 'won'
+                ? 'bg-g-50 text-g-800 dark:bg-g-900 dark:text-g-200'
+                : opportunity.status === 'lost'
+                  ? 'bg-r-50 text-r-800 dark:bg-r-900 dark:text-r-200'
+                  : opportunity.status === 'open'
+                    ? 'bg-b-50 text-b-800 dark:bg-b-900 dark:text-b-200'
+                    : 'bg-n-alpha-2 text-n-slate-11',
             ]"
           >
             {{ t(`OPPORTUNITIES.STATUS.${opportunity.status?.toUpperCase()}`) }}
@@ -88,7 +91,10 @@ const handleClick = () => {
       <span class="text-lg font-semibold text-n-slate-12">
         {{ formatCurrency(opportunity.value, opportunity.currency) }}
       </span>
-      <span v-if="opportunity.pipeline_stage?.probability" class="text-sm text-n-slate-11">
+      <span
+        v-if="opportunity.pipeline_stage?.probability"
+        class="text-sm text-n-slate-11"
+      >
         {{ opportunity.pipeline_stage.probability }}% prob.
       </span>
     </div>

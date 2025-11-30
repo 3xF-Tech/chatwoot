@@ -4,14 +4,14 @@ import { useI18n } from 'vue-i18n';
 import Avatar from 'next/avatar/Avatar.vue';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 
-const { t } = useI18n();
-
 const props = defineProps({
   opportunity: {
     type: Object,
     required: true,
   },
 });
+
+const { t } = useI18n();
 
 const formatCurrency = (value, currency = 'BRL') => {
   if (!value) return '-';

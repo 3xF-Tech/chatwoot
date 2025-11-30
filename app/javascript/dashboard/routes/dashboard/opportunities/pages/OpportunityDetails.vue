@@ -57,15 +57,40 @@ const statusBadgeClass = computed(() => {
     lost: 'bg-n-ruby-3 text-n-ruby-11',
     cancelled: 'bg-n-slate-3 text-n-slate-11',
   };
-  return statusClasses[opportunity.value.status] || 'bg-n-slate-3 text-n-slate-11';
+  return (
+    statusClasses[opportunity.value.status] || 'bg-n-slate-3 text-n-slate-11'
+  );
 });
 
 const tabs = computed(() => [
-  { key: 'overview', label: t('OPPORTUNITIES.DETAILS.OVERVIEW'), icon: 'i-lucide-info' },
-  { key: 'items', label: t('OPPORTUNITIES.DETAILS.ITEMS'), icon: 'i-lucide-list', count: items.value.length },
-  { key: 'activities', label: t('OPPORTUNITIES.DETAILS.ACTIVITIES'), icon: 'i-lucide-calendar', count: activities.value.length },
-  { key: 'conversations', label: t('OPPORTUNITIES.DETAILS.CONVERSATIONS'), icon: 'i-lucide-messages-square', count: conversations.value.length },
-  { key: 'history', label: t('OPPORTUNITIES.DETAILS.HISTORY'), icon: 'i-lucide-history' },
+  {
+    key: 'overview',
+    label: t('OPPORTUNITIES.DETAILS.OVERVIEW'),
+    icon: 'i-lucide-info',
+  },
+  {
+    key: 'items',
+    label: t('OPPORTUNITIES.DETAILS.ITEMS'),
+    icon: 'i-lucide-list',
+    count: items.value.length,
+  },
+  {
+    key: 'activities',
+    label: t('OPPORTUNITIES.DETAILS.ACTIVITIES'),
+    icon: 'i-lucide-calendar',
+    count: activities.value.length,
+  },
+  {
+    key: 'conversations',
+    label: t('OPPORTUNITIES.DETAILS.CONVERSATIONS'),
+    icon: 'i-lucide-messages-square',
+    count: conversations.value.length,
+  },
+  {
+    key: 'history',
+    label: t('OPPORTUNITIES.DETAILS.HISTORY'),
+    icon: 'i-lucide-history',
+  },
 ]);
 
 const formatCurrency = (value, currency = 'BRL') => {
@@ -214,7 +239,11 @@ watch(opportunityId, () => {
                   class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
                   :class="statusBadgeClass"
                 >
-                  {{ t(`OPPORTUNITIES.STATUS.${opportunity.status?.toUpperCase()}`) }}
+                  {{
+                    t(
+                      `OPPORTUNITIES.STATUS.${opportunity.status?.toUpperCase()}`
+                    )
+                  }}
                 </span>
               </div>
               <div class="flex items-center gap-2 text-sm text-n-slate-11">
@@ -277,7 +306,7 @@ watch(opportunityId, () => {
               :class="[
                 activeTab === tab.key
                   ? 'border-n-brand text-n-slate-12'
-                  : 'border-transparent text-n-slate-11 hover:text-n-slate-12 hover:border-n-slate-6'
+                  : 'border-transparent text-n-slate-11 hover:text-n-slate-12 hover:border-n-slate-6',
               ]"
               @click="activeTab = tab.key"
             >
@@ -309,7 +338,9 @@ watch(opportunityId, () => {
                     {{ t('OPPORTUNITIES.FORM.VALUE.LABEL') }}
                   </span>
                   <span class="text-lg font-semibold text-n-slate-12">
-                    {{ formatCurrency(opportunity.value, opportunity.currency) }}
+                    {{
+                      formatCurrency(opportunity.value, opportunity.currency)
+                    }}
                   </span>
                 </div>
                 <div class="flex flex-col gap-1">
@@ -325,10 +356,14 @@ watch(opportunityId, () => {
                     {{ t('OPPORTUNITIES.DETAILS.WEIGHTED_VALUE') }}
                   </span>
                   <span class="text-n-slate-12">
-                    {{ formatCurrency(
-                      (opportunity.value || 0) * ((opportunity.pipeline_stage?.probability || 0) / 100),
-                      opportunity.currency
-                    ) }}
+                    {{
+                      formatCurrency(
+                        (opportunity.value || 0) *
+                          ((opportunity.pipeline_stage?.probability || 0) /
+                            100),
+                        opportunity.currency
+                      )
+                    }}
                   </span>
                 </div>
                 <div class="flex flex-col gap-1">
@@ -352,7 +387,11 @@ watch(opportunityId, () => {
                     {{ t('OPPORTUNITIES.FORM.PRIORITY.LABEL') }}
                   </span>
                   <span class="text-n-slate-12 capitalize">
-                    {{ t(`OPPORTUNITIES.FORM.PRIORITY.${opportunity.priority?.toUpperCase()}`) || '-' }}
+                    {{
+                      t(
+                        `OPPORTUNITIES.FORM.PRIORITY.${opportunity.priority?.toUpperCase()}`
+                      ) || '-'
+                    }}
                   </span>
                 </div>
               </div>
@@ -361,7 +400,8 @@ watch(opportunityId, () => {
             <!-- Contact & Company -->
             <section class="p-6 rounded-xl border border-n-weak bg-n-solid-2">
               <h2 class="text-lg font-medium text-n-slate-12 mb-4">
-                {{ t('OPPORTUNITIES.FORM.CONTACT.LABEL') }} / {{ t('OPPORTUNITIES.FORM.COMPANY.LABEL') }}
+                {{ t('OPPORTUNITIES.FORM.CONTACT.LABEL') }} /
+                {{ t('OPPORTUNITIES.FORM.COMPANY.LABEL') }}
               </h2>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div
@@ -382,7 +422,10 @@ watch(opportunityId, () => {
                       {{ opportunity.contact.email }}
                     </span>
                   </div>
-                  <Icon icon="i-lucide-chevron-right" class="ml-auto text-n-slate-11" />
+                  <Icon
+                    icon="i-lucide-chevron-right"
+                    class="ml-auto text-n-slate-11"
+                  />
                 </div>
                 <div
                   v-if="opportunity.company"
@@ -402,7 +445,10 @@ watch(opportunityId, () => {
                       {{ opportunity.company.domain }}
                     </span>
                   </div>
-                  <Icon icon="i-lucide-chevron-right" class="ml-auto text-n-slate-11" />
+                  <Icon
+                    icon="i-lucide-chevron-right"
+                    class="ml-auto text-n-slate-11"
+                  />
                 </div>
                 <div
                   v-if="!opportunity.contact && !opportunity.company"
@@ -431,15 +477,21 @@ watch(opportunityId, () => {
               <div class="flex items-center gap-6 text-sm text-n-slate-11">
                 <div class="flex items-center gap-2">
                   <Icon icon="i-lucide-calendar-plus" class="size-4" />
-                  <span>{{ t('OPPORTUNITIES.DETAILS.CREATED_AT') }}: {{ formattedDate(opportunity.created_at) }}</span>
+                  <span>{{ t('OPPORTUNITIES.DETAILS.CREATED_AT') }}:
+                    {{ formattedDate(opportunity.created_at) }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <Icon icon="i-lucide-calendar-check" class="size-4" />
-                  <span>{{ t('OPPORTUNITIES.DETAILS.UPDATED_AT') }}: {{ formattedDate(opportunity.updated_at) }}</span>
+                  <span>{{ t('OPPORTUNITIES.DETAILS.UPDATED_AT') }}:
+                    {{ formattedDate(opportunity.updated_at) }}</span>
                 </div>
-                <div v-if="opportunity.closed_at" class="flex items-center gap-2">
+                <div
+                  v-if="opportunity.closed_at"
+                  class="flex items-center gap-2"
+                >
                   <Icon icon="i-lucide-calendar-x" class="size-4" />
-                  <span>{{ t('OPPORTUNITIES.DETAILS.CLOSED_AT') }}: {{ formattedDate(opportunity.closed_at) }}</span>
+                  <span>{{ t('OPPORTUNITIES.DETAILS.CLOSED_AT') }}:
+                    {{ formattedDate(opportunity.closed_at) }}</span>
                 </div>
               </div>
             </section>
@@ -486,10 +538,7 @@ watch(opportunityId, () => {
       @updated="handleOpportunityUpdated"
     />
 
-    <MarkLostDialog
-      ref="markLostDialogRef"
-      @confirm="handleMarkLost"
-    />
+    <MarkLostDialog ref="markLostDialogRef" @confirm="handleMarkLost" />
 
     <DeleteConfirmDialog
       ref="deleteDialogRef"

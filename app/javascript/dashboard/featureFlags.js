@@ -4,6 +4,7 @@ export const FEATURE_FLAGS = {
   ASSIGNMENT_V2: 'assignment_v2',
   AUTO_RESOLVE_CONVERSATIONS: 'auto_resolve_conversations',
   AUTOMATIONS: 'automations',
+  CALENDAR: 'calendar',
   CAMPAIGNS: 'campaigns',
   WHATSAPP_CAMPAIGNS: 'whatsapp_campaign',
   CANNED_RESPONSES: 'canned_responses',

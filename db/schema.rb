@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_28_100000) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_29_120000) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -258,6 +258,87 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_28_100000) do
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "active", default: true, null: false
     t.index ["account_id"], name: "index_automation_rules_on_account_id"
+  end
+
+  create_table "calendar_event_attendees", force: :cascade do |t|
+    t.bigint "calendar_event_id", null: false
+    t.bigint "contact_id"
+    t.bigint "user_id"
+    t.string "email"
+    t.string "name"
+    t.string "response_status", default: "pending"
+    t.boolean "is_organizer", default: false
+    t.boolean "is_optional", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_event_id"], name: "index_calendar_event_attendees_on_calendar_event_id"
+    t.index ["contact_id"], name: "index_calendar_event_attendees_on_contact_id"
+    t.index ["user_id"], name: "index_calendar_event_attendees_on_user_id"
+  end
+
+  create_table "calendar_event_links", force: :cascade do |t|
+    t.bigint "calendar_event_id", null: false
+    t.string "linkable_type", null: false
+    t.bigint "linkable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["calendar_event_id", "linkable_type", "linkable_id"], name: "idx_event_links_unique", unique: true
+    t.index ["calendar_event_id"], name: "index_calendar_event_links_on_calendar_event_id"
+    t.index ["linkable_type", "linkable_id"], name: "index_calendar_event_links_on_linkable"
+  end
+
+  create_table "calendar_events", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "calendar_integration_id"
+    t.string "external_id"
+    t.string "title", null: false
+    t.text "description"
+    t.datetime "starts_at", null: false
+    t.datetime "ends_at", null: false
+    t.boolean "all_day", default: false
+    t.string "location"
+    t.string "meeting_url"
+    t.string "event_type", default: "meeting"
+    t.string "status", default: "confirmed"
+    t.string "visibility", default: "default"
+    t.jsonb "recurrence_rule"
+    t.string "recurrence_id"
+    t.jsonb "reminders", default: []
+    t.jsonb "metadata", default: {}
+    t.datetime "synced_at"
+    t.string "sync_status", default: "local"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "starts_at"], name: "index_calendar_events_on_account_id_and_starts_at"
+    t.index ["account_id"], name: "index_calendar_events_on_account_id"
+    t.index ["calendar_integration_id"], name: "index_calendar_events_on_calendar_integration_id"
+    t.index ["external_id", "calendar_integration_id"], name: "idx_events_external_unique", unique: true
+    t.index ["user_id", "starts_at"], name: "index_calendar_events_on_user_id_and_starts_at"
+    t.index ["user_id"], name: "index_calendar_events_on_user_id"
+  end
+
+  create_table "calendar_integrations", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "user_id", null: false
+    t.string "provider", null: false
+    t.string "provider_user_id"
+    t.string "provider_email"
+    t.text "access_token"
+    t.text "refresh_token"
+    t.datetime "token_expires_at"
+    t.string "calendar_id"
+    t.string "webhook_channel_id"
+    t.string "webhook_resource_id"
+    t.datetime "webhook_expires_at"
+    t.jsonb "sync_settings", default: {}
+    t.datetime "last_synced_at"
+    t.string "sync_status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "user_id", "provider"], name: "idx_calendar_integrations_unique", unique: true
+    t.index ["account_id"], name: "index_calendar_integrations_on_account_id"
+    t.index ["user_id"], name: "index_calendar_integrations_on_user_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -1385,6 +1466,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_28_100000) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "calendar_event_attendees", "calendar_events"
+  add_foreign_key "calendar_event_attendees", "contacts"
+  add_foreign_key "calendar_event_attendees", "users"
+  add_foreign_key "calendar_event_links", "calendar_events"
+  add_foreign_key "calendar_events", "accounts"
+  add_foreign_key "calendar_events", "calendar_integrations"
+  add_foreign_key "calendar_events", "users"
+  add_foreign_key "calendar_integrations", "accounts"
+  add_foreign_key "calendar_integrations", "users"
   add_foreign_key "inboxes", "portals"
   add_foreign_key "opportunities", "accounts"
   add_foreign_key "opportunities", "companies"

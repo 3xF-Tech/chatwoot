@@ -343,6 +343,31 @@
         "CONFIRM": "Sim, excluir",
         "CANCEL": "Cancelar"
       }
+    },
+    "GOOGLE_CALENDAR": {
+      "TITLE": "Google Calendar",
+      "DESCRIPTION": "Conecte seu Google Calendar para sincronizar eventos e agendar reuniões diretamente das conversas.",
+      "CARD_DESCRIPTION": "Sincronize seu Google Calendar para criar e gerenciar eventos vinculados a contatos, oportunidades e conversas.",
+      "CONNECT": "Conectar",
+      "DISCONNECT": "Desconectar",
+      "SYNC": "Sincronizar Agora",
+      "CONNECT_SUCCESS": "Google Calendar conectado com sucesso",
+      "CONNECT_ERROR": "Falha ao conectar Google Calendar. Por favor, tente novamente.",
+      "DISCONNECT_CONFIRM": "Tem certeza que deseja desconectar o Google Calendar?",
+      "DISCONNECT_SUCCESS": "Google Calendar desconectado com sucesso",
+      "DISCONNECT_ERROR": "Falha ao desconectar Google Calendar. Por favor, tente novamente.",
+      "SYNC_SUCCESS": "Calendário sincronizado com sucesso",
+      "SYNC_ERROR": "Falha ao sincronizar calendário. Por favor, tente novamente.",
+      "CONNECTED_ACCOUNT": "Conta Conectada",
+      "EMAIL": "E-mail",
+      "STATUS": "Status da Sincronização",
+      "LAST_SYNC": "Última Sincronização",
+      "CONNECTED_AT": "Conectado em",
+      "FEATURES_TITLE": "Funcionalidades",
+      "FEATURE_SYNC": "Sincronização bidirecional com Google Calendar",
+      "FEATURE_CREATE": "Criar eventos a partir de conversas e oportunidades",
+      "FEATURE_LINK": "Vincular eventos a contatos, empresas e negócios",
+      "FEATURE_REALTIME": "Atualizações em tempo real via webhooks"
     }
   },
   "CAPTAIN": {

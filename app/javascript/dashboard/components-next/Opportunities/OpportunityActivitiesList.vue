@@ -203,7 +203,9 @@ const handleDeleteActivity = async activityId => {
           </label>
           <textarea
             v-model="newActivity.description"
-            :placeholder="t('OPPORTUNITIES.ACTIVITIES.FORM.DESCRIPTION.PLACEHOLDER')"
+            :placeholder="
+              t('OPPORTUNITIES.ACTIVITIES.FORM.DESCRIPTION.PLACEHOLDER')
+            "
             rows="2"
             class="w-full px-3 py-2 rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 resize-none focus:outline-none focus:ring-2 focus:ring-n-brand"
           />
@@ -238,17 +240,19 @@ const handleDeleteActivity = async activityId => {
       <div
         v-for="activity in activities"
         :key="activity.id"
+        class="p-4 rounded-xl border bg-n-solid-2 transition-colors"
         :class="[
-          'p-4 rounded-xl border bg-n-solid-2 transition-colors',
           activity.is_done ? 'border-n-weak opacity-60' : 'border-n-weak',
-          isOverdue(activity) ? 'border-ruby-200 bg-ruby-50 dark:bg-ruby-900/10' : '',
+          isOverdue(activity)
+            ? 'border-ruby-200 bg-ruby-50 dark:bg-ruby-900/10'
+            : '',
         ]"
       >
         <div class="flex items-start gap-4">
           <!-- Complete Checkbox -->
           <button
+            class="flex-shrink-0 size-5 rounded-full border-2 transition-colors mt-0.5"
             :class="[
-              'flex-shrink-0 size-5 rounded-full border-2 transition-colors mt-0.5',
               activity.is_done
                 ? 'border-green-500 bg-green-500'
                 : 'border-n-strong hover:border-green-500',
@@ -266,11 +270,19 @@ const handleDeleteActivity = async activityId => {
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-1">
               <Icon
-                :icon="activityTypeIcons[activity.activity_type] || 'i-lucide-circle'"
+                :icon="
+                  activityTypeIcons[activity.activity_type] || 'i-lucide-circle'
+                "
                 class="size-4 text-n-slate-11"
               />
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-n-slate-3 text-n-slate-11">
-                {{ t(`OPPORTUNITIES.ACTIVITIES.TYPES.${activity.activity_type?.toUpperCase()}`) }}
+              <span
+                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-n-slate-3 text-n-slate-11"
+              >
+                {{
+                  t(
+                    `OPPORTUNITIES.ACTIVITIES.TYPES.${activity.activity_type?.toUpperCase()}`
+                  )
+                }}
               </span>
               <span
                 v-if="isOverdue(activity)"
@@ -280,21 +292,23 @@ const handleDeleteActivity = async activityId => {
               </span>
             </div>
             <h4
+              class="font-medium"
               :class="[
-                'font-medium',
-                activity.is_done ? 'line-through text-n-slate-11' : 'text-n-slate-12',
+                activity.is_done
+                  ? 'line-through text-n-slate-11'
+                  : 'text-n-slate-12',
               ]"
             >
               {{ activity.title }}
             </h4>
-            <p
-              v-if="activity.description"
-              class="text-sm text-n-slate-11 mt-1"
-            >
+            <p v-if="activity.description" class="text-sm text-n-slate-11 mt-1">
               {{ activity.description }}
             </p>
             <div class="flex items-center gap-4 mt-2 text-sm text-n-slate-11">
-              <span v-if="activity.scheduled_at" class="flex items-center gap-1">
+              <span
+                v-if="activity.scheduled_at"
+                class="flex items-center gap-1"
+              >
                 <Icon icon="i-lucide-calendar" class="size-3" />
                 {{ formattedDate(activity.scheduled_at) }}
               </span>

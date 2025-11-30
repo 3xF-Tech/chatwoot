@@ -10,6 +10,7 @@ import SettingsContent from '../Wrapper.vue';
 import Linear from './Linear.vue';
 import Notion from './Notion.vue';
 import Shopify from './Shopify.vue';
+import GoogleCalendar from './GoogleCalendar.vue';
 
 export default {
   routes: [
@@ -109,6 +110,16 @@ export default {
             permissions: ['administrator'],
           },
           props: route => ({ error: route.query.error }),
+        },
+        {
+          path: 'google_calendar',
+          name: 'settings_integrations_google_calendar',
+          component: GoogleCalendar,
+          meta: {
+            featureFlag: FEATURE_FLAGS.CALENDAR,
+            permissions: ['administrator'],
+          },
+          props: route => ({ code: route.query.code }),
         },
         {
           path: ':integration_id',

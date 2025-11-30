@@ -200,6 +200,26 @@ Rails.application.routes.draw do
             end
           end
 
+          # Calendar Module
+          resources :calendar_integrations, only: [:index, :show, :update, :destroy] do
+            collection do
+              get :auth_url
+              get :oauth_callback
+              post :callback
+            end
+            member do
+              post :sync
+              get :calendars
+            end
+          end
+
+          resources :calendar_events, only: [:index, :show, :create, :update, :destroy] do
+            collection do
+              get :upcoming
+              get :by_link
+            end
+          end
+
           resources :contacts, only: [:index, :show, :update, :create, :destroy] do
             collection do
               get :active
@@ -569,6 +589,10 @@ Rails.application.routes.draw do
   post 'webhooks/whatsapp/:phone_number', to: 'webhooks/whatsapp#process_payload'
   get 'webhooks/instagram', to: 'webhooks/instagram#verify'
   post 'webhooks/instagram', to: 'webhooks/instagram#events'
+
+  # Calendar webhooks
+  post 'webhooks/calendar/google', to: 'webhooks/calendar#google'
+  post 'webhooks/calendar/outlook', to: 'webhooks/calendar#outlook'
 
   namespace :twitter do
     resource :callback, only: [:show]

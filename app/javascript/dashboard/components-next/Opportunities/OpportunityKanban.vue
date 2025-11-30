@@ -5,8 +5,6 @@ import draggable from 'vuedraggable';
 import Icon from 'dashboard/components-next/icon/Icon.vue';
 import OpportunityKanbanCard from './OpportunityKanbanCard.vue';
 
-const { t } = useI18n();
-
 const props = defineProps({
   opportunities: {
     type: Array,
@@ -23,6 +21,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['drop', 'showOpportunity']);
+
+const { t } = useI18n();
 
 // Create reactive lists for each stage to enable drag/drop
 const stageOpportunities = ref({});
@@ -70,7 +70,10 @@ const formatCurrency = (value, currency = 'BRL') => {
 const handleDragEnd = (evt, stageId) => {
   console.log('Drag event:', evt, 'Stage ID:', stageId);
   if (evt.added) {
-    console.log('Emitting drop:', { opportunityId: evt.added.element.id, stageId });
+    console.log('Emitting drop:', {
+      opportunityId: evt.added.element.id,
+      stageId,
+    });
     emit('drop', {
       opportunityId: evt.added.element.id,
       stageId,
@@ -94,11 +97,13 @@ const handleCardClick = opportunityId => {
       <div class="flex items-center justify-between p-4 border-b border-n-weak">
         <div class="flex items-center gap-2">
           <span
+            class="px-2 py-1 text-xs font-medium rounded-md"
             :class="[
-              'px-2 py-1 text-xs font-medium rounded-md',
-              stage.stage_type === 'won' ? 'bg-g-50 text-g-800 dark:bg-g-900 dark:text-g-200' :
-              stage.stage_type === 'lost' ? 'bg-r-50 text-r-800 dark:bg-r-900 dark:text-r-200' :
-              'bg-b-50 text-b-800 dark:bg-b-900 dark:text-b-200'
+              stage.stage_type === 'won'
+                ? 'bg-g-50 text-g-800 dark:bg-g-900 dark:text-g-200'
+                : stage.stage_type === 'lost'
+                  ? 'bg-r-50 text-r-800 dark:bg-r-900 dark:text-r-200'
+                  : 'bg-b-50 text-b-800 dark:bg-b-900 dark:text-b-200',
             ]"
           >
             {{ stage.name }}
@@ -136,7 +141,9 @@ const handleCardClick = opportunityId => {
             class="flex flex-col items-center justify-center py-8 text-n-slate-11"
           >
             <Icon icon="i-lucide-inbox" class="size-8 mb-2 opacity-50" />
-            <span class="text-sm">{{ t('OPPORTUNITIES.KANBAN.EMPTY_STAGE') }}</span>
+            <span class="text-sm">{{
+              t('OPPORTUNITIES.KANBAN.EMPTY_STAGE')
+            }}</span>
           </div>
         </template>
       </draggable>

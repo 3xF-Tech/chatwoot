@@ -21,13 +21,15 @@ class ChatwootHub
   def self.pricing_plan
     return 'community' unless ChatwootApp.enterprise?
 
-    InstallationConfig.find_by(name: 'INSTALLATION_PRICING_PLAN')&.value || 'community'
+    # 3xF.Tech: Force enterprise plan for our fork
+    'enterprise'
   end
 
   def self.pricing_plan_quantity
     return 0 unless ChatwootApp.enterprise?
 
-    InstallationConfig.find_by(name: 'INSTALLATION_PRICING_PLAN_QUANTITY')&.value || 0
+    # 3xF.Tech: Unlimited users for our fork
+    Float::INFINITY
   end
 
   def self.support_config

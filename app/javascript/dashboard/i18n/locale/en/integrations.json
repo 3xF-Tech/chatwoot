@@ -340,6 +340,31 @@
         "CONFIRM": "Yes, delete",
         "CANCEL": "Cancel"
       }
+    },
+    "GOOGLE_CALENDAR": {
+      "TITLE": "Google Calendar",
+      "DESCRIPTION": "Connect your Google Calendar to sync events and schedule meetings directly from conversations.",
+      "CARD_DESCRIPTION": "Sync your Google Calendar to create and manage events linked to contacts, opportunities, and conversations.",
+      "CONNECT": "Connect",
+      "DISCONNECT": "Disconnect",
+      "SYNC": "Sync Now",
+      "CONNECT_SUCCESS": "Google Calendar connected successfully",
+      "CONNECT_ERROR": "Failed to connect Google Calendar. Please try again.",
+      "DISCONNECT_CONFIRM": "Are you sure you want to disconnect Google Calendar?",
+      "DISCONNECT_SUCCESS": "Google Calendar disconnected successfully",
+      "DISCONNECT_ERROR": "Failed to disconnect Google Calendar. Please try again.",
+      "SYNC_SUCCESS": "Calendar synced successfully",
+      "SYNC_ERROR": "Failed to sync calendar. Please try again.",
+      "CONNECTED_ACCOUNT": "Connected Account",
+      "EMAIL": "Email",
+      "STATUS": "Sync Status",
+      "LAST_SYNC": "Last Synced",
+      "CONNECTED_AT": "Connected At",
+      "FEATURES_TITLE": "Features",
+      "FEATURE_SYNC": "Bidirectional sync with Google Calendar",
+      "FEATURE_CREATE": "Create events from conversations and opportunities",
+      "FEATURE_LINK": "Link events to contacts, companies, and deals",
+      "FEATURE_REALTIME": "Real-time updates via webhooks"
     }
   },
   "CAPTAIN": {

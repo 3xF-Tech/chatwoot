@@ -92,7 +92,10 @@ class OpportunitiesAPI extends ApiClient {
   }
 
   updateItem(opportunityId, itemId, itemData) {
-    return axios.patch(`${this.url}/${opportunityId}/items/${itemId}`, itemData);
+    return axios.patch(
+      `${this.url}/${opportunityId}/items/${itemId}`,
+      itemData
+    );
   }
 
   deleteItem(opportunityId, itemId) {

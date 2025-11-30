@@ -255,9 +255,14 @@ onMounted(async () => {
 
 <template>
   <!-- Empty state when no pipelines exist -->
-  <div v-if="!hasPipelines && !isFetchingList" class="flex flex-col h-full bg-n-background">
+  <div
+    v-if="!hasPipelines && !isFetchingList"
+    class="flex flex-col h-full bg-n-background"
+  >
     <header class="sticky top-0 z-10 border-b border-n-weak bg-n-background">
-      <div class="flex items-center justify-between w-full py-4 px-6 mx-auto max-w-[80rem]">
+      <div
+        class="flex items-center justify-between w-full py-4 px-6 mx-auto max-w-[80rem]"
+      >
         <span class="text-xl font-medium text-n-slate-12">
           {{ t('OPPORTUNITIES.HEADER') }}
         </span>

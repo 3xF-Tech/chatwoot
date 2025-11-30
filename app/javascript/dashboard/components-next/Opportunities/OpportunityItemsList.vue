@@ -147,7 +147,9 @@ const handleDeleteItem = async itemId => {
           v-model="newItem.discount_percent"
           type="number"
           :label="t('OPPORTUNITIES.ITEMS.FORM.DISCOUNT_PERCENT.LABEL')"
-          :placeholder="t('OPPORTUNITIES.ITEMS.FORM.DISCOUNT_PERCENT.PLACEHOLDER')"
+          :placeholder="
+            t('OPPORTUNITIES.ITEMS.FORM.DISCOUNT_PERCENT.PLACEHOLDER')
+          "
         />
         <div class="lg:col-span-3">
           <Input
@@ -189,16 +191,24 @@ const handleDeleteItem = async itemId => {
             <th class="text-left py-3 px-4 text-sm font-medium text-n-slate-11">
               {{ t('OPPORTUNITIES.ITEMS.FORM.NAME.LABEL') }}
             </th>
-            <th class="text-right py-3 px-4 text-sm font-medium text-n-slate-11">
+            <th
+              class="text-right py-3 px-4 text-sm font-medium text-n-slate-11"
+            >
               {{ t('OPPORTUNITIES.ITEMS.FORM.QUANTITY.LABEL') }}
             </th>
-            <th class="text-right py-3 px-4 text-sm font-medium text-n-slate-11">
+            <th
+              class="text-right py-3 px-4 text-sm font-medium text-n-slate-11"
+            >
               {{ t('OPPORTUNITIES.ITEMS.FORM.UNIT_PRICE.LABEL') }}
             </th>
-            <th class="text-right py-3 px-4 text-sm font-medium text-n-slate-11">
+            <th
+              class="text-right py-3 px-4 text-sm font-medium text-n-slate-11"
+            >
               {{ t('OPPORTUNITIES.ITEMS.FORM.DISCOUNT_PERCENT.LABEL') }}
             </th>
-            <th class="text-right py-3 px-4 text-sm font-medium text-n-slate-11">
+            <th
+              class="text-right py-3 px-4 text-sm font-medium text-n-slate-11"
+            >
               {{ t('OPPORTUNITIES.ITEMS.FORM.TOTAL.LABEL') }}
             </th>
             <th class="w-12" />
@@ -249,7 +259,9 @@ const handleDeleteItem = async itemId => {
             >
               {{ t('OPPORTUNITIES.ITEMS.SUMMARY.TOTAL') }}
             </td>
-            <td class="py-3 px-4 text-right font-semibold text-lg text-n-slate-12">
+            <td
+              class="py-3 px-4 text-right font-semibold text-lg text-n-slate-12"
+            >
               {{ formatCurrency(grandTotal, currency) }}
             </td>
             <td />

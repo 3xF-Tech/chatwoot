@@ -4,8 +4,6 @@ import { useI18n } from 'vue-i18n';
 import { useMapGetter } from 'dashboard/composables/store';
 import Button from 'dashboard/components-next/button/Button.vue';
 
-const { t } = useI18n();
-
 const props = defineProps({
   filters: {
     type: Object,
@@ -22,6 +20,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:filters']);
+
+const { t } = useI18n();
 
 const agents = useMapGetter('agents/getAgents');
 
@@ -61,9 +61,7 @@ const clearFilters = () => {
 
 const hasActiveFilters = computed(() => {
   return (
-    props.filters.status ||
-    props.filters.stageId ||
-    props.filters.assigneeId
+    props.filters.status || props.filters.stageId || props.filters.assigneeId
   );
 });
 </script>
@@ -85,7 +83,12 @@ const hasActiveFilters = computed(() => {
     <select
       :value="filters.stageId"
       class="px-2 py-1 text-xs bg-n-alpha-1 border border-n-weak rounded-md text-n-slate-12 focus:outline-none focus:ring-1 focus:ring-n-brand"
-      @change="updateFilter('stageId', $event.target.value ? Number($event.target.value) : null)"
+      @change="
+        updateFilter(
+          'stageId',
+          $event.target.value ? Number($event.target.value) : null
+        )
+      "
     >
       <option v-for="opt in stageOptions" :key="opt.value" :value="opt.value">
         {{ opt.label }}
@@ -96,9 +99,18 @@ const hasActiveFilters = computed(() => {
     <select
       :value="filters.assigneeId"
       class="px-2 py-1 text-xs bg-n-alpha-1 border border-n-weak rounded-md text-n-slate-12 focus:outline-none focus:ring-1 focus:ring-n-brand"
-      @change="updateFilter('assigneeId', $event.target.value ? Number($event.target.value) : null)"
+      @change="
+        updateFilter(
+          'assigneeId',
+          $event.target.value ? Number($event.target.value) : null
+        )
+      "
     >
-      <option v-for="opt in assigneeOptions" :key="opt.value" :value="opt.value">
+      <option
+        v-for="opt in assigneeOptions"
+        :key="opt.value"
+        :value="opt.value"
+      >
         {{ opt.label }}
       </option>
     </select>

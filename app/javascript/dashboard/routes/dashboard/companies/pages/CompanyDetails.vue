@@ -28,7 +28,9 @@ const company = computed(() => {
 });
 
 const contacts = computed(() => {
-  return store.getters['contacts/getContactsByCompany']?.(companyId.value) || [];
+  return (
+    store.getters['contacts/getContactsByCompany']?.(companyId.value) || []
+  );
 });
 
 const formattedDate = dateValue => {
@@ -131,10 +133,7 @@ watch(companyId, () => {
                 <h1 class="text-xl font-semibold text-n-slate-12">
                   {{ company.name || t('COMPANIES.UNNAMED') }}
                 </h1>
-                <span
-                  v-if="company.domain"
-                  class="text-sm text-n-slate-11"
-                >
+                <span v-if="company.domain" class="text-sm text-n-slate-11">
                   {{ company.domain }}
                 </span>
               </div>
@@ -165,9 +164,7 @@ watch(companyId, () => {
       <main class="flex-1 py-6 px-6">
         <div class="mx-auto max-w-[60rem] space-y-6">
           <!-- Basic Info Section -->
-          <section
-            class="p-6 rounded-xl border border-n-weak bg-n-solid-2"
-          >
+          <section class="p-6 rounded-xl border border-n-weak bg-n-solid-2">
             <h2 class="text-lg font-medium text-n-slate-12 mb-4">
               {{ t('COMPANY_DETAILS.OVERVIEW.BASIC_INFO') }}
             </h2>
@@ -228,9 +225,7 @@ watch(companyId, () => {
           </section>
 
           <!-- Business Info Section -->
-          <section
-            class="p-6 rounded-xl border border-n-weak bg-n-solid-2"
-          >
+          <section class="p-6 rounded-xl border border-n-weak bg-n-solid-2">
             <h2 class="text-lg font-medium text-n-slate-12 mb-4">
               {{ t('COMPANY_DETAILS.OVERVIEW.BUSINESS_INFO') }}
             </h2>
@@ -306,9 +301,7 @@ watch(companyId, () => {
           </section>
 
           <!-- Address Section -->
-          <section
-            class="p-6 rounded-xl border border-n-weak bg-n-solid-2"
-          >
+          <section class="p-6 rounded-xl border border-n-weak bg-n-solid-2">
             <h2 class="text-lg font-medium text-n-slate-12 mb-4">
               {{ t('COMPANY_DETAILS.OVERVIEW.ADDRESS') }}
             </h2>
@@ -357,9 +350,7 @@ watch(companyId, () => {
           </section>
 
           <!-- Contacts Section -->
-          <section
-            class="p-6 rounded-xl border border-n-weak bg-n-solid-2"
-          >
+          <section class="p-6 rounded-xl border border-n-weak bg-n-solid-2">
             <div class="flex items-center justify-between mb-4">
               <h2 class="text-lg font-medium text-n-slate-12">
                 {{ t('COMPANY_DETAILS.CONTACTS.TITLE') }}
@@ -376,13 +367,20 @@ watch(companyId, () => {
               v-if="!company.contactsCount"
               class="text-center py-8 text-n-slate-11"
             >
-              <Icon icon="i-lucide-users" class="size-12 mx-auto mb-2 opacity-50" />
+              <Icon
+                icon="i-lucide-users"
+                class="size-12 mx-auto mb-2 opacity-50"
+              />
               <p>{{ t('COMPANY_DETAILS.CONTACTS.EMPTY') }}</p>
             </div>
 
             <div v-else class="space-y-2">
               <p class="text-n-slate-11 text-sm">
-                {{ t('COMPANIES.CONTACTS_COUNT', { count: company.contactsCount }) }}
+                {{
+                  t('COMPANIES.CONTACTS_COUNT', {
+                    count: company.contactsCount,
+                  })
+                }}
               </p>
             </div>
           </section>

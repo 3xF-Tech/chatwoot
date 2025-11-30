@@ -11,8 +11,6 @@ import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
 
-const emit = defineEmits(['created']);
-
 const props = defineProps({
   pipelines: {
     type: Array,
@@ -31,6 +29,8 @@ const props = defineProps({
     default: null,
   },
 });
+
+const emit = defineEmits(['created']);
 
 const store = useStore();
 const { t } = useI18n();
@@ -225,8 +225,14 @@ defineExpose({ dialogRef });
             :class="v$.pipelineId.$error ? 'border-r-400' : 'border-n-weak'"
             @blur="v$.pipelineId.$touch"
           >
-            <option :value="null" disabled>{{ t('OPPORTUNITIES.FORM.PIPELINE.PLACEHOLDER') }}</option>
-            <option v-for="opt in pipelineOptions" :key="opt.value" :value="opt.value">
+            <option :value="null" disabled>
+              {{ t('OPPORTUNITIES.FORM.PIPELINE.PLACEHOLDER') }}
+            </option>
+            <option
+              v-for="opt in pipelineOptions"
+              :key="opt.value"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>
@@ -247,8 +253,14 @@ defineExpose({ dialogRef });
             :class="v$.stageId.$error ? 'border-r-400' : 'border-n-weak'"
             @blur="v$.stageId.$touch"
           >
-            <option :value="null" disabled>{{ t('OPPORTUNITIES.FORM.STAGE.PLACEHOLDER') }}</option>
-            <option v-for="opt in stageOptions" :key="opt.value" :value="opt.value">
+            <option :value="null" disabled>
+              {{ t('OPPORTUNITIES.FORM.STAGE.PLACEHOLDER') }}
+            </option>
+            <option
+              v-for="opt in stageOptions"
+              :key="opt.value"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>
@@ -274,7 +286,11 @@ defineExpose({ dialogRef });
             v-model="formState.currency"
             class="w-full px-3 py-2 text-sm bg-n-alpha-1 border border-n-weak rounded-lg text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
           >
-            <option v-for="opt in currencyOptions" :key="opt.value" :value="opt.value">
+            <option
+              v-for="opt in currencyOptions"
+              :key="opt.value"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>
@@ -289,7 +305,9 @@ defineExpose({ dialogRef });
             v-model="formState.expectedCloseDate"
             type="date"
             class="w-full px-3 py-2 text-sm bg-n-alpha-1 border border-n-weak rounded-lg text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
-            :placeholder="t('OPPORTUNITIES.FORM.EXPECTED_CLOSE_DATE.PLACEHOLDER')"
+            :placeholder="
+              t('OPPORTUNITIES.FORM.EXPECTED_CLOSE_DATE.PLACEHOLDER')
+            "
           />
         </div>
 
@@ -302,8 +320,14 @@ defineExpose({ dialogRef });
             v-model="formState.assigneeId"
             class="w-full px-3 py-2 text-sm bg-n-alpha-1 border border-n-weak rounded-lg text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
           >
-            <option :value="null">{{ t('OPPORTUNITIES.FORM.ASSIGNEE.PLACEHOLDER') }}</option>
-            <option v-for="opt in agentOptions" :key="opt.value" :value="opt.value">
+            <option :value="null">
+              {{ t('OPPORTUNITIES.FORM.ASSIGNEE.PLACEHOLDER') }}
+            </option>
+            <option
+              v-for="opt in agentOptions"
+              :key="opt.value"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>
@@ -318,8 +342,14 @@ defineExpose({ dialogRef });
             v-model="formState.priority"
             class="w-full px-3 py-2 text-sm bg-n-alpha-1 border border-n-weak rounded-lg text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
           >
-            <option :value="null">{{ t('OPPORTUNITIES.FORM.PRIORITY.PLACEHOLDER') }}</option>
-            <option v-for="opt in priorityOptions" :key="opt.value" :value="opt.value">
+            <option :value="null">
+              {{ t('OPPORTUNITIES.FORM.PRIORITY.PLACEHOLDER') }}
+            </option>
+            <option
+              v-for="opt in priorityOptions"
+              :key="opt.value"
+              :value="opt.value"
+            >
               {{ opt.label }}
             </option>
           </select>

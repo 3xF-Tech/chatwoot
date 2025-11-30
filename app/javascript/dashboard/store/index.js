@@ -11,6 +11,8 @@ import auditlogs from './modules/auditlogs';
 import auth from './modules/auth';
 import automations from './modules/automations';
 import bulkActions from './modules/bulkActions';
+import calendarEvents from './modules/calendarEvents';
+import calendarIntegrations from './modules/calendarIntegrations';
 import campaigns from './modules/campaigns';
 import cannedResponse from './modules/cannedResponse';
 import categories from './modules/helpCenterCategories';
@@ -77,6 +79,8 @@ export default createStore({
     auth,
     automations,
     bulkActions,
+    calendarEvents,
+    calendarIntegrations,
     campaigns,
     cannedResponse,
     categories,

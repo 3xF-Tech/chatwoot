@@ -1,0 +1,83 @@
+{
+  "CALENDAR": {
+    "TITLE": "Agenda",
+    "TODAY": "Hoje",
+    "NEW_EVENT": "Novo Evento",
+    "MORE": "mais",
+    "ALL_DAY": "Dia inteiro",
+    "DELETE": "Excluir",
+    "EDIT": "Editar",
+    "JOIN_VIDEO_CALL": "Entrar na videochamada",
+    "LINKED_ITEMS": "Itens Vinculados",
+    "ATTENDEES": "Participantes",
+    "DELETE_CONFIRM": "Tem certeza que deseja excluir este evento?",
+    "VIEW": {
+      "MONTH": "Mês",
+      "WEEK": "Semana",
+      "DAY": "Dia"
+    },
+    "SIDEBAR": {
+      "CALENDAR": "Agenda",
+      "SETTINGS": "Configurações",
+      "INTEGRATIONS": "Integrações",
+      "NO_INTEGRATIONS": "Nenhuma integração conectada"
+    },
+    "EVENT_TYPES": {
+      "MEETING": "Reunião",
+      "CALL": "Ligação",
+      "TASK": "Tarefa",
+      "REMINDER": "Lembrete",
+      "FOLLOW_UP": "Follow Up"
+    },
+    "EVENT_DIALOG": {
+      "CREATE_TITLE": "Criar Evento",
+      "EDIT_TITLE": "Editar Evento",
+      "TITLE": "Título",
+      "TITLE_PLACEHOLDER": "Título do evento",
+      "TYPE": "Tipo de Evento",
+      "ALL_DAY": "Evento de dia inteiro",
+      "START": "Início",
+      "END": "Fim",
+      "LOCATION": "Local",
+      "LOCATION_PLACEHOLDER": "Adicionar um local",
+      "VIDEO_LINK": "Link de Videoconferência",
+      "VIDEO_LINK_PLACEHOLDER": "https://meet.google.com/...",
+      "DESCRIPTION": "Descrição",
+      "DESCRIPTION_PLACEHOLDER": "Adicionar uma descrição",
+      "COLOR": "Cor",
+      "REMINDER": "Lembrete",
+      "CANCEL": "Cancelar",
+      "CREATE": "Criar Evento",
+      "UPDATE": "Atualizar Evento"
+    },
+    "REMINDERS": {
+      "NONE": "Sem lembrete",
+      "5_MIN": "5 minutos antes",
+      "15_MIN": "15 minutos antes",
+      "30_MIN": "30 minutos antes",
+      "1_HOUR": "1 hora antes",
+      "1_DAY": "1 dia antes"
+    },
+    "SETTINGS": {
+      "TITLE": "Configurações da Agenda",
+      "DESCRIPTION": "Conecte sua agenda para sincronizar eventos e nunca perder uma reunião.",
+      "CONNECT": "Conectar",
+      "DISCONNECT": "Desconectar",
+      "SYNC": "Sincronizar Agora",
+      "DISCONNECT_CONFIRM": "Tem certeza que deseja desconectar esta agenda?",
+      "CONNECTED_AS": "Conectado como",
+      "COMING_SOON": "Em Breve",
+      "PROVIDERS": {
+        "GOOGLE_DESC": "Sincronize eventos com sua conta do Google Calendar",
+        "OUTLOOK_DESC": "Sincronize eventos com sua agenda do Microsoft Outlook",
+        "CALENDLY_DESC": "Conecte o Calendly para agendamento de reuniões"
+      },
+      "SYNC_OPTIONS": {
+        "TITLE": "Opções de Sincronização",
+        "DESCRIPTION": "Configure como os eventos são sincronizados",
+        "BIDIRECTIONAL": "Habilitar sincronização bidirecional (alterações no CRM sincronizam com a agenda e vice-versa)",
+        "AUTO_CREATE": "Criar automaticamente eventos na agenda para atividades agendadas"
+      }
+    }
+  }
+}

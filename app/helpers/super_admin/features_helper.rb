@@ -5,10 +5,15 @@ module SuperAdmin::FeaturesHelper
 
   def self.plan_details
     plan = ChatwootHub.pricing_plan
-    quantity = ChatwootHub.pricing_plan_quantity
 
-    if plan == 'premium'
-      "You are currently on the <span class='font-semibold'>#{plan}</span> plan with <span class='font-semibold'>#{quantity} agents</span>."
+    # 3xF.Tech: Custom message for our fork
+    if plan == 'enterprise'
+      "You are on the <span class='font-semibold'>3xF.Tech Enterprise</span> edition " \
+        "with <span class='font-semibold'>unlimited agents</span>."
+    elsif plan == 'premium'
+      quantity = ChatwootHub.pricing_plan_quantity
+      "You are currently on the <span class='font-semibold'>#{plan}</span> plan " \
+        "with <span class='font-semibold'>#{quantity} agents</span>."
     else
       "You are currently on the <span class='font-semibold'>#{plan}</span> edition plan."
     end

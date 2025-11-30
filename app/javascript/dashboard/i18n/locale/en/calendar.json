@@ -1,0 +1,83 @@
+{
+  "CALENDAR": {
+    "TITLE": "Calendar",
+    "TODAY": "Today",
+    "NEW_EVENT": "New Event",
+    "MORE": "more",
+    "ALL_DAY": "All day",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "JOIN_VIDEO_CALL": "Join video call",
+    "LINKED_ITEMS": "Linked Items",
+    "ATTENDEES": "Attendees",
+    "DELETE_CONFIRM": "Are you sure you want to delete this event?",
+    "VIEW": {
+      "MONTH": "Month",
+      "WEEK": "Week",
+      "DAY": "Day"
+    },
+    "SIDEBAR": {
+      "CALENDAR": "Calendar",
+      "SETTINGS": "Settings",
+      "INTEGRATIONS": "Integrations",
+      "NO_INTEGRATIONS": "No integrations connected"
+    },
+    "EVENT_TYPES": {
+      "MEETING": "Meeting",
+      "CALL": "Call",
+      "TASK": "Task",
+      "REMINDER": "Reminder",
+      "FOLLOW_UP": "Follow Up"
+    },
+    "EVENT_DIALOG": {
+      "CREATE_TITLE": "Create Event",
+      "EDIT_TITLE": "Edit Event",
+      "TITLE": "Title",
+      "TITLE_PLACEHOLDER": "Event title",
+      "TYPE": "Event Type",
+      "ALL_DAY": "All day event",
+      "START": "Start",
+      "END": "End",
+      "LOCATION": "Location",
+      "LOCATION_PLACEHOLDER": "Add a location",
+      "VIDEO_LINK": "Video Conference Link",
+      "VIDEO_LINK_PLACEHOLDER": "https://meet.google.com/...",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Add a description",
+      "COLOR": "Color",
+      "REMINDER": "Reminder",
+      "CANCEL": "Cancel",
+      "CREATE": "Create Event",
+      "UPDATE": "Update Event"
+    },
+    "REMINDERS": {
+      "NONE": "No reminder",
+      "5_MIN": "5 minutes before",
+      "15_MIN": "15 minutes before",
+      "30_MIN": "30 minutes before",
+      "1_HOUR": "1 hour before",
+      "1_DAY": "1 day before"
+    },
+    "SETTINGS": {
+      "TITLE": "Calendar Settings",
+      "DESCRIPTION": "Connect your calendar to sync events and never miss a meeting.",
+      "CONNECT": "Connect",
+      "DISCONNECT": "Disconnect",
+      "SYNC": "Sync Now",
+      "DISCONNECT_CONFIRM": "Are you sure you want to disconnect this calendar?",
+      "CONNECTED_AS": "Connected as",
+      "COMING_SOON": "Coming Soon",
+      "PROVIDERS": {
+        "GOOGLE_DESC": "Sync events with your Google Calendar account",
+        "OUTLOOK_DESC": "Sync events with your Microsoft Outlook calendar",
+        "CALENDLY_DESC": "Connect Calendly for scheduling meetings"
+      },
+      "SYNC_OPTIONS": {
+        "TITLE": "Sync Options",
+        "DESCRIPTION": "Configure how events are synchronized",
+        "BIDIRECTIONAL": "Enable bidirectional sync (changes in CRM sync to calendar and vice versa)",
+        "AUTO_CREATE": "Automatically create calendar events for scheduled activities"
+      }
+    }
+  }
+}

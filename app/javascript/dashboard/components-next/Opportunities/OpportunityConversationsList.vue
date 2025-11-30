@@ -98,16 +98,26 @@ const handleUnlink = async conversationId => {
               </span>
               <span
                 class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
-                :class="statusClasses[conversation.status] || 'bg-n-slate-3 text-n-slate-11'"
+                :class="
+                  statusClasses[conversation.status] ||
+                  'bg-n-slate-3 text-n-slate-11'
+                "
               >
                 {{ conversation.status }}
               </span>
             </div>
             <p class="text-n-slate-12 line-clamp-2">
-              {{ conversation.last_non_activity_message?.content || conversation.additional_attributes?.mail_subject || '-' }}
+              {{
+                conversation.last_non_activity_message?.content ||
+                conversation.additional_attributes?.mail_subject ||
+                '-'
+              }}
             </p>
             <div class="flex items-center gap-4 mt-2 text-sm text-n-slate-11">
-              <span v-if="conversation.meta?.sender?.name" class="flex items-center gap-1">
+              <span
+                v-if="conversation.meta?.sender?.name"
+                class="flex items-center gap-1"
+              >
                 <Icon icon="i-lucide-user" class="size-3" />
                 {{ conversation.meta.sender.name }}
               </span>
@@ -130,7 +140,10 @@ const handleUnlink = async conversationId => {
               size="xs"
               @click.stop="handleUnlink(conversation.id)"
             />
-            <Icon icon="i-lucide-chevron-right" class="size-5 text-n-slate-11" />
+            <Icon
+              icon="i-lucide-chevron-right"
+              class="size-5 text-n-slate-11"
+            />
           </div>
         </div>
       </div>

@@ -11,7 +11,12 @@ defineProps({
   activeOrdering: { type: String, default: '' },
 });
 
-const emit = defineEmits(['update:currentPage', 'update:sort', 'search', 'create']);
+const emit = defineEmits([
+  'update:currentPage',
+  'update:sort',
+  'search',
+  'create',
+]);
 
 const updateCurrentPage = page => {
   emit('update:currentPage', page);

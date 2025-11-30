@@ -1,0 +1,9 @@
+json.id integration.id
+json.provider integration.provider
+json.provider_email integration.provider_email
+json.calendar_id integration.calendar_id
+json.sync_status integration.sync_status
+json.last_synced_at integration.last_synced_at
+json.sync_settings integration.sync_settings
+json.created_at integration.created_at
+json.updated_at integration.updated_at

@@ -4,9 +4,6 @@ import { useI18n } from 'vue-i18n';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 
-const emit = defineEmits(['confirm']);
-const { t } = useI18n();
-
 defineProps({
   title: {
     type: String,
@@ -17,6 +14,8 @@ defineProps({
     required: true,
   },
 });
+const emit = defineEmits(['confirm']);
+const { t } = useI18n();
 
 const dialogRef = ref(null);
 

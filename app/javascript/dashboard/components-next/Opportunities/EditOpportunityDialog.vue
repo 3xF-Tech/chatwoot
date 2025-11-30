@@ -11,14 +11,14 @@ import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
 
-const emit = defineEmits(['updated']);
-
 const props = defineProps({
   opportunity: {
     type: Object,
     required: true,
   },
 });
+
+const emit = defineEmits(['updated']);
 
 const store = useStore();
 const { t } = useI18n();
@@ -186,7 +186,9 @@ defineExpose({ dialogRef });
             class="w-full px-3 py-2 rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
             :class="{ 'border-n-ruby-9': v$.pipelineId.$error }"
           >
-            <option value="">{{ t('OPPORTUNITIES.FORM.PIPELINE.PLACEHOLDER') }}</option>
+            <option value="">
+              {{ t('OPPORTUNITIES.FORM.PIPELINE.PLACEHOLDER') }}
+            </option>
             <option
               v-for="opt in pipelineOptions"
               :key="opt.value"
@@ -208,7 +210,9 @@ defineExpose({ dialogRef });
             :class="{ 'border-n-ruby-9': v$.stageId.$error }"
             :disabled="!formState.pipelineId"
           >
-            <option value="">{{ t('OPPORTUNITIES.FORM.STAGE.PLACEHOLDER') }}</option>
+            <option value="">
+              {{ t('OPPORTUNITIES.FORM.STAGE.PLACEHOLDER') }}
+            </option>
             <option
               v-for="opt in stageOptions"
               :key="opt.value"
@@ -267,7 +271,9 @@ defineExpose({ dialogRef });
             v-model="formState.assigneeId"
             class="w-full px-3 py-2 rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
           >
-            <option value="">{{ t('OPPORTUNITIES.FORM.ASSIGNEE.PLACEHOLDER') }}</option>
+            <option value="">
+              {{ t('OPPORTUNITIES.FORM.ASSIGNEE.PLACEHOLDER') }}
+            </option>
             <option
               v-for="opt in agentOptions"
               :key="opt.value"
@@ -287,7 +293,9 @@ defineExpose({ dialogRef });
             v-model="formState.priority"
             class="w-full px-3 py-2 rounded-lg border border-n-weak bg-n-alpha-1 text-n-slate-12 focus:outline-none focus:ring-2 focus:ring-n-brand"
           >
-            <option value="">{{ t('OPPORTUNITIES.FORM.PRIORITY.PLACEHOLDER') }}</option>
+            <option value="">
+              {{ t('OPPORTUNITIES.FORM.PRIORITY.PLACEHOLDER') }}
+            </option>
             <option
               v-for="opt in priorityOptions"
               :key="opt.value"

@@ -61,10 +61,8 @@ const showPagination = computed(() => {
 
       <main class="flex-1 overflow-y-auto">
         <div
-          :class="[
-            'w-full mx-auto',
-            viewMode === 'kanban' ? '' : 'max-w-[80rem]',
-          ]"
+          class="w-full mx-auto"
+          :class="[viewMode === 'kanban' ? '' : 'max-w-[80rem]']"
         >
           <slot name="default" />
         </div>

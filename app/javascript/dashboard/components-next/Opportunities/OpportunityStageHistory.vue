@@ -76,7 +76,10 @@ const formatCurrency = (value, currency = 'BRL') => {
                   <span class="text-n-slate-11">
                     {{ change.from_stage?.name || 'Início' }}
                   </span>
-                  <Icon icon="i-lucide-arrow-right" class="size-4 text-n-slate-11" />
+                  <Icon
+                    icon="i-lucide-arrow-right"
+                    class="size-4 text-n-slate-11"
+                  />
                   <span class="font-medium text-n-slate-12">
                     {{ change.to_stage?.name }}
                   </span>
@@ -91,7 +94,10 @@ const formatCurrency = (value, currency = 'BRL') => {
                   <span class="text-n-slate-11">
                     {{ formatCurrency(change.from_value) }}
                   </span>
-                  <Icon icon="i-lucide-arrow-right" class="size-3 text-n-slate-11" />
+                  <Icon
+                    icon="i-lucide-arrow-right"
+                    class="size-3 text-n-slate-11"
+                  />
                   <span class="font-medium text-n-slate-12">
                     {{ formatCurrency(change.to_value) }}
                   </span>

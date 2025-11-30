@@ -136,7 +136,15 @@ const companyOptions = computed(() => {
     label: company.name,
     value: company.id,
   }));
-  return [{ label: t('CONTACTS_LAYOUT.CARD.EDIT_DETAILS_FORM.FORM.COMPANY.NO_COMPANY'), value: null }, ...options];
+  return [
+    {
+      label: t(
+        'CONTACTS_LAYOUT.CARD.EDIT_DETAILS_FORM.FORM.COMPANY.NO_COMPANY'
+      ),
+      value: null,
+    },
+    ...options,
+  ];
 });
 
 const fetchCompanies = async () => {

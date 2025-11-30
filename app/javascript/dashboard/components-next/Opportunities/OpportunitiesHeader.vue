@@ -6,8 +6,6 @@ import Icon from 'dashboard/components-next/icon/Icon.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import OpportunitySortMenu from './OpportunitySortMenu.vue';
 
-const { t } = useI18n();
-
 const props = defineProps({
   showSearch: { type: Boolean, default: true },
   searchValue: { type: String, default: '' },
@@ -26,6 +24,8 @@ const emit = defineEmits([
   'update:pipeline',
   'create',
 ]);
+
+const { t } = useI18n();
 
 const viewModes = [
   { key: 'kanban', icon: 'i-lucide-layout-grid' },
@@ -98,8 +98,8 @@ function onPipelineChange(event) {
             <button
               v-for="mode in viewModes"
               :key="mode.key"
+              class="p-1.5 rounded-md transition-colors"
               :class="[
-                'p-1.5 rounded-md transition-colors',
                 viewMode === mode.key
                   ? 'bg-n-solid-3 text-n-slate-12'
                   : 'text-n-slate-11 hover:text-n-slate-12',

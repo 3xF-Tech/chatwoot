@@ -33,8 +33,7 @@ export const getters = {
   getDefaultPipeline: state => state.records.find(p => p.is_default),
   getPipelineById: state => id =>
     state.records.find(p => p.id === Number(id)) || {},
-  getStagesByPipelineId: state => pipelineId =>
-    state.stages[pipelineId] || [],
+  getStagesByPipelineId: state => pipelineId => state.stages[pipelineId] || [],
   getStageById: state => (pipelineId, stageId) => {
     const stages = state.stages[pipelineId] || [];
     return stages.find(s => s.id === Number(stageId)) || {};
@@ -84,7 +83,10 @@ export const actions = {
       const response = await PipelinesAPI.get();
       // API returns array directly, not { payload, meta }
       const pipelines = response.data.payload || response.data;
-      commit('SET_PIPELINE', Array.isArray(pipelines) ? pipelines : [pipelines]);
+      commit(
+        'SET_PIPELINE',
+        Array.isArray(pipelines) ? pipelines : [pipelines]
+      );
       return pipelines;
     } catch (error) {
       throw error;

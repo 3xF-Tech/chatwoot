@@ -403,7 +403,10 @@ export const actions = {
     try {
       const response = await OpportunitiesAPI.getConversations(opportunityId);
       const conversations = response.data.payload || response.data;
-      commit(MUTATION_TYPES.SET_CONVERSATIONS, { opportunityId, conversations });
+      commit(MUTATION_TYPES.SET_CONVERSATIONS, {
+        opportunityId,
+        conversations,
+      });
       return conversations;
     } catch (error) {
       throw error;
@@ -421,7 +424,10 @@ export const actions = {
         ...(state.conversations[opportunityId] || []),
         conversation,
       ];
-      commit(MUTATION_TYPES.SET_CONVERSATIONS, { opportunityId, conversations });
+      commit(MUTATION_TYPES.SET_CONVERSATIONS, {
+        opportunityId,
+        conversations,
+      });
       return conversation;
     } catch (error) {
       throw error;
@@ -437,7 +443,10 @@ export const actions = {
       const conversations = (state.conversations[opportunityId] || []).filter(
         c => c.id !== conversationId
       );
-      commit(MUTATION_TYPES.SET_CONVERSATIONS, { opportunityId, conversations });
+      commit(MUTATION_TYPES.SET_CONVERSATIONS, {
+        opportunityId,
+        conversations,
+      });
     } catch (error) {
       throw error;
     }

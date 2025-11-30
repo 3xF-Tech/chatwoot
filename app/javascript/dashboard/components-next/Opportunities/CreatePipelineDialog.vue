@@ -49,7 +49,9 @@ const resetForm = () => {
 };
 
 const addStage = () => {
-  const position = defaultStages.value.filter(s => s.stageType === 'active').length;
+  const position = defaultStages.value.filter(
+    s => s.stageType === 'active'
+  ).length;
   defaultStages.value.splice(position, 0, {
     name: '',
     position,
@@ -187,14 +189,20 @@ defineExpose({ dialogRef });
               :key="index"
               class="flex items-center gap-2 p-2 rounded-lg bg-n-alpha-1"
             >
-              <div class="flex items-center justify-center size-6 rounded bg-n-alpha-2">
-                <span class="text-xs font-medium text-n-slate-11">{{ index + 1 }}</span>
+              <div
+                class="flex items-center justify-center size-6 rounded bg-n-alpha-2"
+              >
+                <span class="text-xs font-medium text-n-slate-11">{{
+                  index + 1
+                }}</span>
               </div>
 
               <input
                 v-model="stage.name"
                 type="text"
-                :placeholder="t('OPPORTUNITIES.PIPELINE.STAGE_NAME_PLACEHOLDER')"
+                :placeholder="
+                  t('OPPORTUNITIES.PIPELINE.STAGE_NAME_PLACEHOLDER')
+                "
                 class="flex-1 px-2 py-1 text-sm bg-transparent border-0 text-n-slate-12 focus:outline-none"
               />
 
@@ -210,16 +218,22 @@ defineExpose({ dialogRef });
               </div>
 
               <span
+                class="px-2 py-0.5 text-xs rounded"
                 :class="[
-                  'px-2 py-0.5 text-xs rounded',
-                  stage.stageType === 'won' ? 'bg-g-100 text-g-700 dark:bg-g-900 dark:text-g-300' :
-                  stage.stageType === 'lost' ? 'bg-r-100 text-r-700 dark:bg-r-900 dark:text-r-300' :
-                  'bg-b-100 text-b-700 dark:bg-b-900 dark:text-b-300'
+                  stage.stageType === 'won'
+                    ? 'bg-g-100 text-g-700 dark:bg-g-900 dark:text-g-300'
+                    : stage.stageType === 'lost'
+                      ? 'bg-r-100 text-r-700 dark:bg-r-900 dark:text-r-300'
+                      : 'bg-b-100 text-b-700 dark:bg-b-900 dark:text-b-300',
                 ]"
               >
-                {{ stage.stageType === 'won' ? t('OPPORTUNITIES.STATUS.WON') :
-                   stage.stageType === 'lost' ? t('OPPORTUNITIES.STATUS.LOST') :
-                   t('OPPORTUNITIES.PIPELINE.ACTIVE') }}
+                {{
+                  stage.stageType === 'won'
+                    ? t('OPPORTUNITIES.STATUS.WON')
+                    : stage.stageType === 'lost'
+                      ? t('OPPORTUNITIES.STATUS.LOST')
+                      : t('OPPORTUNITIES.PIPELINE.ACTIVE')
+                }}
               </span>
 
               <button

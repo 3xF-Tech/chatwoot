@@ -87,11 +87,17 @@ export default {
         id: company.id,
         name: company.name,
       }));
-      return [{ id: null, name: this.$t('CONTACT_FORM.FORM.COMPANY.NO_COMPANY') }, ...options];
+      return [
+        { id: null, name: this.$t('CONTACT_FORM.FORM.COMPANY.NO_COMPANY') },
+        ...options,
+      ];
     },
     selectedCompany: {
       get() {
-        return this.companyOptions.find(c => c.id === this.companyId) || this.companyOptions[0];
+        return (
+          this.companyOptions.find(c => c.id === this.companyId) ||
+          this.companyOptions[0]
+        );
       },
       set(value) {
         this.companyId = value ? value.id : null;

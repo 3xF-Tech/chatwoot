@@ -299,6 +299,10 @@ pt_BR:
       name: 'LeadSquared'
       short_description: 'Sincronize seus contatos e conversas com LeadSquared CRM.'
       description: 'Sincronize seus contatos e conversas com LeadSquared CRM. Essa integração cria automaticamente leads em LeadSquared quando novos contatos são adicionados, e registra a atividade de conversação para fornecer à sua equipe de vendas um contexto completo.'
+    google_calendar:
+      name: 'Google Calendar'
+      short_description: 'Sincronize eventos e agende reuniões diretamente das conversas.'
+      description: 'Conecte seu Google Calendar para sincronizar eventos bidirecionalmente. Crie reuniões vinculadas a contatos, oportunidades e conversas para agendamento e acompanhamento.'
   captain:
     copilot_message_required: A mensagem é obrigatória
     copilot_error: 'Conecte com um assistente a esta caixa de entrada para usar Copilot'
