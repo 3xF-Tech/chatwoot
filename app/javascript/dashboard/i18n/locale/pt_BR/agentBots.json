@@ -1,103 +1,198 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Robôs",
+    "HEADER": "Agentes IA",
     "LOADING_EDITOR": "Carregando Editor...",
-    "DESCRIPTION": "Robôs agentes são como os membros mais fabulosos de seu time. Eles podem lidar com as pequenas coisas, assim você pode focar nas coisas que importam. Dê uma chance a eles. Você pode gerenciar seus robôs a partir desta página ou criar novos usando o botão 'Criar Robô'.",
-    "LEARN_MORE": "Aprenda sobre os robôs agentes",
-    "GLOBAL_BOT": "Robô do sistema",
+    "DESCRIPTION": "Agentes IA são assistentes inteligentes que podem lidar com conversas automaticamente. Eles podem responder às dúvidas dos clientes, coletar informações e transferir conversas para agentes humanos quando necessário. Você pode configurar cada agente com um prompt de contexto para definir seu comportamento e personalidade.",
+    "LEARN_MORE": "Saiba mais sobre Agentes IA",
+    "GLOBAL_BOT": "Agente do sistema",
     "GLOBAL_BOT_BADGE": "Sistema",
     "AVATAR": {
-      "SUCCESS_DELETE": "Avatar do robô excluído com sucesso",
-      "ERROR_DELETE": "Erro ao excluir o avatar do robô, tente novamente"
+      "SUCCESS_DELETE": "Avatar do Agente IA excluído com sucesso",
+      "ERROR_DELETE": "Erro ao excluir o avatar do Agente IA, tente novamente"
     },
     "BOT_CONFIGURATION": {
-      "TITLE": "Selecione um robô de agente",
-      "DESC": "Atribua um Agente Robô à sua caixa de entrada. Eles podem lidar com as conversas iniciais e transferi-las para um agente humano quando necessário.",
+      "TITLE": "Selecione um Agente IA",
+      "DESC": "Atribua um Agente IA à sua caixa de entrada. Eles podem lidar com as conversas iniciais e transferi-las para um agente humano quando necessário.",
       "SUBMIT": "Atualizar",
-      "DISCONNECT": "Desconectar Robô",
-      "SUCCESS_MESSAGE": "Agente de bot atualizado com sucesso.",
-      "DISCONNECTED_SUCCESS_MESSAGE": "Bot desconectado com sucesso.",
-      "ERROR_MESSAGE": "Não foi possível atualizar o agente robô. Por favor, tente novamente mais tarde.",
-      "DISCONNECTED_ERROR_MESSAGE": "Não foi possível desconectar o agente robô. Por favor, tente novamente mais tarde.",
-      "SELECT_PLACEHOLDER": "Selecionar Robô"
+      "DISCONNECT": "Desconectar Agente",
+      "SUCCESS_MESSAGE": "Agente IA atualizado com sucesso.",
+      "DISCONNECTED_SUCCESS_MESSAGE": "Agente IA desconectado com sucesso.",
+      "ERROR_MESSAGE": "Não foi possível atualizar o Agente IA. Por favor, tente novamente mais tarde.",
+      "DISCONNECTED_ERROR_MESSAGE": "Não foi possível desconectar o Agente IA. Por favor, tente novamente mais tarde.",
+      "SELECT_PLACEHOLDER": "Selecionar Agente IA"
     },
     "ADD": {
-      "TITLE": "Criar Robô",
+      "TITLE": "Criar Agente IA",
       "CANCEL_BUTTON_TEXT": "Cancelar",
       "API": {
-        "SUCCESS_MESSAGE": "Bot adicionado com sucesso.",
-        "ERROR_MESSAGE": "Não foi possível adicionar o agente robô! Por favor, tente novamente mais tarde."
+        "SUCCESS_MESSAGE": "Agente IA adicionado com sucesso.",
+        "ERROR_MESSAGE": "Não foi possível adicionar o Agente IA! Por favor, tente novamente mais tarde."
       }
     },
     "LIST": {
-      "404": "Nenhum robô encontrado. Você pode criar um robô clicando no botão 'Criar Robô'.",
-      "LOADING": "Buscando robôs...",
+      "404": "Nenhum Agente IA encontrado. Você pode criar um Agente IA clicando no botão 'Criar Agente IA'.",
+      "LOADING": "Buscando Agentes IA...",
       "TABLE_HEADER": {
-        "DETAILS": "Detalhe do Robô",
+        "DETAILS": "Detalhes do Agente IA",
         "URL": "URL do Webhook"
       }
     },
     "DELETE": {
       "BUTTON_TEXT": "Excluir",
-      "TITLE": "Deletar robô",
+      "TITLE": "Excluir Agente IA",
       "CONFIRM": {
         "TITLE": "Confirmar exclusão",
         "MESSAGE": "Tem certeza que deseja excluir {name}?",
         "YES": "Sim, excluir",
-        "NO": "Não, Mantenha"
+        "NO": "Não, Manter"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Bot excluído com sucesso.",
-        "ERROR_MESSAGE": "Não foi possível excluir o robô. Por favor, tente novamente."
+        "SUCCESS_MESSAGE": "Agente IA excluído com sucesso.",
+        "ERROR_MESSAGE": "Não foi possível excluir o Agente IA. Por favor, tente novamente."
       }
     },
     "EDIT": {
-      "BUTTON_TEXT": "Alterar",
-      "TITLE": "Alterar Robô",
+      "BUTTON_TEXT": "Editar",
+      "TITLE": "Editar Agente IA",
       "API": {
-        "SUCCESS_MESSAGE": "Robô atualizado com sucesso.",
-        "ERROR_MESSAGE": "Não foi possível atualizar o robô. Por favor, tente novamente mais tarde."
+        "SUCCESS_MESSAGE": "Agente IA atualizado com sucesso.",
+        "ERROR_MESSAGE": "Não foi possível atualizar o Agente IA. Por favor, tente novamente mais tarde."
       }
     },
     "ACCESS_TOKEN": {
       "TITLE": "Token de acesso",
       "DESCRIPTION": "Copie o token de acesso e salve-o de forma segura",
       "COPY_SUCCESSFUL": "Token de acesso copiado para área de transferência",
-      "RESET_SUCCESS": "Token de acesso gerado novamente com sucesso",
-      "RESET_ERROR": "Não foi possível regerar o token de acesso. Por favor, tente novamente"
+      "RESET_SUCCESS": "Token de acesso regenerado com sucesso",
+      "RESET_ERROR": "Não foi possível regenerar o token de acesso. Por favor, tente novamente"
     },
     "FORM": {
       "AVATAR": {
-        "LABEL": "Avatar do robô"
+        "LABEL": "Avatar do Agente IA"
       },
       "NAME": {
-        "LABEL": "Nome do Robô",
-        "PLACEHOLDER": "Insira o nome do robô",
-        "REQUIRED": "O nome do Robô é obrigatório"
+        "LABEL": "Nome do Agente IA",
+        "PLACEHOLDER": "Insira o nome do Agente IA",
+        "REQUIRED": "O nome do Agente IA é obrigatório"
       },
       "DESCRIPTION": {
         "LABEL": "Descrição",
-        "PLACEHOLDER": "O que esse robô faz?"
+        "PLACEHOLDER": "O que esse Agente IA faz?"
       },
       "WEBHOOK_URL": {
         "LABEL": "URL do Webhook",
         "PLACEHOLDER": "https://exemplo.com.br/webhook",
-        "REQUIRED": "URL Webhook é necessária"
+        "REQUIRED": "URL do Webhook é obrigatória"
+      },
+      "CONTEXT_PROMPT": {
+        "LABEL": "Prompt de contexto",
+        "PLACEHOLDER": "Insira o prompt de contexto que define como o Agente IA deve se comportar, sua personalidade, base de conhecimento e diretrizes de resposta..."
+      },
+      "ENABLE_SIGNATURE": {
+        "LABEL": "Habilitar assinatura",
+        "DESCRIPTION": "Adicionar assinatura do Agente IA nas mensagens"
+      },
+      "IS_ACTIVE": {
+        "LABEL": "Ativo",
+        "DESCRIPTION": "Habilitar ou desabilitar este Agente IA"
+      },
+      "RESPONSE_MODE": {
+        "LABEL": "Modo de resposta",
+        "PLACEHOLDER": "Selecione o modo de resposta",
+        "OPTIONS": {
+          "AUTO_RESPOND": "Resposta automática",
+          "ASSIST_AGENT": "Assistir agente",
+          "MANUAL_TRIGGER": "Disparo manual"
+        },
+        "DESCRIPTIONS": {
+          "AUTO_RESPOND": "O Agente IA responde automaticamente todas as mensagens recebidas",
+          "ASSIST_AGENT": "O Agente IA sugere respostas que os agentes podem revisar e enviar",
+          "MANUAL_TRIGGER": "O Agente IA responde apenas quando acionado manualmente"
+        }
+      },
+      "INBOXES": {
+        "LABEL": "Caixas de entrada conectadas",
+        "PLACEHOLDER": "Selecione as caixas de entrada para conectar",
+        "DESCRIPTION": "Selecione em quais caixas de entrada este Agente IA deve estar ativo"
       },
       "ERRORS": {
-        "NAME": "O nome do Robô é obrigatório",
-        "URL": "URL Webhook é necessária",
+        "NAME": "O nome do Agente IA é obrigatório",
+        "URL": "URL do Webhook é obrigatória",
         "VALID_URL": "Digite uma URL válida começando com http:// ou https://"
       },
       "CANCEL": "Cancelar",
-      "CREATE": "Criar um Robô",
-      "UPDATE": "Atualizar o Robô"
+      "CREATE": "Criar Agente IA",
+      "UPDATE": "Atualizar Agente IA"
     },
     "WEBHOOK": {
-      "DESCRIPTION": "Configure um robô de Webhook para integrar com seus serviços personalizados. O robô receberá e processará eventos de conversas e pode respondê-los."
+      "DESCRIPTION": "Configure um webhook para integrar com seus serviços de IA personalizados. O Agente IA receberá e processará eventos de conversas e poderá respondê-los."
     },
     "TYPES": {
-      "WEBHOOK": "Webhook robô"
+      "WEBHOOK": "Agente IA Webhook"
+    }
+  },
+  "AI_AGENTS": {
+    "DASHBOARD": {
+      "TITLE": "Painel de Agentes IA",
+      "DESCRIPTION": "Monitore o desempenho e uso dos seus Agentes IA",
+      "CHART_MESSAGES": "Mensagens ao longo do tempo",
+      "CHART_PERFORMANCE": "Métricas de desempenho",
+      "USAGE_LABEL": "Uso de mensagens este mês",
+      "SATISFACTION": "Satisfação",
+      "RESOLUTION_RATE": "Taxa de resolução",
+      "KPI": {
+        "TOTAL_MESSAGES": "Total de mensagens",
+        "ACTIVE_AGENTS": "Agentes ativos",
+        "AVG_RESPONSE_TIME": "Tempo médio de resposta",
+        "SATISFACTION": "Satisfação"
+      }
+    },
+    "MY_AGENTS": {
+      "TITLE": "Meus Agentes",
+      "DESCRIPTION": "Gerencie seus Agentes IA e monitore seu desempenho",
+      "CREATE_AGENT": "Criar Agente",
+      "STATUS": {
+        "ACTIVE": "Ativo",
+        "INACTIVE": "Inativo"
+      },
+      "ACTIONS": {
+        "EDIT": "Editar",
+        "DELETE": "Excluir"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "Nenhum Agente IA ainda",
+        "DESCRIPTION": "Comece adquirindo um Agente IA em nosso marketplace",
+        "CTA": "Ir para Marketplace"
+      }
+    },
+    "MARKETPLACE": {
+      "BADGE": "Marketplace de Agentes IA",
+      "TITLE": "Adquira Seu Agente IA",
+      "DESCRIPTION": "Escolha o plano de Agente IA perfeito para automatizar seu atendimento e impulsionar suas vendas",
+      "TRIAL_BANNER": "🎉 Comece com 50 mensagens de teste grátis!",
+      "MONTH": "mês",
+      "MESSAGES_LIMIT": "Até 1.000 mensagens/mês",
+      "SELECT_PLAN": "Selecionar Plano",
+      "BADGES": {
+        "POPULAR": "Mais Popular",
+        "COMPLETE": "Mais Completo"
+      },
+      "CUSTOM_TITLE": "Precisa de uma solução personalizada?",
+      "CUSTOM_DESCRIPTION": "Entre em contato com nossa equipe para planos empresariais e desenvolvimento de Agentes IA customizados",
+      "CONTACT_SALES": "Falar com Vendas",
+      "ALREADY_SUBSCRIBED": "Você já possui uma assinatura ativa para este plano",
+      "START_TRIAL": "Iniciar Teste Grátis (50 mensagens)",
+      "SUBSCRIBE_NOW": "Assinar Agora",
+      "TRIAL_STARTED": "Teste iniciado com sucesso! Você tem 50 mensagens grátis.",
+      "CHECKOUT_SUCCESS": "Assinatura ativada com sucesso!",
+      "CHECKOUT_CANCELED": "Checkout foi cancelado",
+      "CHECKOUT_ERROR": "Erro ao criar sessão de checkout",
+      "ERROR": "Ocorreu um erro. Por favor, tente novamente.",
+      "SELECT_PLAN_DIALOG": {
+        "TITLE": "Escolha Sua Opção",
+        "DESCRIPTION": "Selecione como você quer começar com o plano {plan}",
+        "CHOOSE_OPTION": "Comece com um teste grátis ou assine agora para acesso completo:"
+      }
     }
   }
 }

@@ -60,6 +60,25 @@ export const actions = {
       formData.append('bot_type', botData.bot_type || 'webhook');
       formData.append('outgoing_url', botData.outgoing_url);
 
+      // Add new AI Agent fields
+      if (botData.context_prompt !== undefined) {
+        formData.append('context_prompt', botData.context_prompt);
+      }
+      if (botData.enable_signature !== undefined) {
+        formData.append('enable_signature', botData.enable_signature);
+      }
+      if (botData.is_active !== undefined) {
+        formData.append('is_active', botData.is_active);
+      }
+      if (botData.response_mode !== undefined) {
+        formData.append('response_mode', botData.response_mode);
+      }
+      if (botData.inbox_ids && botData.inbox_ids.length > 0) {
+        botData.inbox_ids.forEach(id => {
+          formData.append('inbox_ids[]', id);
+        });
+      }
+
       // Add avatar file if available
       if (botData.avatar) {
         formData.append('avatar', botData.avatar);
@@ -85,6 +104,28 @@ export const actions = {
       formData.append('description', data.description);
       formData.append('bot_type', data.bot_type || 'webhook');
       formData.append('outgoing_url', data.outgoing_url);
+
+      // Add new AI Agent fields
+      if (data.context_prompt !== undefined) {
+        formData.append('context_prompt', data.context_prompt);
+      }
+      if (data.enable_signature !== undefined) {
+        formData.append('enable_signature', data.enable_signature);
+      }
+      if (data.is_active !== undefined) {
+        formData.append('is_active', data.is_active);
+      }
+      if (data.response_mode !== undefined) {
+        formData.append('response_mode', data.response_mode);
+      }
+      if (data.inbox_ids && data.inbox_ids.length > 0) {
+        data.inbox_ids.forEach(inboxId => {
+          formData.append('inbox_ids[]', inboxId);
+        });
+      } else if (data.inbox_ids) {
+        // Send empty array to clear all inbox associations
+        formData.append('inbox_ids', '');
+      }
 
       if (data.avatar) {
         formData.append('avatar', data.avatar);

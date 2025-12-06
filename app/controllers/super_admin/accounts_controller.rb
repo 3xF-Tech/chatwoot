@@ -36,7 +36,11 @@ class SuperAdmin::AccountsController < SuperAdmin::ApplicationController
   def resource_params
     permitted_params = super
     permitted_params[:limits] = permitted_params[:limits].to_h.compact
-    permitted_params[:selected_feature_flags] = params[:enabled_features].keys.map(&:to_sym) if params[:enabled_features].present?
+    # Filter only enabled features (where value is 'true' or true)
+    if params[:enabled_features].present?
+      enabled_flags = params[:enabled_features].select { |_key, value| value.to_s == 'true' }.keys.map(&:to_sym)
+      permitted_params[:selected_feature_flags] = enabled_flags
+    end
     permitted_params
   end
 

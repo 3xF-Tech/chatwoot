@@ -51,7 +51,7 @@ services:
       - POSTGRES_PASSWORD=
 
   redis:
-    image: redis:alpine
+    image: redis:7-alpine
     restart: always
     volumes:
       - redis:/data/redis

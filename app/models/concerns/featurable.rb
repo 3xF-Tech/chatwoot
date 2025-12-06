@@ -19,6 +19,24 @@ module Featurable
     before_create :enable_default_features
   end
 
+  # Setter for selected_feature_flags - used by SuperAdmin to update features
+  # This receives an array of feature symbols that should be enabled
+  # All other features will be disabled
+  def selected_feature_flags=(feature_symbols)
+    return if feature_symbols.nil?
+
+    all_feature_names = FEATURE_LIST.pluck('name')
+    selected_names = feature_symbols.map { |s| s.to_s.delete_prefix('feature_') }
+
+    all_feature_names.each do |feature_name|
+      if selected_names.include?(feature_name)
+        enable_features(feature_name)
+      else
+        disable_features(feature_name)
+      end
+    end
+  end
+
   def enable_features(*names)
     names.each do |name|
       send("feature_#{name}=", true)

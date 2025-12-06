@@ -218,6 +218,32 @@ const menuItems = computed(() => {
       ],
     },
     {
+      name: 'AIAgents',
+      icon: 'i-lucide-bot',
+      label: t('SIDEBAR.AI_AGENTS'),
+      activeOn: ['ai_agents_dashboard', 'ai_agents_my_agents', 'ai_agents_marketplace'],
+      children: [
+        {
+          name: 'AI Agents Dashboard',
+          label: t('SIDEBAR.AI_AGENTS_DASHBOARD'),
+          activeOn: ['ai_agents_dashboard'],
+          to: accountScopedRoute('ai_agents_dashboard'),
+        },
+        {
+          name: 'AI Agents My Agents',
+          label: t('SIDEBAR.AI_AGENTS_MY_AGENTS'),
+          activeOn: ['ai_agents_my_agents'],
+          to: accountScopedRoute('ai_agents_my_agents'),
+        },
+        {
+          name: 'AI Agents Marketplace',
+          label: t('SIDEBAR.AI_AGENTS_MARKETPLACE'),
+          activeOn: ['ai_agents_marketplace'],
+          to: accountScopedRoute('ai_agents_marketplace'),
+        },
+      ],
+    },
+    {
       name: 'Captain',
       icon: 'i-woot-captain',
       label: t('SIDEBAR.CAPTAIN'),

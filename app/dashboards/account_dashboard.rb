@@ -122,6 +122,9 @@ class AccountDashboard < Administrate::BaseDashboard
     # Add manually_managed_features to permitted attributes only for Chatwoot Cloud
     attrs << { manually_managed_features: [] } if ChatwootApp.chatwoot_cloud?
 
+    # Add selected_feature_flags to permitted attributes for SuperAdmin feature toggling
+    attrs << { selected_feature_flags: [] }
+
     attrs
   end
 end

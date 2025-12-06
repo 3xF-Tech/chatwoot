@@ -4,7 +4,10 @@ class AgentBotListener < BaseListener
     inbox = conversation.inbox
     event_name = __method__.to_s
     payload = conversation.webhook_data.merge(event: event_name)
-    agent_bots_for(inbox, conversation).each { |agent_bot| process_webhook_bot_event(agent_bot, payload) }
+    agent_bots_for(inbox, conversation).each do |agent_bot|
+      enriched_payload = enrich_payload_with_agent_bot(payload, agent_bot)
+      process_webhook_bot_event(agent_bot, enriched_payload)
+    end
   end
 
   def conversation_opened(event)
@@ -12,7 +15,10 @@ class AgentBotListener < BaseListener
     inbox = conversation.inbox
     event_name = __method__.to_s
     payload = conversation.webhook_data.merge(event: event_name)
-    agent_bots_for(inbox, conversation).each { |agent_bot| process_webhook_bot_event(agent_bot, payload) }
+    agent_bots_for(inbox, conversation).each do |agent_bot|
+      enriched_payload = enrich_payload_with_agent_bot(payload, agent_bot)
+      process_webhook_bot_event(agent_bot, enriched_payload)
+    end
   end
 
   def message_created(event)
@@ -39,7 +45,10 @@ class AgentBotListener < BaseListener
     event_name = __method__.to_s
     payload = contact_inbox.webhook_data.merge(event: event_name)
     payload[:event_info] = event.data[:event_info]
-    agent_bots_for(inbox).each { |agent_bot| process_webhook_bot_event(agent_bot, payload) }
+    agent_bots_for(inbox).each do |agent_bot|
+      enriched_payload = enrich_payload_with_agent_bot(payload, agent_bot)
+      process_webhook_bot_event(agent_bot, enriched_payload)
+    end
   end
 
   private
@@ -61,6 +70,7 @@ class AgentBotListener < BaseListener
   def process_message_event(method_name, agent_bot, message, _event)
     # Only webhook bots are supported
     payload = message.webhook_data.merge(event: method_name)
+    payload = enrich_payload_with_agent_bot(payload, agent_bot)
     process_webhook_bot_event(agent_bot, payload)
   end
 
@@ -68,5 +78,11 @@ class AgentBotListener < BaseListener
     return if agent_bot.outgoing_url.blank?
 
     AgentBots::WebhookJob.perform_later(agent_bot.outgoing_url, payload)
+  end
+
+  def enrich_payload_with_agent_bot(payload, agent_bot)
+    payload.merge(
+      agent_bot: agent_bot.ai_agent_config
+    )
   end
 end

@@ -1,45 +1,45 @@
 {
   "AGENT_BOTS": {
-    "HEADER": "Bots",
+    "HEADER": "AI Agents",
     "LOADING_EDITOR": "Loading editor...",
-    "DESCRIPTION": "Agent Bots are like the most fabulous members of your team. They can handle the small stuff, so you can focus on the stuff that matters. Give them a try. You can manage your bots from this page or create new ones using the 'Add Bot' button.",
-    "LEARN_MORE": "Learn about agent bots",
-    "GLOBAL_BOT": "System bot",
+    "DESCRIPTION": "AI Agents are intelligent assistants that can handle conversations automatically. They can respond to customer queries, collect information, and transfer conversations to human agents when needed. You can configure each agent with a context prompt to define its behavior and personality.",
+    "LEARN_MORE": "Learn about AI Agents",
+    "GLOBAL_BOT": "System agent",
     "GLOBAL_BOT_BADGE": "System",
     "AVATAR": {
-      "SUCCESS_DELETE": "Bot avatar deleted successfully",
-      "ERROR_DELETE": "Error deleting bot avatar, please try again"
+      "SUCCESS_DELETE": "AI Agent avatar deleted successfully",
+      "ERROR_DELETE": "Error deleting AI Agent avatar, please try again"
     },
     "BOT_CONFIGURATION": {
-      "TITLE": "Select an agent bot",
-      "DESC": "Assign an Agent Bot to your inbox. They can handle initial conversations and transfer them to a live agent when necessary.",
+      "TITLE": "Select an AI Agent",
+      "DESC": "Assign an AI Agent to your inbox. They can handle initial conversations and transfer them to a live agent when necessary.",
       "SUBMIT": "Update",
-      "DISCONNECT": "Disconnect bot",
-      "SUCCESS_MESSAGE": "Successfully updated the agent bot.",
-      "DISCONNECTED_SUCCESS_MESSAGE": "Successfully disconnected the agent bot.",
-      "ERROR_MESSAGE": "Could not update the agent bot. Please try again.",
-      "DISCONNECTED_ERROR_MESSAGE": "Could not disconnect the agent bot. Please try again.",
-      "SELECT_PLACEHOLDER": "Select bot"
+      "DISCONNECT": "Disconnect agent",
+      "SUCCESS_MESSAGE": "Successfully updated the AI Agent.",
+      "DISCONNECTED_SUCCESS_MESSAGE": "Successfully disconnected the AI Agent.",
+      "ERROR_MESSAGE": "Could not update the AI Agent. Please try again.",
+      "DISCONNECTED_ERROR_MESSAGE": "Could not disconnect the AI Agent. Please try again.",
+      "SELECT_PLACEHOLDER": "Select AI Agent"
     },
     "ADD": {
-      "TITLE": "Add Bot",
+      "TITLE": "Add AI Agent",
       "CANCEL_BUTTON_TEXT": "Cancel",
       "API": {
-        "SUCCESS_MESSAGE": "Bot added successfully.",
-        "ERROR_MESSAGE": "Could not add bot. Please try again later."
+        "SUCCESS_MESSAGE": "AI Agent added successfully.",
+        "ERROR_MESSAGE": "Could not add AI Agent. Please try again later."
       }
     },
     "LIST": {
-      "404": "No bots found. You can create a bot by clicking the 'Add Bot' button.",
-      "LOADING": "Fetching bots...",
+      "404": "No AI Agents found. You can create an AI Agent by clicking the 'Add AI Agent' button.",
+      "LOADING": "Fetching AI Agents...",
       "TABLE_HEADER": {
-        "DETAILS": "Bot Details",
+        "DETAILS": "AI Agent Details",
         "URL": "Webhook URL"
       }
     },
     "DELETE": {
       "BUTTON_TEXT": "Delete",
-      "TITLE": "Delete bot",
+      "TITLE": "Delete AI Agent",
       "CONFIRM": {
         "TITLE": "Confirm Deletion",
         "MESSAGE": "Are you sure you want to delete {name}?",
@@ -47,16 +47,16 @@
         "NO": "No, Keep"
       },
       "API": {
-        "SUCCESS_MESSAGE": "Bot deleted successfully.",
-        "ERROR_MESSAGE": "Could not delete bot. Please try again."
+        "SUCCESS_MESSAGE": "AI Agent deleted successfully.",
+        "ERROR_MESSAGE": "Could not delete AI Agent. Please try again."
       }
     },
     "EDIT": {
       "BUTTON_TEXT": "Edit",
-      "TITLE": "Edit bot",
+      "TITLE": "Edit AI Agent",
       "API": {
-        "SUCCESS_MESSAGE": "Bot updated successfully.",
-        "ERROR_MESSAGE": "Could not update bot. Please try again."
+        "SUCCESS_MESSAGE": "AI Agent updated successfully.",
+        "ERROR_MESSAGE": "Could not update AI Agent. Please try again."
       }
     },
     "ACCESS_TOKEN": {
@@ -68,36 +68,131 @@
     },
     "FORM": {
       "AVATAR": {
-        "LABEL": "Bot avatar"
+        "LABEL": "AI Agent avatar"
       },
       "NAME": {
-        "LABEL": "Bot name",
-        "PLACEHOLDER": "Enter bot name",
-        "REQUIRED": "Bot name is required"
+        "LABEL": "AI Agent name",
+        "PLACEHOLDER": "Enter AI Agent name",
+        "REQUIRED": "AI Agent name is required"
       },
       "DESCRIPTION": {
         "LABEL": "Description",
-        "PLACEHOLDER": "What does this bot do?"
+        "PLACEHOLDER": "What does this AI Agent do?"
       },
       "WEBHOOK_URL": {
         "LABEL": "Webhook URL",
         "PLACEHOLDER": "https://example.com/webhook",
         "REQUIRED": "Webhook URL is required"
       },
+      "CONTEXT_PROMPT": {
+        "LABEL": "Context prompt",
+        "PLACEHOLDER": "Enter the context prompt that defines how the AI Agent should behave, its personality, knowledge base, and response guidelines..."
+      },
+      "ENABLE_SIGNATURE": {
+        "LABEL": "Enable signature",
+        "DESCRIPTION": "Add AI Agent signature to messages"
+      },
+      "IS_ACTIVE": {
+        "LABEL": "Active",
+        "DESCRIPTION": "Enable or disable this AI Agent"
+      },
+      "RESPONSE_MODE": {
+        "LABEL": "Response mode",
+        "PLACEHOLDER": "Select response mode",
+        "OPTIONS": {
+          "AUTO_RESPOND": "Auto respond",
+          "ASSIST_AGENT": "Assist agent",
+          "MANUAL_TRIGGER": "Manual trigger"
+        },
+        "DESCRIPTIONS": {
+          "AUTO_RESPOND": "AI Agent automatically responds to all incoming messages",
+          "ASSIST_AGENT": "AI Agent suggests responses that agents can review and send",
+          "MANUAL_TRIGGER": "AI Agent responds only when triggered manually"
+        }
+      },
+      "INBOXES": {
+        "LABEL": "Connected inboxes",
+        "PLACEHOLDER": "Select inboxes to connect",
+        "DESCRIPTION": "Select which inboxes this AI Agent should be active on"
+      },
       "ERRORS": {
-        "NAME": "Bot name is required",
+        "NAME": "AI Agent name is required",
         "URL": "Webhook URL is required",
         "VALID_URL": "Please enter a valid URL starting with http:// or https://"
       },
       "CANCEL": "Cancel",
-      "CREATE": "Create Bot",
-      "UPDATE": "Update Bot"
+      "CREATE": "Create AI Agent",
+      "UPDATE": "Update AI Agent"
     },
     "WEBHOOK": {
-      "DESCRIPTION": "Configure a webhook bot to integrate with your custom services. The bot will receive and process events from conversations and can respond to them."
+      "DESCRIPTION": "Configure a webhook to integrate with your custom AI services. The AI Agent will receive and process events from conversations and can respond to them."
     },
     "TYPES": {
-      "WEBHOOK": "Webhook bot"
+      "WEBHOOK": "Webhook AI Agent"
+    }
+  },
+  "AI_AGENTS": {
+    "DASHBOARD": {
+      "TITLE": "AI Agents Dashboard",
+      "DESCRIPTION": "Monitor the performance and usage of your AI Agents",
+      "CHART_MESSAGES": "Messages over time",
+      "CHART_PERFORMANCE": "Performance metrics",
+      "USAGE_LABEL": "Message usage this month",
+      "SATISFACTION": "Satisfaction",
+      "RESOLUTION_RATE": "Resolution rate",
+      "KPI": {
+        "TOTAL_MESSAGES": "Total messages",
+        "ACTIVE_AGENTS": "Active agents",
+        "AVG_RESPONSE_TIME": "Avg response time",
+        "SATISFACTION": "Satisfaction"
+      }
+    },
+    "MY_AGENTS": {
+      "TITLE": "My Agents",
+      "DESCRIPTION": "Manage your AI Agents and monitor their performance",
+      "CREATE_AGENT": "Create Agent",
+      "STATUS": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "ACTIONS": {
+        "EDIT": "Edit",
+        "DELETE": "Delete"
+      },
+      "EMPTY_STATE": {
+        "TITLE": "No AI Agents yet",
+        "DESCRIPTION": "Get started by acquiring an AI Agent from our marketplace",
+        "CTA": "Go to Marketplace"
+      }
+    },
+    "MARKETPLACE": {
+      "BADGE": "AI Agent Marketplace",
+      "TITLE": "Acquire Your AI Agent",
+      "DESCRIPTION": "Choose the perfect AI Agent plan to automate your customer service and boost your sales",
+      "TRIAL_BANNER": "🎉 Start with 50 free trial messages!",
+      "MONTH": "month",
+      "MESSAGES_LIMIT": "Up to 1,000 messages/month",
+      "SELECT_PLAN": "Select Plan",
+      "BADGES": {
+        "POPULAR": "Most Popular",
+        "COMPLETE": "Most Complete"
+      },
+      "CUSTOM_TITLE": "Need a custom solution?",
+      "CUSTOM_DESCRIPTION": "Contact our team for enterprise plans and custom AI Agent development",
+      "CONTACT_SALES": "Contact Sales",
+      "ALREADY_SUBSCRIBED": "You already have an active subscription for this plan",
+      "START_TRIAL": "Start Free Trial (50 messages)",
+      "SUBSCRIBE_NOW": "Subscribe Now",
+      "TRIAL_STARTED": "Trial started successfully! You have 50 free messages.",
+      "CHECKOUT_SUCCESS": "Subscription activated successfully!",
+      "CHECKOUT_CANCELED": "Checkout was canceled",
+      "CHECKOUT_ERROR": "Error creating checkout session",
+      "ERROR": "An error occurred. Please try again.",
+      "SELECT_PLAN_DIALOG": {
+        "TITLE": "Choose Your Option",
+        "DESCRIPTION": "Select how you want to start with the {plan} plan",
+        "CHOOSE_OPTION": "Start with a free trial or subscribe now for full access:"
+      }
     }
   }
 }

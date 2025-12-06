@@ -47,4 +47,3 @@ class Calendar::SyncEventJob < ApplicationJob
     end
   end
 end
-end

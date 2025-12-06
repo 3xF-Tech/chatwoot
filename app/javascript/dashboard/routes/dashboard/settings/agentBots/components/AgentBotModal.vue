@@ -1,18 +1,30 @@
 <script setup>
-import { ref, computed, reactive, watch } from 'vue';
+import { ref, computed, reactive, watch, onMounted } from 'vue';
 import { useStore, useMapGetter } from 'dashboard/composables/store';
 import { useAlert } from 'dashboard/composables';
 import { useI18n } from 'vue-i18n';
-import { required, helpers, url } from '@vuelidate/validators';
+import { required, helpers } from '@vuelidate/validators';
 import { useVuelidate } from '@vuelidate/core';
 import { copyTextToClipboard } from 'shared/helpers/clipboard';
 import { useToggle } from '@vueuse/core';
+
+// Custom URL validator that accepts localhost and IP addresses
+const isValidWebhookUrl = value => {
+  if (!value) return true;
+  try {
+    const urlObj = new URL(value);
+    return ['http:', 'https:'].includes(urlObj.protocol);
+  } catch {
+    return false;
+  }
+};
 
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
 import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
 import Avatar from 'dashboard/components-next/avatar/Avatar.vue';
+import Switch from 'dashboard/components-next/switch/Switch.vue';
 import AccessToken from 'dashboard/routes/dashboard/settings/profile/AccessToken.vue';
 
 const props = defineProps({
@@ -32,10 +44,17 @@ const MODAL_TYPES = {
   EDIT: 'edit',
 };
 
+const RESPONSE_MODE_OPTIONS = [
+  { id: 'auto_respond', name: 'AUTO_RESPOND' },
+  { id: 'assist_agent', name: 'ASSIST_AGENT' },
+  { id: 'manual_trigger', name: 'MANUAL_TRIGGER' },
+];
+
 const store = useStore();
 const { t } = useI18n();
 const dialogRef = ref(null);
 const uiFlags = useMapGetter('agentBots/getUIFlags');
+const inboxes = useMapGetter('inboxes/getInboxes');
 
 const formState = reactive({
   botName: '',
@@ -43,6 +62,11 @@ const formState = reactive({
   botUrl: '',
   botAvatar: null,
   botAvatarUrl: '',
+  contextPrompt: '',
+  enableSignature: false,
+  isActive: true,
+  responseMode: 'auto_respond',
+  selectedInboxes: [],
 });
 
 const [showAccessToken, toggleAccessToken] = useToggle();
@@ -61,9 +85,9 @@ const v$ = useVuelidate(
         () => t('AGENT_BOTS.FORM.ERRORS.URL'),
         required
       ),
-      url: helpers.withMessage(
+      isValidWebhookUrl: helpers.withMessage(
         () => t('AGENT_BOTS.FORM.ERRORS.VALID_URL'),
-        url
+        isValidWebhookUrl
       ),
     },
   },
@@ -121,6 +145,11 @@ const resetForm = () => {
     botUrl: '',
     botAvatar: null,
     botAvatarUrl: '',
+    contextPrompt: '',
+    enableSignature: false,
+    isActive: true,
+    responseMode: 'auto_respond',
+    selectedInboxes: [],
   });
   v$.value.$reset();
 };
@@ -160,6 +189,11 @@ const handleSubmit = async () => {
     outgoing_url: formState.botUrl,
     bot_type: 'webhook',
     avatar: formState.botAvatar,
+    context_prompt: formState.contextPrompt,
+    enable_signature: formState.enableSignature,
+    is_active: formState.isActive,
+    response_mode: formState.responseMode,
+    inbox_ids: formState.selectedInboxes.map(inbox => inbox.id),
   };
 
   const isCreate = props.type === MODAL_TYPES.CREATE;
@@ -212,11 +246,21 @@ const initializeForm = () => {
       thumbnail,
       bot_config: botConfig,
       access_token: botAccessToken,
+      context_prompt: contextPrompt,
+      enable_signature: enableSignature,
+      is_active: isActive,
+      response_mode: responseMode,
+      inboxes: connectedInboxes,
     } = props.selectedBot;
     formState.botName = name || '';
     formState.botDescription = description || '';
     formState.botUrl = botUrl || botConfig?.webhook_url || '';
     formState.botAvatarUrl = thumbnail || '';
+    formState.contextPrompt = contextPrompt || '';
+    formState.enableSignature = enableSignature ?? false;
+    formState.isActive = isActive ?? true;
+    formState.responseMode = responseMode || 'auto_respond';
+    formState.selectedInboxes = connectedInboxes || [];
 
     if (botAccessToken && props.type === MODAL_TYPES.EDIT) {
       accessToken.value = botAccessToken;
@@ -225,6 +269,10 @@ const initializeForm = () => {
     resetForm();
   }
 };
+
+onMounted(() => {
+  store.dispatch('inboxes/get');
+});
 
 const onCopyToken = async value => {
   await copyTextToClipboard(value);
@@ -316,6 +364,91 @@ defineExpose({ dialogRef });
           :message-type="botUrlError ? 'error' : 'info'"
           @blur="v$.botUrl.$touch()"
         />
+
+        <TextArea
+          id="context-prompt"
+          v-model="formState.contextPrompt"
+          :label="$t('AGENT_BOTS.FORM.CONTEXT_PROMPT.LABEL')"
+          :placeholder="$t('AGENT_BOTS.FORM.CONTEXT_PROMPT.PLACEHOLDER')"
+          :rows="4"
+        />
+
+        <div class="flex flex-col gap-2">
+          <label class="text-sm font-medium text-n-slate-12">
+            {{ $t('AGENT_BOTS.FORM.RESPONSE_MODE.LABEL') }}
+          </label>
+          <div class="flex flex-col gap-2">
+            <label
+              v-for="option in RESPONSE_MODE_OPTIONS"
+              :key="option.id"
+              class="flex items-start gap-3 p-3 border rounded-lg cursor-pointer border-n-weak hover:bg-n-alpha-1"
+              :class="{
+                'bg-n-alpha-2 border-n-brand': formState.responseMode === option.id,
+              }"
+            >
+              <input
+                v-model="formState.responseMode"
+                type="radio"
+                :value="option.id"
+                class="mt-0.5"
+              />
+              <div class="flex flex-col gap-0.5">
+                <span class="text-sm font-medium text-n-slate-12">
+                  {{ $t(`AGENT_BOTS.FORM.RESPONSE_MODE.OPTIONS.${option.name}`) }}
+                </span>
+                <span class="text-xs text-n-slate-11">
+                  {{ $t(`AGENT_BOTS.FORM.RESPONSE_MODE.DESCRIPTIONS.${option.name}`) }}
+                </span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-sm font-medium text-n-slate-12">
+            {{ $t('AGENT_BOTS.FORM.INBOXES.LABEL') }}
+          </label>
+          <p class="text-xs text-n-slate-11">
+            {{ $t('AGENT_BOTS.FORM.INBOXES.DESCRIPTION') }}
+          </p>
+          <multiselect
+            v-model="formState.selectedInboxes"
+            :options="inboxes"
+            track-by="id"
+            label="name"
+            :multiple="true"
+            :close-on-select="false"
+            :clear-on-select="false"
+            :hide-selected="true"
+            :placeholder="$t('AGENT_BOTS.FORM.INBOXES.PLACEHOLDER')"
+            :select-label="$t('FORMS.MULTISELECT.ENTER_TO_SELECT')"
+            :deselect-label="$t('FORMS.MULTISELECT.ENTER_TO_REMOVE')"
+          />
+        </div>
+
+        <div class="flex items-center justify-between p-3 border rounded-lg border-n-weak">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-sm font-medium text-n-slate-12">
+              {{ $t('AGENT_BOTS.FORM.ENABLE_SIGNATURE.LABEL') }}
+            </span>
+            <span class="text-xs text-n-slate-11">
+              {{ $t('AGENT_BOTS.FORM.ENABLE_SIGNATURE.DESCRIPTION') }}
+            </span>
+          </div>
+          <Switch v-model="formState.enableSignature" />
+        </div>
+
+        <div class="flex items-center justify-between p-3 border rounded-lg border-n-weak">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-sm font-medium text-n-slate-12">
+              {{ $t('AGENT_BOTS.FORM.IS_ACTIVE.LABEL') }}
+            </span>
+            <span class="text-xs text-n-slate-11">
+              {{ $t('AGENT_BOTS.FORM.IS_ACTIVE.DESCRIPTION') }}
+            </span>
+          </div>
+          <Switch v-model="formState.isActive" />
+        </div>
       </div>
 
       <div v-if="showAccessTokenInput" class="flex flex-col gap-1">

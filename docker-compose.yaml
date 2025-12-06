@@ -90,12 +90,14 @@ services:
     volumes:
       - postgres:/data/postgres
     environment:
-      - POSTGRES_DB=chatwoot
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=
-
+      - POSTGRES_DATABASE=chatwoot_dev
+      - POSTGRES_HOST=localhost
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=QaRrc79Ft62csKVbPLsV
+      - POSTGRES_PORT=5432
+      - RAILS_ENV=development
   redis:
-    image: redis:alpine
+    image: redis:7-alpine
     restart: always
     command: ["sh", "-c", "redis-server --requirepass \"$REDIS_PASSWORD\""]
     env_file: .env

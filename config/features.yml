@@ -36,7 +36,7 @@
   enabled: true
   help_url: https://chwt.app/hc/help-center
 - name: agent_bots
-  display_name: Agent Bots
+  display_name: AI Agents
   enabled: true
   help_url: https://chwt.app/hc/agent-bots
 - name: macros

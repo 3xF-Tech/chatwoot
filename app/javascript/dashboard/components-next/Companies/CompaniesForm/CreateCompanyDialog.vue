@@ -9,7 +9,7 @@ import { useVuelidate } from '@vuelidate/core';
 import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import Input from 'dashboard/components-next/input/Input.vue';
-import Textarea from 'dashboard/components-next/textarea/Textarea.vue';
+import TextArea from 'dashboard/components-next/textarea/TextArea.vue';
 
 const emit = defineEmits(['created']);
 
@@ -96,7 +96,7 @@ defineExpose({ dialogRef });
           :help-text="t('COMPANIES.FORM.DOMAIN.HELP_TEXT')"
         />
 
-        <Textarea
+        <TextArea
           v-model="formState.description"
           :label="t('COMPANIES.FORM.DESCRIPTION.LABEL')"
           :placeholder="t('COMPANIES.FORM.DESCRIPTION.PLACEHOLDER')"
