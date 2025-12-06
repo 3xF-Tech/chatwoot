@@ -102,7 +102,9 @@ class Api::V1::Accounts::CalendarIntegrationsController < Api::V1::Accounts::Bas
   end
 
   def google_oauth_callback_url
-    "#{ENV.fetch('FRONTEND_URL', request.base_url)}/api/v1/accounts/#{Current.account.id}/calendar_integrations/oauth_callback?provider=google"
+    # Use a fixed callback URL that works for all accounts
+    # The account_id and user_id are passed securely via the state parameter
+    "#{ENV.fetch('FRONTEND_URL', request.base_url)}/google/calendar/callback"
   end
 
   def encode_state(data)

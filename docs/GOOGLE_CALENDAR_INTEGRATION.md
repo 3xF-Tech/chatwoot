@@ -59,25 +59,30 @@ A integração com Google Calendar permite sincronização bidirecional de event
      ```
    - **Authorized redirect URIs**:
      ```
-     http://localhost:3000/api/v1/accounts/1/calendar_integrations/oauth_callback?provider=google
-     https://seu-dominio.com/api/v1/accounts/1/calendar_integrations/oauth_callback?provider=google
+     http://localhost:3000/google/calendar/callback
+     https://seu-dominio.com/google/calendar/callback
      ```
+     
+     > **Nota:** Agora usamos uma callback URL fixa! Não é mais necessário adicionar uma URI por conta.
+     > O account_id e user_id são passados de forma segura via parâmetro `state`.
 5. Copie o **Client ID** e **Client Secret**
 
 ### 4. Configurar Variáveis de Ambiente
 
+O Google Calendar agora usa as **mesmas credenciais** do Google OAuth login.
+
 Adicione ao seu arquivo `.env`:
 
 ```bash
-# Google Calendar OAuth Credentials
-GOOGLE_CALENDAR_CLIENT_ID=seu-client-id.apps.googleusercontent.com
-GOOGLE_CALENDAR_CLIENT_SECRET=seu-client-secret
+# Google OAuth Credentials (usado para login E calendar)
+GOOGLE_OAUTH_CLIENT_ID=seu-client-id.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET=seu-client-secret
 ```
 
-Ou configure via Super Admin em:
-- Settings > Installation Config > Add new config
-- Key: `GOOGLE_CALENDAR_CLIENT_ID`
-- Key: `GOOGLE_CALENDAR_CLIENT_SECRET`
+> **Nota:** Se você precisar credenciais separadas para o Calendar, pode usar:
+> - `GOOGLE_CALENDAR_CLIENT_ID`
+> - `GOOGLE_CALENDAR_CLIENT_SECRET`
+> Mas isso geralmente não é necessário.
 
 ### 5. Reiniciar a Aplicação
 
@@ -223,7 +228,8 @@ app/
 
 ### Erro: "redirect_uri_mismatch"
 - Verifique se a URL de callback está correta no Google Cloud Console
-- O formato deve ser: `{BASE_URL}/api/v1/accounts/{ACCOUNT_ID}/calendar_integrations/oauth_callback?provider=google`
+- O formato é: `{BASE_URL}/google/calendar/callback`
+- Exemplo: `https://chat.3xf.app/google/calendar/callback`
 
 ### Erro: "access_denied"
 - Usuário não está na lista de usuários de teste (se app não publicado)

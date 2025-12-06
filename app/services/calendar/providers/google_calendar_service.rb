@@ -175,13 +175,19 @@ class Calendar::Providers::GoogleCalendarService
   private
 
   def google_client_id
+    # Try calendar-specific first, then fall back to general OAuth credentials
     GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_ID', nil) ||
-      ENV.fetch('GOOGLE_CALENDAR_CLIENT_ID', nil)
+      ENV.fetch('GOOGLE_CALENDAR_CLIENT_ID', nil) ||
+      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil) ||
+      ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', nil)
   end
 
   def google_client_secret
+    # Try calendar-specific first, then fall back to general OAuth credentials
     GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_SECRET', nil) ||
-      ENV.fetch('GOOGLE_CALENDAR_CLIENT_SECRET', nil)
+      ENV.fetch('GOOGLE_CALENDAR_CLIENT_SECRET', nil) ||
+      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_SECRET', nil) ||
+      ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', nil)
   end
 
   def auth_headers(access_token)

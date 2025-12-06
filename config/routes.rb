@@ -632,6 +632,7 @@ Rails.application.routes.draw do
 
   get 'microsoft/callback', to: 'microsoft/callbacks#show'
   get 'google/callback', to: 'google/callbacks#show'
+  get 'google/calendar/callback', to: 'google/calendar_callbacks#show'
   get 'instagram/callback', to: 'instagram/callbacks#show'
   get 'notion/callback', to: 'notion/callbacks#show'
   # ----------------------------------------------------------------------
