@@ -1,16 +1,16 @@
 openapi: '3.0.4'
 info:
-  title: Chatwoot - Application API
-  description: Application API endpoints for Chatwoot
+  title: 3xF CRM - Application API
+  description: Application API endpoints for 3xF CRM
   version: 1.1.0
-  termsOfService: https://www.chatwoot.com/terms-of-service/
+  termsOfService: https://www.3xf.tech/terms-of-service/
   contact:
-    email: hello@chatwoot.com
+    email: hello@3xf.tech
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: https://app.chatwoot.com/
+  - url: https://app.3xf.tech/
 tags:
   - name: Account AgentBots
     description: Manage agent bots within accounts
