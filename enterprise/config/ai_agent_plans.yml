@@ -15,7 +15,8 @@ plans:
     name: "Agente IA - Atendimento"
     description: "Agente para atendimento ao cliente 24/7"
     price_brl: 598.54
-    stripe_price_id: "prod_TY1P0Ibz3CAWWT"  # TODO: Add your Stripe Price ID here (e.g., price_1ABC123...)
+    # Product ID: prod_TY1P0Ibz3CAWWT
+    stripe_price_id: "price_1SavMQE2jP664CESYvWC4e8U"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
@@ -28,7 +29,8 @@ plans:
     name: "Agente IA - Agendamento"
     description: "Agente especializado em agendamentos"
     price_brl: 878.69
-    stripe_price_id: "prod_TY1RbfbjiN2Im8"  # TODO: Add your Stripe Price ID here
+    # Product ID: prod_TY1RbfbjiN2Im8
+    stripe_price_id: "price_1SavP1E2jP664CESE0tAtGmG"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
@@ -42,7 +44,8 @@ plans:
     name: "Agente IA - SDR"
     description: "Agente de vendas e qualificação de leads"
     price_brl: 987.92
-    stripe_price_id: "prod_TY1TTzRVQaeGJa"  # TODO: Add your Stripe Price ID here
+    # Product ID: prod_TY1TTzRVQaeGJa
+    stripe_price_id: "price_1SavQRE2jP664CESX0RRabIG"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
