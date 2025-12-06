@@ -167,14 +167,14 @@ const formatDate = dateStr => {
           <div class="flex gap-2">
             <template v-if="googleIntegration">
               <Button
-                variant="faint"
+                variant="ghost"
                 size="sm"
                 :label="$t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.SYNC')"
                 :is-loading="isSyncing"
                 @click="handleSync"
               />
               <Button
-                variant="faint"
+                variant="ghost"
                 size="sm"
                 color="ruby"
                 :label="$t('INTEGRATION_SETTINGS.GOOGLE_CALENDAR.DISCONNECT')"

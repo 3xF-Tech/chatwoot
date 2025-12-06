@@ -1,3 +1,4 @@
+/* global axios */
 import ApiClient from './ApiClient';
 
 class CalendarIntegrationsAPI extends ApiClient {
@@ -6,22 +7,22 @@ class CalendarIntegrationsAPI extends ApiClient {
   }
 
   getAuthUrl(provider) {
-    return this.axiosInstance.get(`${this.url}/auth_url?provider=${provider}`);
+    return axios.get(`${this.url}/auth_url?provider=${provider}`);
   }
 
   handleCallback(provider, code) {
-    return this.axiosInstance.post(`${this.url}/callback`, {
+    return axios.post(`${this.url}/callback`, {
       provider,
       code,
     });
   }
 
   sync(integrationId) {
-    return this.axiosInstance.post(`${this.url}/${integrationId}/sync`);
+    return axios.post(`${this.url}/${integrationId}/sync`);
   }
 
   getCalendars(integrationId) {
-    return this.axiosInstance.get(`${this.url}/${integrationId}/calendars`);
+    return axios.get(`${this.url}/${integrationId}/calendars`);
   }
 }
 

@@ -43,11 +43,12 @@ class Google::CalendarCallbacksController < ApplicationController
     )
 
     integration.update!(
-      email: user_info['email'],
+      provider_email: user_info['email'],
       access_token: tokens['access_token'],
       refresh_token: tokens['refresh_token'] || integration.refresh_token,
       token_expires_at: Time.current + tokens['expires_in'].to_i.seconds,
-      sync_enabled: true
+      calendar_id: 'primary',
+      sync_status: 'pending'
     )
 
     # Redirect to the calendar settings page

@@ -176,18 +176,20 @@ class Calendar::Providers::GoogleCalendarService
 
   def google_client_id
     # Try calendar-specific first, then fall back to general OAuth credentials
-    GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_ID', nil) ||
-      ENV.fetch('GOOGLE_CALENDAR_CLIENT_ID', nil) ||
-      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil) ||
-      ENV.fetch('GOOGLE_OAUTH_CLIENT_ID', nil)
+    # Check ENV directly first for faster local development
+    ENV['GOOGLE_CALENDAR_CLIENT_ID'].presence ||
+      ENV['GOOGLE_OAUTH_CLIENT_ID'].presence ||
+      GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_ID', nil) ||
+      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_ID', nil)
   end
 
   def google_client_secret
     # Try calendar-specific first, then fall back to general OAuth credentials
-    GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_SECRET', nil) ||
-      ENV.fetch('GOOGLE_CALENDAR_CLIENT_SECRET', nil) ||
-      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_SECRET', nil) ||
-      ENV.fetch('GOOGLE_OAUTH_CLIENT_SECRET', nil)
+    # Check ENV directly first for faster local development
+    ENV['GOOGLE_CALENDAR_CLIENT_SECRET'].presence ||
+      ENV['GOOGLE_OAUTH_CLIENT_SECRET'].presence ||
+      GlobalConfigService.load('GOOGLE_CALENDAR_CLIENT_SECRET', nil) ||
+      GlobalConfigService.load('GOOGLE_OAUTH_CLIENT_SECRET', nil)
   end
 
   def auth_headers(access_token)

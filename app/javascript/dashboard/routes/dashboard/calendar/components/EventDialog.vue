@@ -330,7 +330,7 @@ onMounted(() => {
         <!-- Actions -->
         <div class="flex justify-end gap-2 pt-4">
           <Button
-            variant="faint"
+            variant="ghost"
             :label="t('CALENDAR.EVENT_DIALOG.CANCEL')"
             @click="emit('close')"
           />

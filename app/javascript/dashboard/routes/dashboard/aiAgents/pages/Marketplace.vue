@@ -7,7 +7,6 @@ import { useAlert } from 'dashboard/composables';
 
 import Button from 'dashboard/components-next/button/Button.vue';
 import PricingCard from '../components/PricingCard.vue';
-import Dialog from 'dashboard/components-next/dialog/Dialog.vue';
 
 const { t } = useI18n();
 const store = useStore();
@@ -15,9 +14,7 @@ const route = useRoute();
 
 const subscriptions = useMapGetter('aiAgentSubscriptions/getSubscriptions');
 const uiFlags = useMapGetter('aiAgentSubscriptions/getUIFlags');
-
-const selectedPlan = ref(null);
-const confirmDialogRef = ref(null);
+const isCheckingOut = ref(false);
 
 // Pricing tiers data
 const pricingTiers = [
@@ -83,47 +80,45 @@ const enhancedTiers = computed(() =>
   }))
 );
 
-const handleSelectPlan = tier => {
+// Ir direto para checkout do Stripe
+const handleSelectPlan = async tier => {
+  console.log('[Marketplace] handleSelectPlan - tier:', tier.id);
+  
   if (tier.isActive) {
     useAlert(t('AI_AGENTS.MARKETPLACE.ALREADY_SUBSCRIBED'));
     return;
   }
-  selectedPlan.value = tier;
-  confirmDialogRef.value?.open();
-};
 
-const handleStartTrial = async () => {
-  if (!selectedPlan.value) return;
-
+  isCheckingOut.value = true;
+  
   try {
-    await store.dispatch('aiAgentSubscriptions/startTrial', selectedPlan.value.id);
-    useAlert(t('AI_AGENTS.MARKETPLACE.TRIAL_STARTED'));
-    confirmDialogRef.value?.close();
-  } catch (error) {
-    useAlert(error.response?.data?.error || t('AI_AGENTS.MARKETPLACE.ERROR'));
-  }
-};
-
-const handleCheckout = async () => {
-  if (!selectedPlan.value) return;
-
-  try {
-    const response = await store.dispatch(
-      'aiAgentSubscriptions/checkout',
-      selectedPlan.value.id
-    );
-    if (response.checkout_url) {
+    console.log('[Marketplace] Iniciando checkout para:', tier.id);
+    const response = await store.dispatch('aiAgentSubscriptions/checkout', tier.id);
+    console.log('[Marketplace] Resposta do checkout:', response);
+    
+    if (response?.checkout_url) {
+      console.log('[Marketplace] Redirecionando para:', response.checkout_url);
       window.location.href = response.checkout_url;
     } else {
+      console.error('[Marketplace] Nenhuma checkout_url na resposta:', response);
       useAlert(t('AI_AGENTS.MARKETPLACE.CHECKOUT_ERROR'));
     }
   } catch (error) {
+    console.error('[Marketplace] Erro no checkout:', error);
     useAlert(error.response?.data?.error || t('AI_AGENTS.MARKETPLACE.ERROR'));
+  } finally {
+    isCheckingOut.value = false;
   }
 };
 
 onMounted(async () => {
-  await store.dispatch('aiAgentSubscriptions/fetchSubscriptions');
+  console.log('[Marketplace] onMounted - carregando subscriptions');
+  try {
+    await store.dispatch('aiAgentSubscriptions/fetchSubscriptions');
+    console.log('[Marketplace] Subscriptions carregadas:', subscriptions.value);
+  } catch (error) {
+    console.error('[Marketplace] Erro ao carregar subscriptions:', error);
+  }
 
   // Handle checkout callback
   if (route.query.checkout === 'success') {
@@ -168,7 +163,7 @@ onMounted(async () => {
         v-for="tier in enhancedTiers"
         :key="tier.id"
         :tier="tier"
-        :is-loading="uiFlags.isCreating"
+        :is-loading="isCheckingOut"
         @select="handleSelectPlan"
       />
     </div>
@@ -191,37 +186,5 @@ onMounted(async () => {
         class="transition-all duration-200 hover:scale-105"
       />
     </div>
-
-    <!-- Plan Selection Dialog -->
-    <Dialog
-      ref="confirmDialogRef"
-      :title="t('AI_AGENTS.MARKETPLACE.SELECT_PLAN_DIALOG.TITLE')"
-      :description="t('AI_AGENTS.MARKETPLACE.SELECT_PLAN_DIALOG.DESCRIPTION', { plan: selectedPlan?.name })"
-    >
-      <template #content>
-        <div class="flex flex-col gap-4 p-4">
-          <div class="text-sm text-n-slate-11">
-            {{ t('AI_AGENTS.MARKETPLACE.SELECT_PLAN_DIALOG.CHOOSE_OPTION') }}
-          </div>
-          <div class="flex flex-col gap-3">
-            <Button
-              icon="i-lucide-gift"
-              :label="t('AI_AGENTS.MARKETPLACE.START_TRIAL')"
-              class="w-full justify-center"
-              :is-loading="uiFlags.isCreating"
-              @click="handleStartTrial"
-            />
-            <Button
-              icon="i-lucide-credit-card"
-              :label="t('AI_AGENTS.MARKETPLACE.SUBSCRIBE_NOW')"
-              class="w-full justify-center"
-              slate
-              :is-loading="uiFlags.isCreating"
-              @click="handleCheckout"
-            />
-          </div>
-        </div>
-      </template>
-    </Dialog>
   </div>
 </template>

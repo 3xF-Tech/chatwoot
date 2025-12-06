@@ -28,7 +28,7 @@ const providers = [
   {
     id: 'outlook',
     name: 'Microsoft Outlook',
-    icon: 'mail',
+    icon: 'contact-card',
     description: 'Sync events with your Microsoft Outlook calendar',
     disabled: true,
     comingSoon: true,
@@ -36,7 +36,7 @@ const providers = [
   {
     id: 'calendly',
     name: 'Calendly',
-    icon: 'clock',
+    icon: 'book-clock',
     description: 'Connect Calendly for scheduling meetings',
     disabled: true,
     comingSoon: true,
@@ -57,6 +57,8 @@ const handleConnect = async providerId => {
     );
     if (response && response.auth_url) {
       window.location.href = response.auth_url;
+    } else {
+      useAlert('Failed to get authorization URL');
     }
   } catch (error) {
     const errorMessage =
@@ -156,13 +158,13 @@ onMounted(async () => {
           <div class="flex gap-2">
             <template v-if="getIntegrationForProvider(provider.id)">
               <Button
-                variant="faint"
+                variant="ghost"
                 size="sm"
                 label="Sync"
                 @click="handleSync(getIntegrationForProvider(provider.id).id)"
               />
               <Button
-                variant="faint"
+                variant="ghost"
                 size="sm"
                 color="ruby"
                 label="Disconnect"
@@ -183,7 +185,7 @@ onMounted(async () => {
               />
               <Button
                 v-else
-                variant="faint"
+                variant="ghost"
                 size="sm"
                 label="Connect"
                 disabled
@@ -192,30 +194,6 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Info Section -->
-    <div class="mt-8 rounded-lg border border-n-weak bg-n-alpha-1 p-4">
-      <h2 class="text-base font-medium text-n-slate-12 mb-2">
-        About Calendar Integration
-      </h2>
-      <p class="text-sm text-n-slate-11 mb-3">
-        To connect Google Calendar, you need to configure OAuth credentials in
-        your environment. Contact your administrator to set up the following
-        environment variables:
-      </p>
-      <ul class="text-sm text-n-slate-11 space-y-1 list-disc list-inside">
-        <li>
-          <code class="bg-n-alpha-2 px-1 rounded"
-            >GOOGLE_CALENDAR_CLIENT_ID</code
-          >
-        </li>
-        <li>
-          <code class="bg-n-alpha-2 px-1 rounded"
-            >GOOGLE_CALENDAR_CLIENT_SECRET</code
-          >
-        </li>
-      </ul>
     </div>
   </div>
 </template>

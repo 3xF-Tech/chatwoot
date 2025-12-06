@@ -90,7 +90,7 @@ const viewOptions = [
       </div>
 
       <Button
-        variant="faint"
+        variant="ghost"
         size="sm"
         :label="t('CALENDAR.TODAY')"
         @click="emit('today')"

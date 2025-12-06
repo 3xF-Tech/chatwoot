@@ -288,7 +288,7 @@ leadsquared:
 google_calendar:
   id: google_calendar
   feature_flag: calendar
-  logo: google-calendar.png
+  logo: google_calendar.png
   i18n_key: google_calendar
   action: /google_calendar
   hook_type: account

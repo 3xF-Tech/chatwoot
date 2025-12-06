@@ -232,7 +232,7 @@ const colorClass = computed(() => {
         <!-- Actions -->
         <div class="flex justify-end gap-2 mt-6 pt-4 border-t border-n-weak">
           <Button
-            variant="faint"
+            variant="ghost"
             color="ruby"
             size="sm"
             icon="delete"

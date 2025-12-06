@@ -75,7 +75,7 @@ Rails.application.routes.draw do
             delete :avatar, on: :member
             post :reset_access_token, on: :member
           end
-          resources :ai_agent_subscriptions, only: [:index, :show, :create], controller: 'enterprise/api/v1/accounts/ai_agent_subscriptions' do
+          resources :ai_agent_subscriptions, only: [:index, :show, :create] do
             collection do
               get :plans
               get :usage

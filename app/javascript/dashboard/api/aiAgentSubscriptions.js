@@ -1,8 +1,9 @@
+/* global axios */
 import ApiClient from './ApiClient';
 
 class AiAgentSubscriptionsAPI extends ApiClient {
   constructor() {
-    super('ai_agent_subscriptions', { accountScoped: true, enterprise: true });
+    super('ai_agent_subscriptions', { accountScoped: true });
   }
 
   getPlans() {
