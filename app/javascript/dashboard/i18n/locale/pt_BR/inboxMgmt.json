@@ -220,8 +220,8 @@
         }
       },
       "WHATSAPP": {
-        "TITLE": "Canal do WhatsApp",
-        "DESC": "Comece a oferecer suporte a seus clientes pelo WhatsApp.",
+        "TITLE": "Canal WhatsApp API",
+        "DESC": "Comece a oferecer suporte a seus clientes via WhatsApp Business API.",
         "PROVIDERS": {
           "LABEL": "Provedor de API",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
@@ -303,6 +303,54 @@
         },
         "API": {
           "ERROR_MESSAGE": "Não foi possível salvar o canal do WhatsApp"
+        }
+      },
+      "WHATSAPP_WEB": {
+        "TITLE": "Canal WhatsApp Web",
+        "DESC": "Conecte seu WhatsApp via QR Code. Não requer verificação empresarial.",
+        "INBOX_NAME": {
+          "LABEL": "Nome da Caixa de Entrada",
+          "PLACEHOLDER": "Digite um nome para sua caixa de entrada",
+          "ERROR": "Este campo é obrigatório"
+        },
+        "INSTANCE_NAME": {
+          "LABEL": "Nome da Instância",
+          "PLACEHOLDER": "Digite um nome único para a instância (sem espaços)",
+          "ERROR": "Nome da instância é obrigatório e não pode conter espaços"
+        },
+        "CONNECTION": {
+          "TITLE": "Conecte seu WhatsApp",
+          "DESCRIPTION": "Escaneie o QR code com seu aplicativo WhatsApp para conectar",
+          "QR_CODE": "QR Code",
+          "WAITING_QR": "Gerando QR Code...",
+          "SCAN_INSTRUCTIONS": "Abra o WhatsApp no seu celular, vá em Configurações > Aparelhos conectados > Conectar um aparelho, e escaneie este QR code",
+          "STATUS": {
+            "CONNECTING": "Conectando...",
+            "CONNECTED": "Conectado",
+            "DISCONNECTED": "Desconectado",
+            "WAITING": "Aguardando conexão..."
+          },
+          "REFRESH_QR": "Atualizar QR Code",
+          "QR_EXPIRED": "QR Code expirado. Clique para atualizar."
+        },
+        "RECONNECT": {
+          "TITLE": "Reconectar WhatsApp",
+          "DESCRIPTION": "Sua conexão com o WhatsApp foi perdida. Escaneie o QR code novamente para reconectar.",
+          "BUTTON": "Reconectar"
+        },
+        "SETTINGS": {
+          "REJECT_CALLS": "Rejeitar chamadas recebidas",
+          "IGNORE_GROUPS": "Ignorar mensagens de grupos",
+          "ALWAYS_ONLINE": "Sempre mostrar status online",
+          "READ_MESSAGES": "Marcar mensagens como lidas",
+          "SYNC_HISTORY": "Sincronizar histórico completo de mensagens"
+        },
+        "SUBMIT_BUTTON": "Criar Canal WhatsApp Web",
+        "API": {
+          "ERROR_MESSAGE": "Não foi possível criar o canal WhatsApp Web",
+          "ERROR_INSTANCE": "Falha ao criar instância na Evolution API",
+          "ERROR_QR": "Falha ao gerar QR Code",
+          "ERROR_STATUS": "Falha ao verificar status da conexão"
         }
       },
       "VOICE": {
@@ -440,8 +488,12 @@
             "DESCRIPTION": "Conectar sua página do Facebook"
           },
           "WHATSAPP": {
-            "TITLE": "WhatsApp",
-            "DESCRIPTION": "Atenda seus clientes no WhatsApp"
+            "TITLE": "WhatsApp API",
+            "DESCRIPTION": "Atenda seus Clientes via Whatsapp API Oficial"
+          },
+          "WHATSAPP_WEB": {
+            "TITLE": "WhatsApp Web",
+            "DESCRIPTION": "Conecte via QR Code"
           },
           "EMAIL": {
             "TITLE": "e-mail",

@@ -220,8 +220,8 @@
         }
       },
       "WHATSAPP": {
-        "TITLE": "WhatsApp Channel",
-        "DESC": "Start supporting your customers via WhatsApp.",
+        "TITLE": "WhatsApp API Channel",
+        "DESC": "Start supporting your customers via WhatsApp Business API.",
         "PROVIDERS": {
           "LABEL": "API Provider",
           "WHATSAPP_EMBEDDED": "WhatsApp Business",
@@ -303,6 +303,54 @@
         },
         "API": {
           "ERROR_MESSAGE": "We were not able to save the WhatsApp channel"
+        }
+      },
+      "WHATSAPP_WEB": {
+        "TITLE": "WhatsApp Web Channel",
+        "DESC": "Connect your WhatsApp via QR Code. No business verification required.",
+        "INBOX_NAME": {
+          "LABEL": "Inbox Name",
+          "PLACEHOLDER": "Enter a name for your inbox",
+          "ERROR": "This field is required"
+        },
+        "INSTANCE_NAME": {
+          "LABEL": "Instance Name",
+          "PLACEHOLDER": "Enter a unique instance name (no spaces)",
+          "ERROR": "Instance name is required and must not contain spaces"
+        },
+        "CONNECTION": {
+          "TITLE": "Connect your WhatsApp",
+          "DESCRIPTION": "Scan the QR code with your WhatsApp app to connect",
+          "QR_CODE": "QR Code",
+          "WAITING_QR": "Generating QR Code...",
+          "SCAN_INSTRUCTIONS": "Open WhatsApp on your phone, go to Settings > Linked Devices > Link a Device, and scan this QR code",
+          "STATUS": {
+            "CONNECTING": "Connecting...",
+            "CONNECTED": "Connected",
+            "DISCONNECTED": "Disconnected",
+            "WAITING": "Waiting for connection..."
+          },
+          "REFRESH_QR": "Refresh QR Code",
+          "QR_EXPIRED": "QR Code expired. Click to refresh."
+        },
+        "RECONNECT": {
+          "TITLE": "Reconnect WhatsApp",
+          "DESCRIPTION": "Your WhatsApp connection was lost. Scan the QR code again to reconnect.",
+          "BUTTON": "Reconnect"
+        },
+        "SETTINGS": {
+          "REJECT_CALLS": "Reject incoming calls",
+          "IGNORE_GROUPS": "Ignore group messages",
+          "ALWAYS_ONLINE": "Always show online status",
+          "READ_MESSAGES": "Mark messages as read",
+          "SYNC_HISTORY": "Sync full message history"
+        },
+        "SUBMIT_BUTTON": "Create WhatsApp Web Channel",
+        "API": {
+          "ERROR_MESSAGE": "We were not able to create the WhatsApp Web channel",
+          "ERROR_INSTANCE": "Failed to create Evolution API instance",
+          "ERROR_QR": "Failed to generate QR Code",
+          "ERROR_STATUS": "Failed to check connection status"
         }
       },
       "VOICE": {
@@ -444,8 +492,12 @@
             "DESCRIPTION": "Connect your Facebook page"
           },
           "WHATSAPP": {
-            "TITLE": "WhatsApp",
-            "DESCRIPTION": "Support your customers on WhatsApp"
+            "TITLE": "WhatsApp API",
+            "DESCRIPTION": "Support your customers via Official WhatsApp API"
+          },
+          "WHATSAPP_WEB": {
+            "TITLE": "WhatsApp Web",
+            "DESCRIPTION": "Connect via QR Code"
           },
           "EMAIL": {
             "TITLE": "Email",

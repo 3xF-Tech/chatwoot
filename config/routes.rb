@@ -274,6 +274,16 @@ Rails.application.routes.draw do
             post :sync_templates, on: :member
             get :health, on: :member
           end
+
+          # Evolution API (WhatsApp Web) routes
+          resources :evolution_instances, only: [:create, :show, :destroy] do
+            member do
+              get :qrcode
+              get :status
+              delete :disconnect
+            end
+          end
+
           resources :inbox_members, only: [:create, :show], param: :inbox_id do
             collection do
               delete :destroy
