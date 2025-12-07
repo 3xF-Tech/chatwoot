@@ -42,12 +42,20 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
   end
 
   def qrcode
+    # First check if already connected
+    if @channel.connected?
+      render json: { state: 'open' }
+      return
+    end
+
     result = @channel.fetch_qr_code
 
-    if result[:success]
-      render json: { qrcode: result[:qrcode] }
+    if result[:success] && result[:qrcode].present?
+      render json: { base64: result[:qrcode], state: 'connecting' }
+    elsif result[:error]&.include?('connected')
+      render json: { state: 'open' }
     else
-      render json: { error: result[:error] }, status: :unprocessable_entity
+      render json: { error: result[:error] || 'Failed to generate QR code' }, status: :unprocessable_entity
     end
   end
 
@@ -55,8 +63,9 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     result = @channel.check_connection_status
 
     if result[:success]
+      state = @channel.connected? ? 'open' : 'close'
       render json: {
-        status: @channel.connection_status,
+        state: state,
         connected: @channel.connected?,
         phone_number: @channel.phone_number
       }

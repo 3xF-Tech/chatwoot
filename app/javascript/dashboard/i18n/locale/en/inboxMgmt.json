@@ -670,6 +670,7 @@
       "WIDGET_BUILDER": "Widget Builder",
       "BOT_CONFIGURATION": "Bot Configuration",
       "ACCOUNT_HEALTH": "Account Health",
+      "CONNECTION": "Connection",
       "CSAT": "CSAT"
     },
     "ACCOUNT_HEALTH": {
@@ -1061,6 +1062,7 @@
       "TWITTER_PROFILE": "Twitter",
       "TWILIO_SMS": "Twilio SMS",
       "WHATSAPP": "WhatsApp",
+      "WHATSAPP_WEB": "WhatsApp Web",
       "SMS": "SMS",
       "EMAIL": "Email",
       "TELEGRAM": "Telegram",
@@ -1068,6 +1070,36 @@
       "API": "API Channel",
       "INSTAGRAM": "Instagram",
       "VOICE": "Voice"
+    },
+    "WHATSAPP_WEB": {
+      "TITLE": "WhatsApp Web Connection",
+      "DESCRIPTION": "Manage your WhatsApp Web connection status and reconnect if needed.",
+      "CONNECTION_STATUS": "Connection Status",
+      "STATUS": {
+        "CONNECTED": "Connected",
+        "CONNECTING": "Connecting...",
+        "DISCONNECTED": "Disconnected",
+        "UNKNOWN": "Unknown"
+      },
+      "SCAN_QR": "Scan this QR code with your WhatsApp app to connect",
+      "QR_HELP": "Open WhatsApp on your phone > Settings > Linked Devices > Link a Device",
+      "INSTANCE_NAME": "Instance Name",
+      "PHONE_NUMBER": "Phone Number",
+      "ACTIONS": {
+        "SHOW_QR": "Show QR Code",
+        "DISCONNECT": "Disconnect",
+        "REFRESH": "Refresh Status"
+      },
+      "SUCCESS": {
+        "CONNECTED": "WhatsApp connected successfully!",
+        "DISCONNECTED": "WhatsApp disconnected successfully",
+        "ALREADY_CONNECTED": "WhatsApp is already connected"
+      },
+      "ERROR": {
+        "FETCH_STATUS": "Failed to fetch connection status",
+        "FETCH_QR": "Failed to fetch QR code",
+        "DISCONNECT": "Failed to disconnect WhatsApp"
+      }
     }
   }
 }

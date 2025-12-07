@@ -23,6 +23,7 @@ import CollaboratorsPage from './settingsPage/CollaboratorsPage.vue';
 import WidgetBuilder from './WidgetBuilder.vue';
 import BotConfiguration from './components/BotConfiguration.vue';
 import AccountHealth from './components/AccountHealth.vue';
+import WhatsappWebConfiguration from './channels/whatsappWeb/Configuration.vue';
 import { FEATURE_FLAGS } from '../../../../featureFlags';
 import SenderNameExamplePreview from './components/SenderNameExamplePreview.vue';
 import NextButton from 'dashboard/components-next/button/Button.vue';
@@ -50,6 +51,7 @@ export default {
     NextButton,
     InstagramReauthorize,
     WhatsappReauthorize,
+    WhatsappWebConfiguration,
     DuplicateInboxBanner,
     Editor,
     Avatar,
@@ -187,6 +189,16 @@ export default {
           {
             key: 'whatsapp-health',
             name: this.$t('INBOX_MGMT.TABS.ACCOUNT_HEALTH'),
+          },
+        ];
+      }
+
+      if (this.isAWhatsAppWebChannel) {
+        visibleToAllChannelTabs = [
+          ...visibleToAllChannelTabs,
+          {
+            key: 'whatsapp-web-connection',
+            name: this.$t('INBOX_MGMT.TABS.CONNECTION'),
           },
         ];
       }
@@ -942,6 +954,9 @@ export default {
       </div>
       <div v-if="selectedTabKey === 'whatsapp-health'">
         <AccountHealth :health-data="healthData" />
+      </div>
+      <div v-if="selectedTabKey === 'whatsapp-web-connection'">
+        <WhatsappWebConfiguration :inbox="inbox" />
       </div>
     </section>
   </div>
