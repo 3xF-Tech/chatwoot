@@ -318,6 +318,12 @@
           "PLACEHOLDER": "Enter a unique instance name (no spaces)",
           "ERROR": "Instance name is required and must not contain spaces"
         },
+        "PHONE_NUMBER": {
+          "LABEL": "Phone Number",
+          "PLACEHOLDER": "+5511999999999",
+          "ERROR": "Enter a valid phone number with country code (e.g. +5511999999999)",
+          "HELP": "Enter the phone number that will be connected to WhatsApp, including country code"
+        },
         "CONNECTION": {
           "TITLE": "Connect your WhatsApp",
           "DESCRIPTION": "Scan the QR code with your WhatsApp app to connect",

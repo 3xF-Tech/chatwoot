@@ -3,54 +3,33 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
   before_action :fetch_inbox_and_channel, only: [:show, :qrcode, :status, :disconnect, :destroy]
 
   def create
-    ActiveRecord::Base.transaction do
-      # 1. Create the channel
-      @channel = Channel::WhatsappWeb.create!(
-        instance_name: sanitized_instance_name,
-        account_id: Current.account.id,
-        connection_status: 'connecting',
-        provider_config: {
-          reject_call: instance_params[:reject_call] || true,
-          groups_ignore: instance_params[:groups_ignore] || true,
-          always_online: instance_params[:always_online] || true,
-          read_messages: instance_params[:read_messages] || true,
-          sync_full_history: instance_params[:sync_full_history] || true
-        }
-      )
+    # Call Evolution API to create instance
+    # Evolution will automatically create the inbox in Chatwoot via chatwootAutoCreate: true
+    result = evolution_service.create_instance(
+      instance_name: sanitized_instance_name,
+      inbox_name: instance_params[:inbox_name] || "WhatsApp #{sanitized_instance_name}",
+      phone_number: instance_params[:phone_number],
+      reject_call: instance_params[:reject_call],
+      groups_ignore: instance_params[:groups_ignore],
+      always_online: instance_params[:always_online],
+      read_messages: instance_params[:read_messages],
+      sync_full_history: instance_params[:sync_full_history],
+      days_limit_import_messages: instance_params[:days_limit_import_messages]
+    )
 
-      # 2. Create the inbox
-      @inbox = Current.account.inboxes.create!(
-        name: instance_params[:inbox_name] || "WhatsApp #{sanitized_instance_name}",
-        channel: @channel
-      )
-
-      # 3. Create instance on Evolution API (passing our inbox_id)
-      result = evolution_service.create_instance(
-        instance_params.merge(
-          instance_name: sanitized_instance_name,
-          inbox_id: @inbox.id
-        )
-      )
-
-      unless result[:success]
-        raise ActiveRecord::Rollback, result[:error]
-      end
-
-      # 4. Update channel with any returned data
-      @channel.update(connection_status: 'waiting_qr')
-
+    if result[:success]
       render json: {
         success: true,
-        inbox_id: @inbox.id,
         instance_name: sanitized_instance_name,
         qrcode: result[:qrcode],
         status: 'waiting_qr'
       }, status: :created
+    else
+      render json: { success: false, error: result[:error] }, status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
   rescue StandardError => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    Rails.logger.error("Evolution API Error: #{e.message}")
+    render json: { success: false, error: e.message }, status: :unprocessable_entity
   end
 
   def show
@@ -134,7 +113,8 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     @evolution_service ||= EvolutionApiService.new(
       api_url: ENV.fetch('EVOLUTION_API_URL', nil),
       api_key: ENV.fetch('EVOLUTION_API_KEY', nil),
-      account: Current.account
+      account: Current.account,
+      user: Current.user
     )
   end
 
@@ -146,11 +126,13 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     params.permit(
       :instance_name,
       :inbox_name,
+      :phone_number,
       :reject_call,
       :groups_ignore,
       :always_online,
       :read_messages,
-      :sync_full_history
+      :sync_full_history,
+      :days_limit_import_messages
     )
   end
 end

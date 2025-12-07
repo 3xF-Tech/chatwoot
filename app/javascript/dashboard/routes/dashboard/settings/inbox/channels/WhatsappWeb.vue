@@ -15,6 +15,7 @@ const { accountId } = useAccount();
 // Form state
 const inboxName = ref('');
 const instanceName = ref('');
+const phoneNumber = ref('');
 
 // Settings
 const rejectCalls = ref(true);
@@ -30,7 +31,7 @@ const qrCodeData = ref(null);
 const connectionStatus = ref('idle'); // idle, creating, waiting_qr, connected, error
 const errorMessage = ref('');
 const statusCheckInterval = ref(null);
-const createdInboxId = ref(null); // Store the inbox ID after creation
+const createdInstanceName = ref(null); // Store the instance name after creation
 
 // Steps
 const STEPS = {
@@ -41,7 +42,11 @@ const STEPS = {
 const currentStep = ref(STEPS.FORM);
 
 const isFormValid = computed(() => {
-  return inboxName.value.trim() !== '' && instanceName.value.trim() !== '' && !instanceName.value.includes(' ');
+  return inboxName.value.trim() !== '' && 
+         instanceName.value.trim() !== '' && 
+         !instanceName.value.includes(' ') &&
+         phoneNumber.value.trim() !== '' &&
+         /^\+\d{10,15}$/.test(phoneNumber.value.replace(/\s/g, ''));
 });
 
 const sanitizedInstanceName = computed(() => {
@@ -59,6 +64,7 @@ const createInstance = async () => {
     const response = await evolutionApi.createInstance({
       instance_name: sanitizedInstanceName.value,
       inbox_name: inboxName.value,
+      phone_number: phoneNumber.value.replace(/\s/g, ''),
       reject_call: rejectCalls.value,
       groups_ignore: ignoreGroups.value,
       always_online: alwaysOnline.value,
@@ -67,11 +73,11 @@ const createInstance = async () => {
     });
 
     if (response.data.success) {
-      createdInboxId.value = response.data.inbox_id;
+      createdInstanceName.value = response.data.instance_name;
       qrCodeData.value = response.data.qrcode;
       currentStep.value = STEPS.QR_CODE;
       connectionStatus.value = 'waiting_qr';
-      startStatusPolling();
+      // Note: Status polling removed - Evolution API will create inbox automatically when connected
       useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.WAITING_QR'));
     } else {
       throw new Error(response.data.error || 'Failed to create instance');
@@ -87,20 +93,15 @@ const createInstance = async () => {
 };
 
 const refreshQrCode = async () => {
-  if (!createdInboxId.value) return;
+  if (!createdInstanceName.value) return;
 
   isLoading.value = true;
   errorMessage.value = '';
 
   try {
-    const response = await evolutionApi.getQrCode(createdInboxId.value);
-
-    if (response.data.qrcode) {
-      qrCodeData.value = response.data.qrcode;
-      connectionStatus.value = 'waiting_qr';
-    } else {
-      throw new Error('No QR code received');
-    }
+    // For now, we can't refresh QR code without Evolution API endpoint for instance-based refresh
+    // The user should restart the process if QR expires
+    useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.QR_EXPIRED'));
   } catch (error) {
     console.error('Error refreshing QR code:', error);
     errorMessage.value = t('INBOX_MGMT.ADD.WHATSAPP_WEB.API.ERROR_QR');
@@ -110,34 +111,16 @@ const refreshQrCode = async () => {
   }
 };
 
-const checkConnectionStatus = async () => {
-  if (!createdInboxId.value) return;
-
-  try {
-    const response = await evolutionApi.getConnectionStatus(createdInboxId.value);
-
-    if (response.data.connected) {
-      connectionStatus.value = 'connected';
-      currentStep.value = STEPS.CONNECTED;
-      stopStatusPolling();
-      useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.STATUS.CONNECTED'));
-
-      // Redirect to inbox settings after a short delay
-      setTimeout(() => {
-        router.push({
-          name: 'settings_inbox_list',
-          params: { accountId: accountId.value },
-        });
-      }, 2000);
-    }
-  } catch (error) {
-    console.error('Error checking status:', error);
-  }
+// Simplified - Evolution API creates inbox automatically when WhatsApp connects
+const goToInboxList = () => {
+  router.push({
+    name: 'settings_inbox_list',
+    params: { accountId: accountId.value },
+  });
 };
 
 const startStatusPolling = () => {
-  // Check status every 3 seconds
-  statusCheckInterval.value = setInterval(checkConnectionStatus, 3000);
+  // Not needed - Evolution API handles connection status
 };
 
 const stopStatusPolling = () => {
@@ -212,6 +195,24 @@ onUnmounted(() => {
               </span>
               <p v-if="instanceName && !instanceName.includes(' ')" class="mt-1 text-xs text-n-slate-10">
                 Instance ID: {{ sanitizedInstanceName }}
+              </p>
+            </label>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="flex-shrink-0 flex-grow-0 mb-6">
+            <label :class="{ error: phoneNumber && !/^\+\d{10,15}$/.test(phoneNumber.replace(/\s/g, '')) }">
+              {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.LABEL') }}
+              <input
+                v-model="phoneNumber"
+                type="tel"
+                :placeholder="$t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.PLACEHOLDER')"
+              />
+              <span v-if="phoneNumber && !/^\+\d{10,15}$/.test(phoneNumber.replace(/\s/g, ''))" class="message">
+                {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.ERROR') }}
+              </span>
+              <p class="mt-1 text-xs text-n-slate-10">
+                {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.HELP') }}
               </p>
             </label>
           </div>
@@ -347,13 +348,20 @@ onUnmounted(() => {
           </div>
 
           <!-- Refresh Button -->
-          <div class="mt-6 flex justify-center">
+          <div class="mt-6 flex justify-center gap-3">
             <NextButton
               :disabled="isLoading"
               :is-loading="isLoading"
               :label="$t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.REFRESH_QR')"
               @click="refreshQrCode"
             />
+          </div>
+
+          <!-- Info message -->
+          <div class="mt-4 p-4 rounded-lg bg-b-50 border border-b-200">
+            <p class="text-sm text-b-700 text-center">
+              Após escanear o QR Code, a inbox será criada automaticamente. Clique no botão abaixo para ver suas inboxes.
+            </p>
           </div>
         </div>
 
@@ -362,6 +370,12 @@ onUnmounted(() => {
           <NextButton
             :label="$t('GENERAL_SETTINGS.BACK')"
             @click="goBack"
+          />
+          <NextButton
+            solid
+            blue
+            label="Ir para Inboxes"
+            @click="goToInboxList"
           />
         </div>
       </div>

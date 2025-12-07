@@ -318,6 +318,12 @@
           "PLACEHOLDER": "Digite um nome único para a instância (sem espaços)",
           "ERROR": "Nome da instância é obrigatório e não pode conter espaços"
         },
+        "PHONE_NUMBER": {
+          "LABEL": "Número de Telefone",
+          "PLACEHOLDER": "+5511999999999",
+          "ERROR": "Digite um número válido com código do país (ex: +5511999999999)",
+          "HELP": "Informe o número de telefone que será conectado ao WhatsApp, incluindo código do país"
+        },
         "CONNECTION": {
           "TITLE": "Conecte seu WhatsApp",
           "DESCRIPTION": "Escaneie o QR code com seu aplicativo WhatsApp para conectar",
