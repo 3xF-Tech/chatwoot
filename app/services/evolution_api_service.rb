@@ -71,6 +71,68 @@ class EvolutionApiService
     { success: false, error: e.message }
   end
 
+  # Create instance for an existing inbox (without chatwootAutoCreate)
+  # This is used when the inbox is created locally first
+  def create_instance_for_existing_inbox(params)
+    instance_name = params[:instance_name]
+    phone_number = params[:phone_number]&.gsub(/^\+/, '')
+
+    # Build body WITHOUT chatwootAutoCreate - we already have the inbox
+    body = {
+      instanceName: instance_name,
+      number: phone_number,
+      qrcode: true,
+      integration: 'WHATSAPP-BAILEYS',
+
+      # Settings
+      rejectCall: params[:reject_call].nil? ? true : params[:reject_call],
+      groupsIgnore: params[:groups_ignore].nil? ? true : params[:groups_ignore],
+      alwaysOnline: params[:always_online].nil? ? true : params[:always_online],
+      readMessages: params[:read_messages].nil? ? true : params[:read_messages],
+      readStatus: false,
+      syncFullHistory: params[:sync_full_history].nil? ? true : params[:sync_full_history],
+
+      # Chatwoot integration - connect to existing inbox
+      chatwootAccountId: account.id.to_s,
+      chatwootToken: user_access_token,
+      chatwootUrl: chatwoot_url,
+      chatwootSignMsg: true,
+      chatwootReopenConversation: true,
+      chatwootConversationPending: true,
+      chatwootImportContacts: true,
+      chatwootMergeBrazilContacts: true,
+      chatwootImportMessages: true,
+      chatwootDaysLimitImportMessages: params[:days_limit_import_messages] || 90,
+      chatwootOrganization: account.name,
+      # IMPORTANT: Do NOT auto-create inbox - we already created it
+      chatwootAutoCreate: false,
+      # Link to existing inbox
+      chatwootInboxId: params[:inbox_id].to_s
+    }
+
+    Rails.logger.info("Evolution API - Creating instance for existing inbox: #{instance_name}")
+    Rails.logger.info("Evolution API - Inbox ID: #{params[:inbox_id]}")
+
+    response = make_request(:post, '/instance/create', body)
+
+    if response[:success]
+      qrcode_data = response[:data]['qrcode']
+      qrcode_data ||= response[:data].dig('qrcode', 'base64')
+      qrcode_data ||= response[:data]['base64']
+
+      {
+        success: true,
+        instance_name: instance_name,
+        qrcode: qrcode_data,
+        status: response[:data]['state'] || response[:data]['status'] || 'waiting'
+      }
+    else
+      { success: false, error: response[:error] }
+    end
+  rescue StandardError => e
+    { success: false, error: e.message }
+  end
+
   def get_qrcode(instance_name)
     response = make_request(:get, "/instance/connect/#{instance_name}")
 
