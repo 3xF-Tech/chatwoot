@@ -58,22 +58,23 @@ class Channel::WhatsappWeb < ApplicationRecord
     ENV.fetch('EVOLUTION_API_KEY', nil)
   end
 
-  def evolution_service
-    @evolution_service ||= EvolutionApiService.new(
+  def evolution_service(user: nil)
+    EvolutionApiService.new(
       api_url: evolution_api_url,
       api_key: evolution_api_key,
-      account: account
+      account: account,
+      user: user
     )
   end
 
-  def fetch_qr_code
+  def fetch_qr_code(user:)
     return { success: false, error: 'Already connected' } if connected?
 
-    evolution_service.get_qrcode(instance_name)
+    evolution_service(user: user).get_qrcode(instance_name)
   end
 
-  def check_connection_status
-    result = evolution_service.get_connection_status(instance_name)
+  def check_connection_status(user:)
+    result = evolution_service(user: user).get_connection_status(instance_name)
 
     if result[:success]
       new_status = result[:connected] ? 'connected' : 'disconnected'
@@ -84,8 +85,8 @@ class Channel::WhatsappWeb < ApplicationRecord
     result
   end
 
-  def disconnect!
-    result = evolution_service.disconnect_instance(instance_name)
+  def disconnect!(user:)
+    result = evolution_service(user: user).disconnect_instance(instance_name)
     update(connection_status: 'disconnected') if result[:success]
     result
   end

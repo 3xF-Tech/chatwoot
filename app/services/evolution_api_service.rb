@@ -22,12 +22,12 @@ class EvolutionApiService
       integration: 'WHATSAPP-BAILEYS',
 
       # Settings
-      rejectCall: params[:reject_call].nil? ? true : params[:reject_call],
-      groupsIgnore: params[:groups_ignore].nil? ? true : params[:groups_ignore],
-      alwaysOnline: params[:always_online].nil? ? true : params[:always_online],
-      readMessages: params[:read_messages].nil? ? true : params[:read_messages],
+      rejectCall: params[:reject_call].nil? || params[:reject_call],
+      groupsIgnore: params[:groups_ignore].nil? || params[:groups_ignore],
+      alwaysOnline: params[:always_online].nil? || params[:always_online],
+      readMessages: params[:read_messages].nil? || params[:read_messages],
       readStatus: false,
-      syncFullHistory: params[:sync_full_history].nil? ? true : params[:sync_full_history],
+      syncFullHistory: params[:sync_full_history].nil? || params[:sync_full_history],
 
       # Chatwoot integration
       chatwootAccountId: account.id.to_s,
@@ -85,12 +85,12 @@ class EvolutionApiService
       integration: 'WHATSAPP-BAILEYS',
 
       # Settings
-      rejectCall: params[:reject_call].nil? ? true : params[:reject_call],
-      groupsIgnore: params[:groups_ignore].nil? ? true : params[:groups_ignore],
-      alwaysOnline: params[:always_online].nil? ? true : params[:always_online],
-      readMessages: params[:read_messages].nil? ? true : params[:read_messages],
+      rejectCall: params[:reject_call].nil? || params[:reject_call],
+      groupsIgnore: params[:groups_ignore].nil? || params[:groups_ignore],
+      alwaysOnline: params[:always_online].nil? || params[:always_online],
+      readMessages: params[:read_messages].nil? || params[:read_messages],
       readStatus: false,
-      syncFullHistory: params[:sync_full_history].nil? ? true : params[:sync_full_history],
+      syncFullHistory: params[:sync_full_history].nil? || params[:sync_full_history],
 
       # Chatwoot integration - connect to existing inbox
       chatwootAccountId: account.id.to_s,
@@ -206,20 +206,20 @@ class EvolutionApiService
     uri = URI.parse("#{api_url}#{endpoint}")
 
     # Log detalhado da requisição
-    Rails.logger.info("=" * 80)
-    Rails.logger.info("EVOLUTION API REQUEST DEBUG")
-    Rails.logger.info("=" * 80)
+    Rails.logger.info('=' * 80)
+    Rails.logger.info('EVOLUTION API REQUEST DEBUG')
+    Rails.logger.info('=' * 80)
     Rails.logger.info("Method: #{method.upcase}")
     Rails.logger.info("Full URL: #{uri}")
     Rails.logger.info("Host: #{uri.host}")
     Rails.logger.info("Port: #{uri.port}")
     Rails.logger.info("Path: #{uri.request_uri}")
     Rails.logger.info("SSL: #{uri.scheme == 'https'}")
-    Rails.logger.info("API Key: #{api_key[0..15]}..." ) if api_key
-    Rails.logger.info("-" * 40)
-    Rails.logger.info("Request Body (JSON):")
+    Rails.logger.info("API Key: #{api_key[0..15]}...") if api_key
+    Rails.logger.info('-' * 40)
+    Rails.logger.info('Request Body (JSON):')
     Rails.logger.info(body.to_json) if body
-    Rails.logger.info("-" * 40)
+    Rails.logger.info('-' * 40)
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = uri.scheme == 'https'
@@ -229,19 +229,19 @@ class EvolutionApiService
     request = build_request(method, uri, body)
 
     # Log headers
-    Rails.logger.info("Request Headers:")
+    Rails.logger.info('Request Headers:')
     request.each_header { |k, v| Rails.logger.info("  #{k}: #{v}") }
-    Rails.logger.info("-" * 40)
+    Rails.logger.info('-' * 40)
 
     response = http.request(request)
 
     # Log detalhado da resposta
-    Rails.logger.info("EVOLUTION API RESPONSE DEBUG")
+    Rails.logger.info('EVOLUTION API RESPONSE DEBUG')
     Rails.logger.info("Response Code: #{response.code}")
     Rails.logger.info("Response Message: #{response.message}")
-    Rails.logger.info("Response Body:")
+    Rails.logger.info('Response Body:')
     Rails.logger.info(response.body)
-    Rails.logger.info("=" * 80)
+    Rails.logger.info('=' * 80)
 
     parse_response(response)
   end

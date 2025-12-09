@@ -2,6 +2,15 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
   before_action :validate_evolution_api_config
   before_action :fetch_inbox_and_channel, only: [:show, :qrcode, :status, :disconnect, :destroy]
 
+  def show
+    render json: {
+      inbox_id: @inbox.id,
+      instance_name: @channel.instance_name,
+      phone_number: @channel.phone_number,
+      connection_status: @channel.connection_status
+    }
+  end
+
   def create
     ActiveRecord::Base.transaction do
       # 1. Create the WhatsApp Web channel locally first
@@ -38,9 +47,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
         days_limit_import_messages: instance_params[:days_limit_import_messages]
       )
 
-      unless result[:success]
-        raise StandardError, result[:error]
-      end
+      raise StandardError, result[:error] unless result[:success]
 
       render json: {
         success: true,
@@ -58,15 +65,6 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     render json: { success: false, error: e.message }, status: :unprocessable_entity
   end
 
-  def show
-    render json: {
-      inbox_id: @inbox.id,
-      instance_name: @channel.instance_name,
-      phone_number: @channel.phone_number,
-      connection_status: @channel.connection_status
-    }
-  end
-
   def qrcode
     # First check if already connected
     if @channel.connected?
@@ -74,7 +72,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
       return
     end
 
-    result = @channel.fetch_qr_code
+    result = @channel.fetch_qr_code(user: Current.user)
 
     if result[:success] && result[:qrcode].present?
       render json: { base64: result[:qrcode], state: 'connecting' }
@@ -86,7 +84,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
   end
 
   def status
-    result = @channel.check_connection_status
+    result = @channel.check_connection_status(user: Current.user)
 
     if result[:success]
       state = @channel.connected? ? 'open' : 'close'
@@ -101,7 +99,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
   end
 
   def disconnect
-    result = @channel.disconnect!
+    result = @channel.disconnect!(user: Current.user)
 
     if result[:success]
       render json: { message: 'Instance disconnected successfully' }
@@ -137,9 +135,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     @inbox = Current.account.inboxes.find(params[:id])
     @channel = @inbox.channel
 
-    unless @channel.is_a?(Channel::WhatsappWeb)
-      render json: { error: 'Invalid channel type' }, status: :bad_request
-    end
+    render json: { error: 'Invalid channel type' }, status: :bad_request unless @channel.is_a?(Channel::WhatsappWeb)
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Inbox not found' }, status: :not_found
   end
