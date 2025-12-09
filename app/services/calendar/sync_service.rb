@@ -98,7 +98,7 @@ class Calendar::SyncService
   end
 
   def sync_attendees(event, remote_attendees)
-    existing_emails = event.attendees.pluck(:email)
+    event.attendees.pluck(:email)
     remote_emails = remote_attendees.pluck(:email)
 
     # Remove attendees not in remote

@@ -22,9 +22,7 @@ class Enterprise::Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::A
 
     # Check if already has this plan
     existing = Current.account.ai_agent_subscriptions.find_by(plan_id: plan_id)
-    if existing&.active?
-      return render json: { error: 'You already have an active subscription for this plan' }, status: :unprocessable_entity
-    end
+    return render json: { error: 'You already have an active subscription for this plan' }, status: :unprocessable_entity if existing&.active?
 
     # Start trial or create checkout session
     if params[:start_trial]
@@ -50,9 +48,7 @@ class Enterprise::Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::A
   def cancel
     return render_error('Subscription not found') unless @subscription
 
-    if @subscription.stripe_subscription_id.present?
-      Stripe::Subscription.cancel(@subscription.stripe_subscription_id)
-    end
+    Stripe::Subscription.cancel(@subscription.stripe_subscription_id) if @subscription.stripe_subscription_id.present?
 
     @subscription.update!(status: 'canceled')
     render json: subscription_json(@subscription)
@@ -103,28 +99,28 @@ class Enterprise::Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::A
     customer_id = get_or_create_stripe_customer
 
     session = Stripe::Checkout::Session.create({
-      customer: customer_id,
-      payment_method_types: ['card'],
-      line_items: [{
-        price: plan_config['stripe_price_id'],
-        quantity: 1
-      }],
-      mode: 'subscription',
-      success_url: success_url(plan_id),
-      cancel_url: cancel_url,
-      metadata: {
-        account_id: Current.account.id,
-        plan_id: plan_id,
-        type: 'ai_agent_subscription'
-      },
-      subscription_data: {
-        metadata: {
-          account_id: Current.account.id,
-          plan_id: plan_id,
-          type: 'ai_agent_subscription'
-        }
-      }
-    })
+                                                 customer: customer_id,
+                                                 payment_method_types: ['card'],
+                                                 line_items: [{
+                                                   price: plan_config['stripe_price_id'],
+                                                   quantity: 1
+                                                 }],
+                                                 mode: 'subscription',
+                                                 success_url: success_url(plan_id),
+                                                 cancel_url: cancel_url,
+                                                 metadata: {
+                                                   account_id: Current.account.id,
+                                                   plan_id: plan_id,
+                                                   type: 'ai_agent_subscription'
+                                                 },
+                                                 subscription_data: {
+                                                   metadata: {
+                                                     account_id: Current.account.id,
+                                                     plan_id: plan_id,
+                                                     type: 'ai_agent_subscription'
+                                                   }
+                                                 }
+                                               })
 
     session.url
   end
@@ -134,10 +130,10 @@ class Enterprise::Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::A
     return customer_id if customer_id.present?
 
     customer = Stripe::Customer.create({
-      name: Current.account.name,
-      email: Current.account.administrators.first&.email,
-      metadata: { account_id: Current.account.id }
-    })
+                                         name: Current.account.name,
+                                         email: Current.account.administrators.first&.email,
+                                         metadata: { account_id: Current.account.id }
+                                       })
 
     Current.account.update!(
       custom_attributes: Current.account.custom_attributes.merge('stripe_customer_id' => customer.id)

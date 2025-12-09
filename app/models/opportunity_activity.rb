@@ -51,7 +51,7 @@ class OpportunityActivity < ApplicationRecord
   scope :pending, -> { where(is_done: false) }
   scope :completed, -> { where(is_done: true) }
   scope :scheduled_between, ->(start_date, end_date) { where(scheduled_at: start_date..end_date) }
-  scope :due_today, -> { where(scheduled_at: Time.current.beginning_of_day..Time.current.end_of_day, is_done: false) }
+  scope :due_today, -> { where(scheduled_at: Time.current.all_day, is_done: false) }
   scope :overdue, -> { where(is_done: false).where('scheduled_at < ?', Time.current) }
 
   after_save :update_opportunity_last_activity

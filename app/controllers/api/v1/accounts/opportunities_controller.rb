@@ -94,9 +94,7 @@ class Api::V1::Accounts::OpportunitiesController < Api::V1::Accounts::BaseContro
     opportunities = opportunities.by_status(params[:status]) if params[:status].present?
     opportunities = opportunities.where('value >= ?', params[:value_min]) if params[:value_min].present?
     opportunities = opportunities.where('value <= ?', params[:value_max]) if params[:value_max].present?
-    if params[:expected_close_from].present?
-      opportunities = opportunities.where('expected_close_date >= ?', params[:expected_close_from])
-    end
+    opportunities = opportunities.where('expected_close_date >= ?', params[:expected_close_from]) if params[:expected_close_from].present?
     opportunities = opportunities.where('expected_close_date <= ?', params[:expected_close_to]) if params[:expected_close_to].present?
     opportunities
   end

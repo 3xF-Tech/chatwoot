@@ -16,13 +16,11 @@ class Api::V1::Accounts::PipelinesController < Api::V1::Accounts::BaseController
     render :show, status: :created
   rescue ActiveRecord::RecordNotUnique => e
     # Handle race condition when setting is_default
-    if e.message.include?('index_pipelines_on_account_default')
-      @pipeline.is_default = false
-      @pipeline.save!
-      render :show, status: :created
-    else
-      raise
-    end
+    raise unless e.message.include?('index_pipelines_on_account_default')
+
+    @pipeline.is_default = false
+    @pipeline.save!
+    render :show, status: :created
   end
 
   def update
