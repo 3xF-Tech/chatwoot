@@ -13,11 +13,14 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
 
   def create
     ActiveRecord::Base.transaction do
+      # Instance name is derived from phone number (digits only)
+      computed_instance_name = sanitized_phone_number
+
       # 1. Create the WhatsApp Web channel locally first
       @channel = Channel::WhatsappWeb.create!(
         account_id: Current.account.id,
-        instance_name: sanitized_instance_name,
-        phone_number: instance_params[:phone_number],
+        instance_name: computed_instance_name,
+        phone_number: cleaned_phone_number,
         connection_status: 'connecting',
         provider_config: {
           reject_call: instance_params[:reject_call],
@@ -30,15 +33,15 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
 
       # 2. Create the inbox associated with the channel
       @inbox = Current.account.inboxes.create!(
-        name: instance_params[:inbox_name] || "WhatsApp #{sanitized_instance_name}",
+        name: instance_params[:inbox_name] || "WhatsApp #{computed_instance_name}",
         channel: @channel
       )
 
       # 3. Call Evolution API to create instance (without chatwootAutoCreate)
       result = evolution_service.create_instance_for_existing_inbox(
-        instance_name: sanitized_instance_name,
+        instance_name: computed_instance_name,
         inbox_id: @inbox.id,
-        phone_number: instance_params[:phone_number],
+        phone_number: cleaned_phone_number,
         reject_call: instance_params[:reject_call],
         groups_ignore: instance_params[:groups_ignore],
         always_online: instance_params[:always_online],
@@ -52,7 +55,7 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
       render json: {
         success: true,
         inbox_id: @inbox.id,
-        instance_name: sanitized_instance_name,
+        instance_name: computed_instance_name,
         qrcode: result[:qrcode],
         status: 'waiting_qr'
       }, status: :created
@@ -149,13 +152,18 @@ class Api::V1::Accounts::EvolutionInstancesController < Api::V1::Accounts::BaseC
     )
   end
 
-  def sanitized_instance_name
-    @sanitized_instance_name ||= instance_params[:instance_name]&.gsub(/\s+/, '_')&.downcase
+  # Clean phone number - remove +, spaces, dashes, parentheses
+  def cleaned_phone_number
+    @cleaned_phone_number ||= instance_params[:phone_number]&.gsub(/[\s\-\(\)\+]/, '')
+  end
+
+  # Instance name derived from phone number (digits only)
+  def sanitized_phone_number
+    @sanitized_phone_number ||= instance_params[:phone_number]&.gsub(/\D/, '')
   end
 
   def instance_params
     params.permit(
-      :instance_name,
       :inbox_name,
       :phone_number,
       :reject_call,

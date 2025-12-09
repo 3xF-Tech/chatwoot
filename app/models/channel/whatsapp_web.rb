@@ -33,6 +33,7 @@ class Channel::WhatsappWeb < ApplicationRecord
   validates :connection_status, inclusion: { in: CONNECTION_STATUSES }
 
   before_validation :sanitize_instance_name
+  before_destroy :delete_evolution_instance
 
   def name
     'WhatsApp Web'
@@ -95,5 +96,30 @@ class Channel::WhatsappWeb < ApplicationRecord
 
   def sanitize_instance_name
     self.instance_name = instance_name&.gsub(/\s+/, '_')&.downcase
+  end
+
+  def delete_evolution_instance
+    return unless evolution_api_url.present? && evolution_api_key.present?
+
+    Rails.logger.info("Deleting Evolution API instance: #{instance_name}")
+
+    # Use a service without user context for cleanup
+    service = EvolutionApiService.new(
+      api_url: evolution_api_url,
+      api_key: evolution_api_key,
+      account: account,
+      user: nil
+    )
+
+    result = service.delete_instance(instance_name)
+
+    if result[:success]
+      Rails.logger.info("Successfully deleted Evolution API instance: #{instance_name}")
+    else
+      Rails.logger.warn("Failed to delete Evolution API instance: #{instance_name} - #{result[:error]}")
+    end
+  rescue StandardError => e
+    Rails.logger.error("Error deleting Evolution API instance: #{e.message}")
+    # Don't prevent inbox deletion even if Evolution API call fails
   end
 end

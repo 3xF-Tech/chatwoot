@@ -12,9 +12,11 @@ const router = useRouter();
 const { t } = useI18n();
 const { accountId } = useAccount();
 
+// LocalStorage key for persisting state
+const STORAGE_KEY = 'whatsapp_web_inbox_creation';
+
 // Form state
 const inboxName = ref('');
-const instanceName = ref('');
 const phoneNumber = ref('');
 
 // Settings
@@ -31,7 +33,7 @@ const qrCodeData = ref(null);
 const connectionStatus = ref('idle'); // idle, creating, waiting_qr, connected, error
 const errorMessage = ref('');
 const statusCheckInterval = ref(null);
-const createdInstanceName = ref(null); // Store the instance name after creation
+const createdInboxId = ref(null); // Store the inbox ID after creation
 
 // Steps
 const STEPS = {
@@ -41,17 +43,98 @@ const STEPS = {
 };
 const currentStep = ref(STEPS.FORM);
 
-const isFormValid = computed(() => {
-  return inboxName.value.trim() !== '' && 
-         instanceName.value.trim() !== '' && 
-         !instanceName.value.includes(' ') &&
-         phoneNumber.value.trim() !== '' &&
-         /^\+\d{10,15}$/.test(phoneNumber.value.replace(/\s/g, ''));
+// Phone number validation - accepts with or without +, 10-15 digits
+const isValidPhoneNumber = computed(() => {
+  const cleaned = phoneNumber.value.replace(/[\s\-\(\)]/g, '');
+  return /^\+?\d{10,15}$/.test(cleaned);
 });
 
-const sanitizedInstanceName = computed(() => {
-  return instanceName.value.replace(/\s+/g, '_').toLowerCase();
+const isFormValid = computed(() => {
+  return inboxName.value.trim() !== '' && 
+         phoneNumber.value.trim() !== '' &&
+         isValidPhoneNumber.value;
 });
+
+// Instance name will be derived from phone number (cleaned)
+const sanitizedInstanceName = computed(() => {
+  // Remove all non-digit characters and use as instance name
+  return phoneNumber.value.replace(/\D/g, '');
+});
+
+// Persist state to localStorage
+const saveState = () => {
+  const state = {
+    inboxId: createdInboxId.value,
+    inboxName: inboxName.value,
+    phoneNumber: phoneNumber.value,
+    step: currentStep.value,
+    timestamp: Date.now(),
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+};
+
+// Clear persisted state
+const clearState = () => {
+  localStorage.removeItem(STORAGE_KEY);
+};
+
+// Restore state from localStorage
+const restoreState = async () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return false;
+
+    const state = JSON.parse(saved);
+    
+    // Check if state is not too old (max 30 minutes)
+    const maxAge = 30 * 60 * 1000; // 30 minutes
+    if (Date.now() - state.timestamp > maxAge) {
+      clearState();
+      return false;
+    }
+
+    // Check if we have an inbox ID and were in QR code step
+    if (state.inboxId && state.step === STEPS.QR_CODE) {
+      // Verify the inbox still exists and get its status
+      try {
+        const response = await evolutionApi.getConnectionStatus(state.inboxId);
+        
+        if (response.data.state === 'open' || response.data.connected) {
+          // Already connected - go to connected step
+          createdInboxId.value = state.inboxId;
+          inboxName.value = state.inboxName || '';
+          phoneNumber.value = state.phoneNumber || '';
+          currentStep.value = STEPS.CONNECTED;
+          connectionStatus.value = 'connected';
+          clearState();
+          return true;
+        }
+        
+        // Not connected - restore and show QR code
+        createdInboxId.value = state.inboxId;
+        inboxName.value = state.inboxName || '';
+        phoneNumber.value = state.phoneNumber || '';
+        currentStep.value = STEPS.QR_CODE;
+        connectionStatus.value = 'waiting_qr';
+        
+        // Fetch QR code and start polling
+        await refreshQrCode();
+        startStatusPolling();
+        
+        return true;
+      } catch {
+        // Inbox might have been deleted or error occurred
+        clearState();
+        return false;
+      }
+    }
+
+    return false;
+  } catch {
+    clearState();
+    return false;
+  }
+};
 
 const createInstance = async () => {
   if (!isFormValid.value) return;
@@ -61,10 +144,13 @@ const createInstance = async () => {
   errorMessage.value = '';
 
   try {
+    // Clean phone number - remove spaces, dashes, parentheses
+    const cleanedPhone = phoneNumber.value.replace(/[\s\-\(\)]/g, '');
+    
     const response = await evolutionApi.createInstance({
       instance_name: sanitizedInstanceName.value,
       inbox_name: inboxName.value,
-      phone_number: phoneNumber.value.replace(/\s/g, ''),
+      phone_number: cleanedPhone,
       reject_call: rejectCalls.value,
       groups_ignore: ignoreGroups.value,
       always_online: alwaysOnline.value,
@@ -73,12 +159,21 @@ const createInstance = async () => {
     });
 
     if (response.data.success) {
-      createdInstanceName.value = response.data.instance_name;
+      createdInboxId.value = response.data.inbox_id;
       qrCodeData.value = response.data.qrcode;
       currentStep.value = STEPS.QR_CODE;
       connectionStatus.value = 'waiting_qr';
-      // Note: Status polling removed - Evolution API will create inbox automatically when connected
-      useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.WAITING_QR'));
+      
+      // Save state to localStorage for recovery on page refresh
+      saveState();
+      
+      // Start polling for connection status
+      startStatusPolling();
+      
+      // If no QR code returned, fetch it
+      if (!qrCodeData.value && createdInboxId.value) {
+        await refreshQrCode();
+      }
     } else {
       throw new Error(response.data.error || 'Failed to create instance');
     }
@@ -93,25 +188,34 @@ const createInstance = async () => {
 };
 
 const refreshQrCode = async () => {
-  if (!createdInstanceName.value) return;
+  if (!createdInboxId.value) return;
 
   isLoading.value = true;
   errorMessage.value = '';
 
   try {
-    // For now, we can't refresh QR code without Evolution API endpoint for instance-based refresh
-    // The user should restart the process if QR expires
-    useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.QR_EXPIRED'));
+    const response = await evolutionApi.getQrCode(createdInboxId.value);
+    
+    if (response.data.base64) {
+      qrCodeData.value = response.data.base64;
+    } else if (response.data.state === 'open') {
+      connectionStatus.value = 'connected';
+      currentStep.value = STEPS.CONNECTED;
+      stopStatusPolling();
+      clearState(); // Clear saved state on successful connection
+      useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.STATUS.CONNECTED'));
+    } else {
+      errorMessage.value = t('INBOX_MGMT.ADD.WHATSAPP_WEB.API.ERROR_QR');
+    }
   } catch (error) {
     console.error('Error refreshing QR code:', error);
-    errorMessage.value = t('INBOX_MGMT.ADD.WHATSAPP_WEB.API.ERROR_QR');
+    errorMessage.value = error.response?.data?.error || t('INBOX_MGMT.ADD.WHATSAPP_WEB.API.ERROR_QR');
     useAlert(errorMessage.value);
   } finally {
     isLoading.value = false;
   }
 };
 
-// Simplified - Evolution API creates inbox automatically when WhatsApp connects
 const goToInboxList = () => {
   router.push({
     name: 'settings_inbox_list',
@@ -119,8 +223,33 @@ const goToInboxList = () => {
   });
 };
 
+const goToInboxSettings = () => {
+  if (createdInboxId.value) {
+    router.push({
+      name: 'settings_inbox_show',
+      params: { accountId: accountId.value, inboxId: createdInboxId.value },
+    });
+  }
+};
+
 const startStatusPolling = () => {
-  // Not needed - Evolution API handles connection status
+  stopStatusPolling();
+  statusCheckInterval.value = setInterval(async () => {
+    if (!createdInboxId.value) return;
+    
+    try {
+      const response = await evolutionApi.getConnectionStatus(createdInboxId.value);
+      if (response.data.state === 'open' || response.data.connected) {
+        connectionStatus.value = 'connected';
+        currentStep.value = STEPS.CONNECTED;
+        stopStatusPolling();
+        clearState(); // Clear saved state on successful connection
+        useAlert(t('INBOX_MGMT.ADD.WHATSAPP_WEB.CONNECTION.STATUS.CONNECTED'));
+      }
+    } catch (error) {
+      console.error('Error checking status:', error);
+    }
+  }, 5000);
 };
 
 const stopStatusPolling = () => {
@@ -133,16 +262,23 @@ const stopStatusPolling = () => {
 const goBack = () => {
   if (currentStep.value === STEPS.QR_CODE) {
     stopStatusPolling();
+    clearState(); // Clear saved state when going back
     currentStep.value = STEPS.FORM;
     qrCodeData.value = null;
+    createdInboxId.value = null;
   } else {
     router.back();
   }
 };
 
-onMounted(() => {
-  // Generate a default instance name based on timestamp
-  instanceName.value = `whatsapp_${Date.now()}`;
+onMounted(async () => {
+  // Try to restore state from previous session (e.g., page refresh during QR code step)
+  isLoading.value = true;
+  try {
+    await restoreState();
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 onUnmounted(() => {
@@ -181,38 +317,20 @@ onUnmounted(() => {
             </label>
           </div>
 
-          <!-- Instance Name -->
-          <div class="flex-shrink-0 flex-grow-0 mb-6">
-            <label :class="{ error: instanceName.includes(' ') }">
-              {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.INSTANCE_NAME.LABEL') }}
-              <input
-                v-model="instanceName"
-                type="text"
-                :placeholder="$t('INBOX_MGMT.ADD.WHATSAPP_WEB.INSTANCE_NAME.PLACEHOLDER')"
-              />
-              <span v-if="instanceName.includes(' ')" class="message">
-                {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.INSTANCE_NAME.ERROR') }}
-              </span>
-              <p v-if="instanceName && !instanceName.includes(' ')" class="mt-1 text-xs text-n-slate-10">
-                Instance ID: {{ sanitizedInstanceName }}
-              </p>
-            </label>
-          </div>
-
           <!-- Phone Number -->
           <div class="flex-shrink-0 flex-grow-0 mb-6">
-            <label :class="{ error: phoneNumber && !/^\+\d{10,15}$/.test(phoneNumber.replace(/\s/g, '')) }">
+            <label :class="{ error: phoneNumber && !isValidPhoneNumber }">
               {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.LABEL') }}
               <input
                 v-model="phoneNumber"
                 type="tel"
-                :placeholder="$t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.PLACEHOLDER')"
+                placeholder="5511999999999"
               />
-              <span v-if="phoneNumber && !/^\+\d{10,15}$/.test(phoneNumber.replace(/\s/g, ''))" class="message">
-                {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.ERROR') }}
+              <span v-if="phoneNumber && !isValidPhoneNumber" class="message">
+                Digite um número válido (10-15 dígitos)
               </span>
               <p class="mt-1 text-xs text-n-slate-10">
-                {{ $t('INBOX_MGMT.ADD.WHATSAPP_WEB.PHONE_NUMBER.HELP') }}
+                Número do WhatsApp que será conectado (com código do país, ex: 5511999999999)
               </p>
             </label>
           </div>

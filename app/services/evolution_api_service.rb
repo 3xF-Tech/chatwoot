@@ -1,7 +1,7 @@
 class EvolutionApiService
   attr_reader :api_url, :api_key, :account, :user
 
-  def initialize(api_url:, api_key:, account:, user:)
+  def initialize(api_url:, api_key:, account:, user: nil)
     @api_url = api_url
     @api_key = api_key
     @account = account
@@ -193,6 +193,9 @@ class EvolutionApiService
 
   def user_access_token
     # Use the current user's access token for Chatwoot API integration
+    # Some operations (like delete_instance) don't need the user token
+    return nil unless user
+
     user.access_token&.token || raise('User access token not found')
   end
 
