@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "ai-engine"
+version = "0.2.0"
+description = "Motor de Agentes de IA para CRM Chatwoot"
+authors = ["ThiagoDanyel <thiago.carvalho@3xf.tech>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+
+# --- Web Framework ---
+fastapi = "^0.115.0"
+uvicorn = "^0.30.0"
+
+# --- Message Queue ---
+pika = "^1.3.2"
+
+# --- Redis (idempotência e cache) ---
+redis = "^5.0.0"
+
+# --- HTTP Client ---
+requests = "^2.32.0"
+httpx = "^0.27.0"
+
+# --- Database ---
+asyncpg = "^0.29.0"
+psycopg2-binary = "^2.9.9"
+
+# --- Config ---
+python-dotenv = "^1.0.1"
+pydantic-settings = "^2.2.0"
+
+# --- AI Stack ---
+langchain = "^0.3.0"
+langchain-core = "^0.3.0"
+langchain-openai = "^0.2.0"
+langgraph = "^0.2.20"
+langfuse = "^2.50.0"
+
+# --- Future: RAG ---
+# langchain-community = "^0.3.0"
+# pgvector = "^0.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

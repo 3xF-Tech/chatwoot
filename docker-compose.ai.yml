@@ -1,0 +1,133 @@
+version: '3.7'
+
+services:
+  # --- Message Broker ---
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"   # Porta do protocolo AMQP
+      - "15672:15672" # Painel de Gestão Web (User: guest / Pass: guest)
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - default
+
+  # --- Cache Rápido para Agentes (idempotência, checkpoints) ---
+  redis-ai:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_ai_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - default
+
+  # --- Banco Dedicado para IA (Configs + Vetores + Langfuse) ---
+  db-ai:
+    image: ankane/pgvector:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_AI_USER:-langfuse}
+      POSTGRES_PASSWORD: ${POSTGRES_AI_PASS:-langfuse}
+      POSTGRES_DB: ${POSTGRES_AI_DB:-langfuse}
+    volumes:
+      - db_ai_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langfuse"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - default
+
+  # --- Observabilidade (Langfuse) ---
+  langfuse-server:
+    image: langfuse/langfuse:2
+    depends_on:
+      db-ai:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_AI_USER:-langfuse}:${POSTGRES_AI_PASS:-langfuse}@db-ai:5432/${POSTGRES_AI_DB:-langfuse}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-dev-secret-change-in-production}
+      - NEXTAUTH_URL=${LANGFUSE_URL:-http://localhost:3333}
+    ports:
+      - "3333:3000"
+    networks:
+      - default
+
+  # --- AI Gateway (FastAPI) ---
+  ai-gateway:
+    build:
+      context: ./ai_engine
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=${RABBITMQ_USER:-guest}
+      - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
+      - REDIS_HOST=redis-ai
+      - REDIS_PORT=6379
+      - LANGFUSE_HOST=http://langfuse-server:3000
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis-ai:
+        condition: service_healthy
+    command: uvicorn api_gateway.main:app --host 0.0.0.0 --port 8000
+    networks:
+      - default
+    profiles:
+      - full
+
+  # --- AI Worker ---
+  ai-worker:
+    build:
+      context: ./ai_engine
+      dockerfile: Dockerfile
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=${RABBITMQ_USER:-guest}
+      - RABBITMQ_PASS=${RABBITMQ_PASS:-guest}
+      - REDIS_HOST=redis-ai
+      - REDIS_PORT=6379
+      - LANGFUSE_HOST=http://langfuse-server:3000
+      - CHATWOOT_BASE_URL=http://rails:3000
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis-ai:
+        condition: service_healthy
+    command: python worker/main.py
+    networks:
+      - default
+    profiles:
+      - full
+
+volumes:
+  rabbitmq_data:
+  db_ai_data:
+  redis_ai_data:
+
+networks:
+  default:
+    external:
+      name: chatwoot_default
