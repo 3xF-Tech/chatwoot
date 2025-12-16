@@ -78,6 +78,47 @@ class Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::Accounts::Bas
     }
   end
 
+  # Test endpoint to create AI Agent without Stripe (development/testing only)
+  def test_create_agent
+    return render_error('Only available in development/test') unless Rails.env.development? || Rails.env.test?
+
+    plan_id = params[:plan_id]
+    plan_config = AiAgentSubscription.plans_config[plan_id]
+
+    return render_error('Invalid plan') if plan_config.blank?
+
+    # Create or find subscription in trial mode
+    subscription = Current.account.ai_agent_subscriptions.find_or_create_by!(plan_id: plan_id) do |sub|
+      sub.status = 'trial'
+      sub.trial_messages_remaining = plan_config['trial_messages'] || 50
+      sub.monthly_message_limit = plan_config['monthly_message_limit'] || 1000
+      sub.trial_ends_at = 30.days.from_now
+    end
+
+    # Create the AI Agent synchronously for testing
+    agent_bot = Enterprise::AiAgents::CreateAgentService.new(
+      account: Current.account,
+      plan_id: plan_id,
+      subscription: subscription
+    ).perform
+
+    render json: {
+      success: true,
+      subscription: subscription_json(subscription),
+      agent_bot: {
+        id: agent_bot.id,
+        name: agent_bot.name,
+        workflow_id: agent_bot.workflow_id,
+        workflow_version_id: agent_bot.workflow_version_id,
+        workflow_active: agent_bot.workflow_active,
+        outgoing_url: agent_bot.outgoing_url,
+        is_active: agent_bot.is_active
+      }
+    }, status: :created
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def set_subscription
@@ -95,34 +136,45 @@ class Api::V1::Accounts::AiAgentSubscriptionsController < Api::V1::Accounts::Bas
   end
 
   def create_stripe_checkout(plan_id, plan_config)
-    # Get or create Stripe customer
     customer_id = get_or_create_stripe_customer
 
-    session = Stripe::Checkout::Session.create({
-                                                 customer: customer_id,
-                                                 payment_method_types: ['card'],
-                                                 line_items: [{
-                                                   price: plan_config['stripe_price_id'],
-                                                   quantity: 1
-                                                 }],
-                                                 mode: 'subscription',
-                                                 success_url: success_url(plan_id),
-                                                 cancel_url: cancel_url,
-                                                 metadata: {
-                                                   account_id: Current.account.id,
-                                                   plan_id: plan_id,
-                                                   type: 'ai_agent_subscription'
-                                                 },
-                                                 subscription_data: {
-                                                   metadata: {
-                                                     account_id: Current.account.id,
-                                                     plan_id: plan_id,
-                                                     type: 'ai_agent_subscription'
-                                                   }
-                                                 }
-                                               })
+    session = Stripe::Checkout::Session.create(
+      build_checkout_params(customer_id, plan_id, plan_config)
+    )
 
     session.url
+  end
+
+  def build_checkout_params(customer_id, plan_id, plan_config)
+    params = {
+      customer: customer_id,
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      success_url: success_url(plan_id),
+      cancel_url: cancel_url,
+      metadata: {
+        account_id: Current.account.id,
+        plan_id: plan_id,
+        type: 'ai_agent_subscription'
+      },
+      subscription_data: {
+        metadata: {
+          account_id: Current.account.id,
+          plan_id: plan_id,
+          type: 'ai_agent_subscription'
+        }
+      }
+    }
+
+    params[:line_items] = build_line_items(plan_config)
+    params
+  end
+
+  def build_line_items(plan_config)
+    price_id = plan_config['stripe_price_id']
+    return [{ price: price_id }] if plan_config['billing_meter'].present?
+
+    [{ price: price_id, quantity: 1 }]
   end
 
   def get_or_create_stripe_customer

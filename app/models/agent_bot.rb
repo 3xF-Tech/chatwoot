@@ -2,24 +2,28 @@
 #
 # Table name: agent_bots
 #
-#  id               :bigint           not null, primary key
-#  ai_agent_type    :string           default("assistant")
-#  bot_config       :jsonb
-#  bot_type         :integer          default("webhook")
-#  context_prompt   :text
-#  description      :string
-#  enable_signature :boolean          default(FALSE), not null
-#  is_active        :boolean          default(TRUE), not null
-#  name             :string
-#  outgoing_url     :string
-#  response_mode    :integer          default("auto_respond")
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  account_id       :bigint
+#  id                  :bigint           not null, primary key
+#  ai_agent_type       :string           default("assistant")
+#  bot_config          :jsonb
+#  bot_type            :integer          default("webhook")
+#  context_prompt      :text
+#  description         :string
+#  enable_signature    :boolean          default(FALSE), not null
+#  is_active           :boolean          default(TRUE), not null
+#  name                :string
+#  outgoing_url        :string
+#  response_mode       :integer          default("auto_respond")
+#  workflow_active     :boolean          default(FALSE)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  account_id          :bigint
+#  workflow_id         :string
+#  workflow_version_id :string
 #
 # Indexes
 #
-#  index_agent_bots_on_account_id  (account_id)
+#  index_agent_bots_on_account_id   (account_id)
+#  index_agent_bots_on_workflow_id  (workflow_id)
 #
 
 class AgentBot < ApplicationRecord
@@ -100,5 +104,15 @@ class AgentBot < ApplicationRecord
   # Check if agent is configured for a specific inbox
   def active_for_inbox?(inbox)
     is_active && agent_bot_inboxes.active.exists?(inbox_id: inbox.id)
+  end
+
+  def workflow?
+    workflow_id.present?
+  end
+
+  def subscription
+    return nil if account.blank? || ai_agent_type.blank?
+
+    account.ai_agent_subscriptions.find_by(plan_id: ai_agent_type)
   end
 end

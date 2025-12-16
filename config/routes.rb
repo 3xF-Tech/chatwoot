@@ -79,6 +79,7 @@ Rails.application.routes.draw do
             collection do
               get :plans
               get :usage
+              post :test_create_agent
             end
             member do
               post :checkout

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_07_120000) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_09_120000) do
   # These extensions should be enabled to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -136,7 +136,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_07_120000) do
     t.string "ai_agent_type", default: "assistant"
     t.integer "response_mode", default: 0
     t.boolean "is_active", default: true, null: false
+    t.string "workflow_id"
+    t.string "workflow_version_id"
+    t.boolean "workflow_active", default: false
     t.index ["account_id"], name: "index_agent_bots_on_account_id"
+    t.index ["workflow_id"], name: "index_agent_bots_on_workflow_id"
   end
 
   create_table "agent_capacity_policies", force: :cascade do |t|

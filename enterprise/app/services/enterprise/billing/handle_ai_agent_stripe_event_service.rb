@@ -41,6 +41,9 @@ class Enterprise::Billing::HandleAiAgentStripeEventService
     )
 
     Rails.logger.info "AI Agent subscription activated for account #{account.id}, plan: #{plan_id}"
+
+    # Create the AI Agent via webhook
+    Enterprise::CreateAiAgentJob.perform_later(account.id, plan_id, subscription.id)
   end
 
   def process_subscription_updated

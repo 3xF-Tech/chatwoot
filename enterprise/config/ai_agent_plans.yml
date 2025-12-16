@@ -16,7 +16,8 @@ plans:
     description: "Agente para atendimento ao cliente 24/7"
     price_brl: 598.54
     # Product ID: prod_TY1P0Ibz3CAWWT
-    stripe_price_id: "price_1SavMQE2jP664CESYvWC4e8U"
+    stripe_price_id: "price_1ScT3JE2jP664CES5h73L7QD"
+    billing_meter: "mensagens_do_agente_ia"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
@@ -31,6 +32,7 @@ plans:
     price_brl: 878.69
     # Product ID: prod_TY1RbfbjiN2Im8
     stripe_price_id: "price_1SavP1E2jP664CESE0tAtGmG"
+    billing_meter: "mensagens_do_agente_ia"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
@@ -46,6 +48,7 @@ plans:
     price_brl: 987.92
     # Product ID: prod_TY1TTzRVQaeGJa
     stripe_price_id: "price_1SavQRE2jP664CESX0RRabIG"
+    billing_meter: "mensagens_do_agente_ia"
     monthly_message_limit: 1000
     trial_messages: 50
     features:
