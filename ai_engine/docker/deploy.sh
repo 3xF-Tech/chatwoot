@@ -20,7 +20,7 @@ cd "$(dirname "$0")"
 export VERSION=${VERSION}
 
 echo ">> Deploying stack..."
-docker stack deploy -c swarm-stack.yml ${STACK_NAME}
+docker stack deploy --with-registry-auth -c swarm-stack.yml ${STACK_NAME}
 
 echo ">> Waiting for services..."
 sleep 5
